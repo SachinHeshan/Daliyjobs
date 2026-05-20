@@ -1,0 +1,336 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Senior Full Stack Engineer (React & NestJS)",
+      "company": "Sysco LABS Sri Lanka",
+      "location": "Colombo, Western Province",
+      "postedTime": "1 hour ago",
+      "postedDate": "2026-05-20",
+      "type": "Full-time",
+      "salary": "LKR 350,000 - 500,000 / mo",
+      "logo": "🍔",
+      "tags": [
+        "React",
+        "NestJS",
+        "AWS",
+        "TypeScript"
+      ],
+      "description": "Join Sysco LABS to build the future of food service technology. We are looking for an experienced Full Stack Developer to lead our merchant ordering platforms.",
+      "urgent": true
+    },
+    {
+      "id": 2,
+      "title": "UI/UX Product Designer",
+      "company": "99x",
+      "location": "Colombo (Hybrid)",
+      "postedTime": "3 hours ago",
+      "postedDate": "2026-05-20",
+      "type": "Full-time",
+      "salary": "LKR 200,000 - 320,000 / mo",
+      "logo": "🎨",
+      "tags": [
+        "Figma",
+        "UI/UX",
+        "User Research",
+        "Wireframing"
+      ],
+      "description": "Design sleek, intuitive interfaces for European clients. Collaborate closely with cross-functional agile teams in Colombo and Oslo."
+    },
+    {
+      "id": 3,
+      "title": "Associate Software Engineer (Java)",
+      "company": "WSO2",
+      "location": "Colombo, Sri Lanka",
+      "postedTime": "5 hours ago",
+      "postedDate": "2026-05-20",
+      "type": "Full-time",
+      "salary": "LKR 150,000 - 220,000 / mo",
+      "logo": "🔌",
+      "tags": [
+        "Java",
+        "API Manager",
+        "Microservices",
+        "Choreo"
+      ],
+      "description": "Help build and support WSO2's industry-leading open-source API management and integration platforms. Ideal for recent computer science graduates."
+    },
+    {
+      "id": 4,
+      "title": "QA Automation Engineer",
+      "company": "Virtusa",
+      "location": "Colombo / Remote",
+      "postedTime": "1 day ago",
+      "postedDate": "2026-05-19",
+      "type": "Full-time",
+      "salary": "LKR 250,000 - 380,000 / mo",
+      "logo": "🔍",
+      "tags": [
+        "Selenium",
+        "Java",
+        "TestNG",
+        "CI/CD"
+      ],
+      "description": "Develop automated testing suites for large-scale enterprise banking clients. Ensure high software quality through rigorous testing cycles.",
+      "urgent": true
+    },
+    {
+      "id": 5,
+      "title": "Cloud DevOps Engineer",
+      "company": "Axiata Digital Labs",
+      "location": "Colombo, Sri Lanka",
+      "postedTime": "1 day ago",
+      "postedDate": "2026-05-19",
+      "type": "Full-time",
+      "salary": "LKR 300,000 - 450,000 / mo",
+      "logo": "☁️",
+      "tags": [
+        "Kubernetes",
+        "Docker",
+        "Jenkins",
+        "Terraform"
+      ],
+      "description": "Manage high-traffic telecommunication services deployments. Scale cloud-native solutions across Axiata group networks."
+    },
+    {
+      "id": 6,
+      "title": "Digital Marketing Executive",
+      "company": "Dialog Axiata PLC",
+      "location": "Colombo, Western Province",
+      "postedTime": "2 days ago",
+      "postedDate": "2026-05-18",
+      "type": "Full-time",
+      "salary": "LKR 90,000 - 130,000 / mo",
+      "logo": "📱",
+      "tags": [
+        "Social Media",
+        "SEO",
+        "Google Ads",
+        "Copywriting"
+      ],
+      "description": "Drive marketing campaigns for Dialog's digital service products. Manage social channels, track performance metrics and optimize conversion rates."
+    },
+    {
+      "id": 7,
+      "title": "Technical Support Engineer",
+      "company": "IFS Sri Lanka",
+      "location": "Colombo / Hybrid",
+      "postedTime": "2 days ago",
+      "postedDate": "2026-05-18",
+      "type": "Full-time",
+      "salary": "LKR 180,000 - 260,000 / mo",
+      "logo": "⚙️",
+      "tags": [
+        "SQL",
+        "ERP",
+        "Customer Support",
+        "Troubleshooting"
+      ],
+      "description": "Assist global enterprise clients with troubleshooting IFS Applications. Investigate database issues and document solutions."
+    },
+    {
+      "id": 8,
+      "title": "Senior Data Scientist",
+      "company": "London Stock Exchange Group (LSEG)",
+      "location": "Colombo, Sri Lanka",
+      "postedTime": "3 days ago",
+      "postedDate": "2026-05-17",
+      "type": "Full-time",
+      "salary": "LKR 450,000 - 650,000 / mo",
+      "logo": "📈",
+      "tags": [
+        "Python",
+        "Machine Learning",
+        "Pandas",
+        "SQL"
+      ],
+      "description": "Apply state-of-the-art predictive modeling and machine learning algorithms to financial transaction data and market intelligence.",
+      "urgent": true
+    },
+    {
+      "id": 9,
+      "title": "Human Resources Coordinator",
+      "company": "John Keells Holdings",
+      "location": "Colombo, Sri Lanka",
+      "postedTime": "4 days ago",
+      "postedDate": "2026-05-16",
+      "type": "Full-time",
+      "salary": "LKR 100,000 - 150,000 / mo",
+      "logo": "👥",
+      "tags": [
+        "Recruitment",
+        "Onboarding",
+        "HRIS",
+        "Employee Engagement"
+      ],
+      "description": "Coordinate recruiting events, organize onboarding schedules, and support employee engagement programs across JKH sectors."
+    },
+    {
+      "id": 10,
+      "title": "Mobile Application Developer (Flutter)",
+      "company": "Creative Software",
+      "location": "Colombo / Remote",
+      "postedTime": "4 days ago",
+      "postedDate": "2026-05-16",
+      "type": "Full-time",
+      "salary": "LKR 220,000 - 350,000 / mo",
+      "logo": "📲",
+      "tags": [
+        "Flutter",
+        "Dart",
+        "iOS",
+        "Android"
+      ],
+      "description": "Design and build cross-platform mobile applications. Work in collaborative squads to deliver sleek mobile user experiences."
+    },
+    {
+      "id": 11,
+      "title": "Software Engineer Internship",
+      "company": "Codegen",
+      "location": "Colombo, Sri Lanka",
+      "postedTime": "5 days ago",
+      "postedDate": "2026-05-15",
+      "type": "Internship",
+      "salary": "LKR 40,000 - 60,000 / mo",
+      "logo": "🚗",
+      "tags": [
+        "Python",
+        "C++",
+        "Robotics",
+        "Web Dev"
+      ],
+      "description": "Work on real-world projects in travel tech, autonomous vehicles, or agriculture automation. Mentorship provided by senior developers."
+    },
+    {
+      "id": 12,
+      "title": "Branch Operations Executive",
+      "company": "Commercial Bank of Ceylon PLC",
+      "location": "Kandy, Central Province",
+      "postedTime": "5 days ago",
+      "postedDate": "2026-05-15",
+      "type": "Full-time",
+      "salary": "LKR 80,000 - 110,000 / mo",
+      "logo": "🏦",
+      "tags": [
+        "Customer Service",
+        "Banking",
+        "Finance",
+        "Cash Management"
+      ],
+      "description": "Assist customers with branch banking transactions, process applications, and ensure smooth operational compliance in Kandy."
+    },
+    {
+      "id": 13,
+      "title": "Sales & Client Relationship Executive",
+      "company": "Ceylon Cold Stores (Elephant House)",
+      "location": "Galle, Southern Province",
+      "postedTime": "6 days ago",
+      "postedDate": "2026-05-14",
+      "type": "Full-time",
+      "salary": "LKR 75,000 - 120,000 / mo",
+      "logo": "🥤",
+      "tags": [
+        "B2B Sales",
+        "Client Relations",
+        "Negotiation",
+        "Retail"
+      ],
+      "description": "Manage distributor networks and build retail client relationships in the Galle and Southern district territories."
+    },
+    {
+      "id": 14,
+      "title": "Hotel Operations Assistant Manager",
+      "company": "Jetwing Hotels",
+      "location": "Negombo, Gampaha District",
+      "postedTime": "1 week ago",
+      "postedDate": "2026-05-13",
+      "type": "Full-time",
+      "salary": "LKR 120,000 - 180,000 / mo",
+      "logo": "🏨",
+      "tags": [
+        "Hospitality",
+        "Operations",
+        "Customer Care",
+        "Team Leadership"
+      ],
+      "description": "Oversee front office and guest experience at Jetwing hotels in Negombo. Assist the General Manager in daily operations."
+    }
+  ],
+  "banners": [
+    {
+      "id": 1,
+      "tag": "🇱🇰 Sri Lanka Focus",
+      "title": "1,500+ Top Local Jobs Available",
+      "subtitle": "Find vacancies at leading Sri Lankan companies and multinationals hiring in Colombo, Kandy, Galle, and more.",
+      "cta": "Explore Jobs",
+      "href": "/#jobs",
+      "gradient": "linear-gradient(135deg, #1591DC 0%, #0d74b5 50%, #000000 100%)",
+      "accent": "#1591DC",
+      "emoji": "💼",
+      "stats": [
+        {
+          "label": "Active Jobs",
+          "value": "1,500+"
+        },
+        {
+          "label": "Top Companies",
+          "value": "150+"
+        },
+        {
+          "label": "Added Today",
+          "value": "80+"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "tag": "💻 Remote Options",
+      "title": "Work Remotely from Sri Lanka",
+      "subtitle": "Discover global and local remote job opportunities that allow you to work from home, earning in LKR or foreign currencies.",
+      "cta": "Find Remote Jobs",
+      "href": "/#jobs",
+      "gradient": "linear-gradient(135deg, #000000 0%, #0d74b5 60%, #1591DC 100%)",
+      "accent": "#1591DC",
+      "emoji": "🌍",
+      "stats": [
+        {
+          "label": "Remote Jobs",
+          "value": "400+"
+        },
+        {
+          "label": "Work From Home",
+          "value": "100%"
+        },
+        {
+          "label": "New Today",
+          "value": "25+"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "tag": "⚡ Direct Connect",
+      "title": "Apply Directly to Hiring Managers",
+      "subtitle": "No registration required. Get the hiring managers' direct email address or official application links instantly.",
+      "cta": "Apply Now",
+      "href": "/#jobs",
+      "gradient": "linear-gradient(135deg, #0d74b5 0%, #1591DC 50%, #000000 100%)",
+      "accent": "#1591DC",
+      "emoji": "🚀",
+      "stats": [
+        {
+          "label": "Avg. Response",
+          "value": "24h"
+        },
+        {
+          "label": "No Signup Needed",
+          "value": "Free"
+        },
+        {
+          "label": "Daily Applicants",
+          "value": "5K+"
+        }
+      ]
+    }
+  ]
+}
