@@ -45,6 +45,8 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         overflow: "hidden",
         gap: 24,
         width: "100%",
+        maxWidth: 1000,
+        margin: "0 auto",
       }}
     >
 
@@ -52,15 +54,15 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         {/* Left: Logo */}
         <div
           style={{
-            width: isMobile ? 56 : 72,
-            height: isMobile ? 56 : 72,
+            width: isMobile ? 64 : 88,
+            height: isMobile ? 64 : 88,
             borderRadius: 16,
             background: "linear-gradient(135deg, rgba(21, 145, 220, 0.3), rgba(255, 255, 255, 0.1))",
             border: "1px solid rgba(21, 145, 220, 0.3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: isMobile ? 24 : 32,
+            fontSize: isMobile ? 28 : 40,
             fontWeight: 800,
             color: "#1591DC",
             flexShrink: 0,
@@ -84,7 +86,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           <div>
             <h3
               style={{
-                fontSize: isMobile ? 16 : 18,
+                fontSize: isMobile ? 18 : 22,
                 fontWeight: 700,
                 color: "#f1f5f9",
                 marginBottom: 4,
@@ -96,7 +98,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
               {job.title}
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 14, color: "#94a3b8", fontWeight: 600 }}>
+              <span style={{ fontSize: 16, color: "#94a3b8", fontWeight: 600 }}>
                 {job.company}
               </span>
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
@@ -158,8 +160,8 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
       </div>
 
       {/* Right: Actions */}
-      <div style={{ display: "flex", flexDirection: isMobile ? "row" : "column", alignItems: isMobile ? "center" : "flex-end", justifyContent: "space-between", gap: 16, flexShrink: 0, width: isMobile ? "100%" : "auto", marginTop: isMobile ? 16 : 0, borderTop: isMobile ? "1px solid rgba(255,255,255,0.05)" : "none", paddingTop: isMobile ? 16 : 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "column", alignItems: isMobile ? "stretch" : "flex-end", justifyContent: "space-between", gap: 16, flexShrink: 0, width: isMobile ? "100%" : "auto", marginTop: isMobile ? 16 : 0, borderTop: isMobile ? "1px solid rgba(255,255,255,0.05)" : "none", paddingTop: isMobile ? 16 : 0 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: isMobile ? "space-between" : "flex-end", gap: 16 }}>
           <span style={infoStyle}>{job.postedDate}</span>
           <button
             onClick={(e) => {
@@ -183,7 +185,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           </button>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: isMobile ? "center" : "flex-end", gap: 12 }}>
           {job.urgent && (
             <span
               style={{
@@ -195,7 +197,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 borderRadius: 50,
                 letterSpacing: 0.5,
                 whiteSpace: "nowrap",
-                display: isMobile ? "none" : "inline-block" // Hide on mobile to save space
+                display: isMobile ? "none" : "inline-block"
               }}
             >
               URGENT
@@ -203,7 +205,8 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           )}
           <button
             style={{
-              padding: isMobile ? "8px 16px" : "10px 24px",
+              width: isMobile ? "100%" : "auto",
+              padding: isMobile ? "12px 16px" : "10px 24px",
               borderRadius: 8,
               border: "none",
               background: hovered
@@ -211,11 +214,12 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 : "rgba(21, 145, 220, 0.1)",
               color: hovered ? "#fff" : "#1591DC",
               fontWeight: 600,
-              fontSize: isMobile ? 13 : 14,
+              fontSize: isMobile ? 14 : 14,
               cursor: "pointer",
               transition: "all 0.3s",
               letterSpacing: 0.3,
               fontFamily: "inherit",
+              textAlign: "center"
             }}
           >
             {hovered ? "Apply Now →" : "View Details"}
@@ -227,7 +231,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
 }
 
 const infoStyle: React.CSSProperties = {
-  fontSize: 13,
+  fontSize: 15,
   color: "#94a3b8",
   display: "flex",
   alignItems: "center",

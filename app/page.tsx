@@ -432,6 +432,7 @@ export default function Home() {
           }}
         >
           <div
+            className="job-modal-container"
             style={{
               background: "#0d0d0d",
               border: "1px solid rgba(21, 145, 220, 0.3)",
@@ -448,6 +449,7 @@ export default function Home() {
           >
             {/* Modal Header Banner */}
             <div
+              className="job-modal-header"
               style={{
                 height: 120,
                 background: "linear-gradient(135deg, rgba(21, 145, 220, 0.2) 0%, rgba(0,0,0,0) 100%)",
@@ -486,6 +488,7 @@ export default function Home() {
 
               {/* Logo Badge */}
               <div
+                className="job-modal-logo"
                 style={{
                   width: 72,
                   height: 72,
@@ -518,7 +521,7 @@ export default function Home() {
             </div>
 
             {/* Modal Content */}
-            <div style={{ padding: "48px 32px 32px 32px" }}>
+            <div className="job-modal-body" style={{ padding: "48px 32px 32px 32px" }}>
               {/* Job Title and Badges */}
               <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
                 <div>
@@ -597,7 +600,7 @@ export default function Home() {
                 <form onSubmit={handleApply} style={{ marginTop: 32, paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
                   <h4 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>Apply for this position</h4>
                   
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                  <div className="job-modal-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                     <input type="text" placeholder="Full Name" required value={applicantName} onChange={e => setApplicantName(e.target.value)} style={filterInputStyle} />
                     <input type="email" placeholder="Email Address" required value={applicantEmail} onChange={e => setApplicantEmail(e.target.value)} style={filterInputStyle} />
                   </div>
@@ -616,7 +619,7 @@ export default function Home() {
                     Email me a copy of my job application (optional)
                   </label>
 
-                  <div style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 16 }}>
+                  <div className="job-modal-buttons" style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 16 }}>
                     <button type="button" onClick={() => setShowApplyForm(false)} disabled={isSubmitting} style={{ background: "rgba(255,255,255,0.05)", color: "#fff", border: "none", borderRadius: 12, padding: "12px 24px", fontWeight: 600, cursor: "pointer" }}>
                       Cancel
                     </button>
@@ -626,7 +629,7 @@ export default function Home() {
                   </div>
                 </form>
               ) : (
-                <div style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 32, paddingTop: 20 }}>
+                <div className="job-modal-buttons" style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 32, paddingTop: 20 }}>
                   <button
                     type="button"
                     onClick={() => {
@@ -665,6 +668,37 @@ export default function Home() {
               )}
             </div>
           </div>
+          <style>{`
+            @media (max-width: 600px) {
+              .job-modal-container {
+                border-radius: 16px !important;
+              }
+              .job-modal-header {
+                padding: 16px !important;
+                height: 100px !important;
+              }
+              .job-modal-logo {
+                left: 16px !important;
+                width: 56px !important;
+                height: 56px !important;
+                bottom: -20px !important;
+                font-size: 24px !important;
+              }
+              .job-modal-body {
+                padding: 36px 16px 20px 16px !important;
+              }
+              .job-modal-form-grid {
+                grid-template-columns: 1fr !important;
+              }
+              .job-modal-buttons {
+                flex-direction: column;
+                width: 100%;
+              }
+              .job-modal-buttons button {
+                width: 100%;
+              }
+            }
+          `}</style>
         </div>
       )}
     </div>

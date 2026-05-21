@@ -5,7 +5,6 @@ import Link from "next/link";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -81,66 +80,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Search Bar */}
-        <div
-          style={{
-            flex: 1,
-            maxWidth: 480,
-            display: "flex",
-            alignItems: "center",
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(21,145,220,0.3)",
-            borderRadius: 50,
-            padding: "8px 18px",
-            gap: 10,
-            transition: "all 0.3s",
-          }}
-          onFocus={(e) => {
-            (e.currentTarget as HTMLDivElement).style.borderColor = "#1591DC";
-            (e.currentTarget as HTMLDivElement).style.boxShadow =
-              "0 0 20px rgba(21,145,220,0.3)";
-          }}
-          onBlur={(e) => {
-            (e.currentTarget as HTMLDivElement).style.borderColor =
-              "rgba(21,145,220,0.3)";
-            (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
-          }}
-        >
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="7" stroke="#94a3b8" strokeWidth="2" />
-            <path d="M16.5 16.5 21 21" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search jobs, companies..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              color: "#f1f5f9",
-              fontSize: 14,
-              width: "100%",
-              fontFamily: "inherit",
-            }}
-          />
-          {search && (
-            <button
-              onClick={() => setSearch("")}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#94a3b8",
-                cursor: "pointer",
-                fontSize: 16,
-                lineHeight: 1,
-              }}
-            >
-              ✕
-            </button>
-          )}
-        </div>
+
 
         {/* Nav Links - Desktop */}
         <div
