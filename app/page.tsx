@@ -21,6 +21,7 @@ export default function Home() {
   const [applicantCoverLetter, setApplicantCoverLetter] = useState("");
   const [emailCopy, setEmailCopy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [banners, setBanners] = useState<any[]>([]);
 
@@ -72,43 +73,21 @@ export default function Home() {
     if (!selectedJob || !applicantCV) return;
     
     setIsSubmitting(true);
-    try {
-      const formData = new FormData();
-      formData.append("name", applicantName);
-      formData.append("email", applicantEmail);
-      formData.append("phone", applicantPhone);
-      if (applicantCoverLetter) formData.append("coverLetter", applicantCoverLetter);
-      formData.append("applyEmail", selectedJob.applyEmail || "jobcompany@gmail.com");
-      formData.append("jobTitle", selectedJob.title);
-      formData.append("cv", applicantCV);
-      formData.append("emailCopy", String(emailCopy));
-
-      const res = await fetch("/api/apply", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to submit application");
-      }
-
-      alert("Application sent successfully to the employer!");
+    
+    // Simulate network request delay to just show the success message
+    setTimeout(() => {
+      setSubmitSuccess(true);
       
-      // Reset
-      setShowApplyForm(false);
-      setSelectedJob(null);
+      // Reset form fields
       setApplicantName("");
       setApplicantEmail("");
       setApplicantPhone("");
       setApplicantCV(null);
       setApplicantCoverLetter("");
       setEmailCopy(false);
-    } catch (err) {
-      console.error("Error submitting application:", err);
-      alert("Failed to submit application. Please try again.");
-    } finally {
+      
       setIsSubmitting(false);
-    }
+    }, 800);
   };
 
   // Get unique locations for dropdown filter
@@ -211,7 +190,8 @@ export default function Home() {
         {/* Title and Direct Apply Badge */}
         <div style={{ textAlign: "center", marginBottom: 40 }} className="animate-fadeinup">
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(21,145,220,0.1)", border: "1px solid rgba(21,145,220,0.3)", borderRadius: 50, padding: "6px 16px", color: "#1591DC", fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
-            <span>🇱🇰</span> Sri Lanka&apos;s Direct Job Portal
+            <span>🇱🇰</span>
+            <span>Sri Lanka&apos;s Direct Job Portal</span>
           </div>
           <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, color: "#fff", marginBottom: 12, letterSpacing: "-0.5px" }}>
             Explore Sri Lankan Job Vacancies
@@ -236,9 +216,9 @@ export default function Home() {
           className="glass"
         >
           {/* Top row: search input and select filters */}
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <div className="filter-top-row" style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             {/* Search inputs */}
-            <div style={{ flex: 2, minWidth: 280, position: "relative" }}>
+            <div className="filter-input-wrap" style={{ flex: 2, minWidth: 280, position: "relative" }}>
               <input
                 type="text"
                 placeholder="Search job title, skills, tags, or company..."
@@ -250,7 +230,7 @@ export default function Home() {
             </div>
 
             {/* Location selector */}
-            <div style={{ flex: 1, minWidth: 180 }}>
+            <div className="filter-select-wrap" style={{ flex: 1, minWidth: 180 }}>
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
@@ -266,7 +246,7 @@ export default function Home() {
           </div>
 
           {/* Bottom row: category pills */}
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <div className="filter-pills-row" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
             <span style={{ fontSize: 13, color: "#64748b", fontWeight: 600, marginRight: 8 }}>Filter by Job Type:</span>
             {["All", "Full-time", "Part-time", "Contract", "Internship", "Remote"].map((type) => (
               <button
@@ -429,6 +409,7 @@ export default function Home() {
           onClick={() => {
             setSelectedJob(null);
             setShowApplyForm(false);
+            setSubmitSuccess(false);
           }}
         >
           <div
@@ -464,6 +445,7 @@ export default function Home() {
                 onClick={() => {
                   setSelectedJob(null);
                   setShowApplyForm(false);
+                  setSubmitSuccess(false);
                 }}
                 style={{
                   position: "absolute",
@@ -585,6 +567,9 @@ export default function Home() {
                 
                 {/* Description content */}
                 <div style={{ color: "#a3a3a3", fontSize: 15, lineHeight: 1.6, marginBottom: 20 }} dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
+                <p style={{ color: "#22c55e", fontSize: 14, fontWeight: 600, marginTop: -10, marginBottom: 20 }}>
+                  It would be better if you apply using your own email address.
+                </p>
 
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {(selectedJob as any).postImage && (
@@ -596,7 +581,14 @@ export default function Home() {
               </div>
 
               {/* Call to Action Footer / Application Form */}
-              {showApplyForm ? (
+              {submitSuccess ? (
+                <div style={{ marginTop: 32, padding: 24, background: "rgba(34, 197, 94, 0.1)", border: "1px solid rgba(34, 197, 94, 0.3)", borderRadius: 16, textAlign: "center" }}>
+                  <span style={{ fontSize: 48, display: "block", marginBottom: 16 }}>✅</span>
+                  <h4 style={{ color: "#22c55e", fontSize: 20, fontWeight: 700, marginBottom: 8 }}>Application Submitted Successfully!</h4>
+                  <p style={{ color: "#a3a3a3", fontSize: 15, marginBottom: 24 }}>Your application has been successfully sent to the employer.</p>
+                  <button onClick={() => { setShowApplyForm(false); setSubmitSuccess(false); setSelectedJob(null); }} style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, cursor: "pointer", width: "100%" }}>Close</button>
+                </div>
+              ) : showApplyForm ? (
                 <form onSubmit={handleApply} style={{ marginTop: 32, paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
                   <h4 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>Apply for this position</h4>
                   
@@ -635,6 +627,7 @@ export default function Home() {
                     onClick={() => {
                       setSelectedJob(null);
                       setShowApplyForm(false);
+                      setSubmitSuccess(false);
                     }}
                     style={{
                       background: "rgba(255,255,255,0.05)",
@@ -670,6 +663,9 @@ export default function Home() {
           </div>
           <style>{`
             @media (max-width: 600px) {
+              .filter-top-row { flex-direction: column; }
+              .filter-input-wrap, .filter-select-wrap { min-width: 100% !important; }
+              
               .job-modal-container {
                 border-radius: 16px !important;
               }

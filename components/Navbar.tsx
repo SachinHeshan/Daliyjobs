@@ -56,13 +56,11 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontWeight: 900,
-                fontSize: 18,
-                color: "#000",
+                overflow: "hidden",
                 boxShadow: "0 0 20px rgba(21,145,220,0.5)",
               }}
             >
-              D
+              <img src="/favicon.ico" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
             <span
               style={{

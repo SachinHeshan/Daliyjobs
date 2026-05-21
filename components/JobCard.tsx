@@ -54,15 +54,15 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         {/* Left: Logo */}
         <div
           style={{
-            width: isMobile ? 64 : 88,
-            height: isMobile ? 64 : 88,
+            width: isMobile ? 80 : 88,
+            height: isMobile ? 80 : 88,
             borderRadius: 16,
             background: "linear-gradient(135deg, rgba(21, 145, 220, 0.3), rgba(255, 255, 255, 0.1))",
             border: "1px solid rgba(21, 145, 220, 0.3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: isMobile ? 28 : 40,
+            fontSize: isMobile ? 36 : 40,
             fontWeight: 800,
             color: "#1591DC",
             flexShrink: 0,
@@ -86,7 +86,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           <div>
             <h3
               style={{
-                fontSize: isMobile ? 18 : 22,
+                fontSize: isMobile ? 20 : 22,
                 fontWeight: 700,
                 color: "#f1f5f9",
                 marginBottom: 4,
@@ -98,13 +98,13 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
               {job.title}
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 16, color: "#94a3b8", fontWeight: 600 }}>
+              <span style={{ fontSize: isMobile ? 18 : 16, color: "#94a3b8", fontWeight: 600 }}>
                 {job.company}
               </span>
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                <span style={infoStyle}>{job.location}</span>
+                <span style={{ ...infoStyle, fontSize: isMobile ? 15 : 15 }}>{job.location}</span>
                 <span style={{ color: "#475569" }}>•</span>
-                <span style={infoStyle}>{job.salary}</span>
+                <span style={{ ...infoStyle, fontSize: isMobile ? 15 : 15 }}>{job.salary}</span>
               </div>
             </div>
           </div>
