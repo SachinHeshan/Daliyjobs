@@ -1,68 +1,111 @@
 "use client";
 import { useEffect, useState } from "react";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
 
 export default function ManageBanners() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<{ jobs: any[], banners: any[] } | null>(null);
+  const [banners, setBanners] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [editingBanner, setEditingBanner] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchBanners = async () => {
+    setLoading(true);
+    try {
+      const snap = await getDocs(collection(db, "banners"));
+      const list = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
+      setBanners(list);
+    } catch (err) {
+      console.error("Error fetching banners:", err);
+      alert("Failed to fetch banners: " + (err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetch("/api/data").then(r => r.json()).then(setData);
+    fetchBanners();
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const saveToApi = async (newData: any) => {
-    await fetch("/api/data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newData)
-    });
-    setData(newData);
+  const seedBanners = async () => {
+    if (!confirm("Load default banners to Firestore?")) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/data");
+      const { banners: mockBanners } = await res.json();
+      for (const b of mockBanners) {
+        await addDoc(collection(db, "banners"), b);
+      }
+      alert("Successfully seeded banners!");
+      fetchBanners();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to seed banners. Error: " + (err as Error).message);
+      setLoading(false);
+    }
   };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!data) return;
+    if (!editingBanner) return;
+    setLoading(true);
     
-    let updatedBanners = [...data.banners];
-    if (editingBanner?.id) {
-      updatedBanners = updatedBanners.map(b => b.id === editingBanner.id ? editingBanner : b);
-    } else {
-      updatedBanners.unshift({ ...editingBanner, id: Date.now() });
+    try {
+      if (editingBanner.firestoreId) {
+        const { firestoreId, ...data } = editingBanner;
+        await updateDoc(doc(db, "banners", firestoreId), data);
+      } else {
+        await addDoc(collection(db, "banners"), editingBanner);
+      }
+      setEditingBanner(null);
+      await fetchBanners();
+    } catch (err) {
+      console.error("Error saving banner:", err);
+      alert("Failed to save banner: " + (err as Error).message);
+      setLoading(false);
     }
-    
-    await saveToApi({ ...data, banners: updatedBanners });
-    setEditingBanner(null);
   };
 
-  const handleDelete = async (id: number) => {
-    if (!data || !confirm("Are you sure?")) return;
-    const updatedBanners = data.banners.filter(b => b.id !== id);
-    await saveToApi({ ...data, banners: updatedBanners });
+  const handleDelete = async (firestoreId: string) => {
+    if (!confirm("Are you sure?")) return;
+    setLoading(true);
+    try {
+      await deleteDoc(doc(db, "banners", firestoreId));
+      await fetchBanners();
+    } catch (err) {
+      console.error("Error deleting banner:", err);
+      alert("Failed to delete banner: " + (err as Error).message);
+      setLoading(false);
+    }
   };
 
-  if (!data) return <div>Loading...</div>;
+  if (loading) return <div style={{ color: "#a3a3a3", padding: 40 }}>Loading banners...</div>;
 
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <h1 style={{ fontSize: 32, fontWeight: 800, color: "#fff" }}>Manage Banners</h1>
-        <button onClick={() => setEditingBanner({ title: "", subtitle: "", tag: "", cta: "Explore", href: "/#jobs", gradient: "linear-gradient(135deg, #1591DC 0%, #0d74b5 50%, #000000 100%)", accent: "#1591DC", emoji: "✨", stats: [{label: "Stat 1", value: "100"}] })} style={btnStyle}>
-          + Add New Banner
-        </button>
+        <div style={{ display: "flex", gap: 12 }}>
+          {banners.length === 0 && (
+             <button onClick={seedBanners} style={{ ...btnStyle, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
+               🌱 Seed Mock Banners
+             </button>
+          )}
+          <button onClick={() => setEditingBanner({ image: "", title: "", description: "" })} style={btnStyle}>
+            + Add New Banner
+          </button>
+        </div>
       </div>
 
       {editingBanner && (
         <form onSubmit={handleSave} style={{ background: "rgba(255,255,255,0.02)", padding: 24, borderRadius: 16, border: "1px solid rgba(255,255,255,0.05)", marginBottom: 32, display: "flex", flexDirection: "column", gap: 16 }}>
-          <h2 style={{ fontSize: 20, color: "#fff" }}>{editingBanner.id ? "Edit Banner" : "Add Banner"}</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            <input placeholder="Tag (e.g. 🇱🇰 Sri Lanka Focus)" required value={editingBanner.tag || ""} onChange={e => setEditingBanner({...editingBanner, tag: e.target.value})} style={inputStyle} />
-            <input placeholder="Title" required value={editingBanner.title || ""} onChange={e => setEditingBanner({...editingBanner, title: e.target.value})} style={inputStyle} />
-            <input placeholder="CTA Text" required value={editingBanner.cta || ""} onChange={e => setEditingBanner({...editingBanner, cta: e.target.value})} style={inputStyle} />
-            <input placeholder="Emoji" required value={editingBanner.emoji || ""} onChange={e => setEditingBanner({...editingBanner, emoji: e.target.value})} style={inputStyle} />
+          <h2 style={{ fontSize: 20, color: "#fff" }}>{editingBanner.firestoreId ? "Edit Banner" : "Add Banner"}</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 16 }}>
+            <input placeholder="Image Link (URL) *" required value={editingBanner.image || ""} onChange={e => setEditingBanner({...editingBanner, image: e.target.value})} style={inputStyle} />
+            <input placeholder="Title (Optional)" value={editingBanner.title || ""} onChange={e => setEditingBanner({...editingBanner, title: e.target.value})} style={inputStyle} />
           </div>
-          <textarea placeholder="Subtitle" required value={editingBanner.subtitle || ""} onChange={e => setEditingBanner({...editingBanner, subtitle: e.target.value})} style={{ ...inputStyle, minHeight: 80 }} />
+          <textarea placeholder="Description (Optional)" value={editingBanner.description || ""} onChange={e => setEditingBanner({...editingBanner, description: e.target.value})} style={{ ...inputStyle, minHeight: 80 }} />
           <div style={{ display: "flex", gap: 12 }}>
             <button type="submit" style={btnStyle}>Save Banner</button>
             <button type="button" onClick={() => setEditingBanner(null)} style={{ ...btnStyle, background: "rgba(255,255,255,0.1)", color: "#fff" }}>Cancel</button>
@@ -71,16 +114,24 @@ export default function ManageBanners() {
       )}
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {data.banners.map((banner) => (
-          <div key={banner.id} style={{ background: "rgba(255,255,255,0.02)", padding: "16px 24px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-              <span style={{ fontSize: 12, background: "rgba(255,255,255,0.1)", padding: "4px 8px", borderRadius: 4, marginBottom: 8, display: "inline-block" }}>{banner.tag}</span>
-              <h3 style={{ fontSize: 18, color: "#fff", fontWeight: 700 }}>{banner.title}</h3>
-              <p style={{ color: "#a3a3a3", fontSize: 14 }}>{banner.subtitle}</p>
+        {banners.length === 0 && <p style={{ color: "#64748b", textAlign: "center", padding: 40 }}>No banners yet. Click &quot;Add New Banner&quot; or seed them.</p>}
+        {banners.map((banner) => (
+          <div key={banner.firestoreId || banner.id} style={{ background: "rgba(255,255,255,0.02)", padding: "16px 24px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20 }}>
+            {banner.image ? (
+              <div style={{ width: 120, height: 60, flexShrink: 0, borderRadius: 8, overflow: "hidden", background: "#000" }}>
+                <img src={banner.image} alt="Banner" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
+            ) : (
+              <div style={{ width: 120, height: 60, flexShrink: 0, borderRadius: 8, overflow: "hidden", background: "#333", display: "flex", alignItems: "center", justifyContent: "center", color: "#a3a3a3", fontSize: 12 }}>No Image</div>
+            )}
+            <div style={{ flex: 1 }}>
+              <h3 style={{ fontSize: 18, color: "#fff", fontWeight: 700 }}>{banner.title || "No Title"}</h3>
+              <p style={{ color: "#a3a3a3", fontSize: 14 }}>{banner.description || banner.subtitle || "No description"}</p>
+              <p style={{ color: "#64748b", fontSize: 12, wordBreak: "break-all", marginTop: 4 }}>{banner.image}</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => setEditingBanner(banner)} style={{ ...btnActionStyle, color: "#1591DC", background: "rgba(21,145,220,0.1)" }}>Edit</button>
-              <button onClick={() => handleDelete(banner.id)} style={{ ...btnActionStyle, color: "#ef4444", background: "rgba(239,68,68,0.1)" }}>Delete</button>
+              <button onClick={() => handleDelete(banner.firestoreId)} style={{ ...btnActionStyle, color: "#ef4444", background: "rgba(239,68,68,0.1)" }}>Delete</button>
             </div>
           </div>
         ))}

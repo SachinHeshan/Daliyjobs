@@ -1,20 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Job } from "@/data/jobs";
 
-export interface Job {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  postedTime: string;
-  type: string;
-  salary: string;
-  logo: string;
-  tags: string[];
-  urgent?: boolean;
-}
-
-export default function JobCard({ job }: { job: Job }) {
+export default function JobCard({ job, onClick }: { job: Job; onClick?: () => void }) {
   const [saved, setSaved] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -30,6 +18,8 @@ export default function JobCard({ job }: { job: Job }) {
 
   return (
     <article
+      suppressHydrationWarning
+      onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -58,94 +48,119 @@ export default function JobCard({ job }: { job: Job }) {
       }}
     >
 
-      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 24, flex: 1, width: "100%", alignItems: isMobile ? "flex-start" : "center" }}>
+      <div style={{ display: "flex", flexDirection: "row", gap: 16, flex: 1, width: "100%", alignItems: "flex-start" }}>
         {/* Left: Logo */}
         <div
           style={{
-            width: 72,
-            height: 72,
+            width: isMobile ? 56 : 72,
+            height: isMobile ? 56 : 72,
             borderRadius: 16,
             background: "linear-gradient(135deg, rgba(21, 145, 220, 0.3), rgba(255, 255, 255, 0.1))",
             border: "1px solid rgba(21, 145, 220, 0.3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 32,
+            fontSize: isMobile ? 24 : 32,
+            fontWeight: 800,
+            color: "#1591DC",
             flexShrink: 0,
-            marginTop: job.urgent && isMobile ? 16 : 0,
+            overflow: "hidden",
           }}
         >
-          {job.logo}
+          {job.logo && (job.logo.startsWith("http") || job.logo.startsWith("/")) ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={job.logo} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : job.website ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "contain", padding: isMobile ? 8 : 12, background: "#fff", borderRadius: 16 }} />
+          ) : (
+            job.company.charAt(0).toUpperCase()
+          )}
         </div>
 
         {/* Middle: Info */}
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 8 }}>
           {/* Title and Company */}
           <div>
             <h3
               style={{
-                fontSize: 18,
+                fontSize: isMobile ? 16 : 18,
                 fontWeight: 700,
                 color: "#f1f5f9",
-                marginBottom: 6,
+                marginBottom: 4,
                 lineHeight: 1.3,
-                whiteSpace: isMobile ? "normal" : "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
+                whiteSpace: "normal",
+                wordBreak: "break-word"
               }}
             >
               {job.title}
             </h3>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-              <span style={{ fontSize: 15, color: "#94a3b8", fontWeight: 600 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <span style={{ fontSize: 14, color: "#94a3b8", fontWeight: 600 }}>
                 {job.company}
               </span>
-              <span style={{ color: "#475569", display: isMobile ? "none" : "inline" }}>•</span>
-              <span style={infoStyle}>📍 {job.location}</span>
-              <span style={{ color: "#475569", display: isMobile ? "none" : "inline" }}>•</span>
-              <span style={infoStyle}>💰 {job.salary}</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <span style={infoStyle}>{job.location}</span>
+                <span style={{ color: "#475569" }}>•</span>
+                <span style={infoStyle}>{job.salary}</span>
+              </div>
             </div>
           </div>
 
           {/* Tags */}
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             <span
               style={{
                 background: "rgba(21, 145, 220, 0.15)",
                 border: "1px solid rgba(21, 145, 220, 0.3)",
                 color: "#1591DC",
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: 600,
-                padding: "4px 12px",
+                padding: "2px 10px",
                 borderRadius: 50,
               }}
             >
               {job.type}
             </span>
-            {job.tags.map((tag) => (
+            {job.tags.slice(0, isMobile ? 2 : job.tags.length).map((tag) => (
               <span
                 key={tag}
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.08)",
                   color: "#94a3b8",
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: 500,
-                  padding: "4px 12px",
+                  padding: "2px 10px",
                   borderRadius: 50,
                 }}
               >
                 {tag}
               </span>
             ))}
+            {isMobile && job.tags.length > 2 && (
+              <span
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  color: "#94a3b8",
+                  fontSize: 11,
+                  fontWeight: 500,
+                  padding: "2px 10px",
+                  borderRadius: 50,
+                }}
+              >
+                +{job.tags.length - 2}
+              </span>
+            )}
           </div>
         </div>
       </div>
 
       {/* Right: Actions */}
-      <div style={{ display: "flex", flexDirection: isMobile ? "row" : "column", alignItems: isMobile ? "center" : "flex-end", justifyContent: "space-between", gap: 16, flexShrink: 0, width: isMobile ? "100%" : "auto", marginTop: isMobile ? 16 : 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 16, width: isMobile ? "100%" : "auto", justifyContent: isMobile ? "space-between" : "flex-end" }}>
-          <span style={infoStyle}>⏰ {job.postedTime}</span>
+      <div style={{ display: "flex", flexDirection: isMobile ? "row" : "column", alignItems: isMobile ? "center" : "flex-end", justifyContent: "space-between", gap: 16, flexShrink: 0, width: isMobile ? "100%" : "auto", marginTop: isMobile ? 16 : 0, borderTop: isMobile ? "1px solid rgba(255,255,255,0.05)" : "none", paddingTop: isMobile ? 16 : 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <span style={infoStyle}>{job.postedDate}</span>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -168,7 +183,7 @@ export default function JobCard({ job }: { job: Job }) {
           </button>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 12, width: isMobile ? "50%" : "auto", justifyContent: isMobile ? "flex-end" : "flex-start" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           {job.urgent && (
             <span
               style={{
@@ -180,6 +195,7 @@ export default function JobCard({ job }: { job: Job }) {
                 borderRadius: 50,
                 letterSpacing: 0.5,
                 whiteSpace: "nowrap",
+                display: isMobile ? "none" : "inline-block" // Hide on mobile to save space
               }}
             >
               URGENT
@@ -187,7 +203,7 @@ export default function JobCard({ job }: { job: Job }) {
           )}
           <button
             style={{
-              padding: "10px 24px",
+              padding: isMobile ? "8px 16px" : "10px 24px",
               borderRadius: 8,
               border: "none",
               background: hovered
@@ -195,12 +211,11 @@ export default function JobCard({ job }: { job: Job }) {
                 : "rgba(21, 145, 220, 0.1)",
               color: hovered ? "#fff" : "#1591DC",
               fontWeight: 600,
-              fontSize: 14,
+              fontSize: isMobile ? 13 : 14,
               cursor: "pointer",
               transition: "all 0.3s",
               letterSpacing: 0.3,
               fontFamily: "inherit",
-              width: isMobile ? "100%" : "auto",
             }}
           >
             {hovered ? "Apply Now →" : "View Details"}

@@ -1,5 +1,5 @@
 export interface Job {
-  id: number;
+  id: string | number;
   title: string;
   company: string;
   location: string;
@@ -11,6 +11,8 @@ export interface Job {
   tags: string[];
   description: string;
   urgent?: boolean;
+  website?: string;
+  applyEmail?: string;
 }
 
 export const mockJobs: Job[] = [
