@@ -11,7 +11,8 @@ import { db, storage } from "@/lib/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default function Home() {
-  const [jobs, setJobs] = useState<Job[]>(fallbackJobs);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [showApplyForm, setShowApplyForm] = useState(false);
   const [applicantName, setApplicantName] = useState("");
@@ -33,11 +34,6 @@ export default function Home() {
         if (!bannersSnap.empty) {
           const list = bannersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
           setBanners(list);
-        } else {
-          // Fallback to API if firestore is empty
-          const res = await fetch("/api/data");
-          const data = await res.json();
-          if (data.banners) setBanners(data.banners);
         }
 
         // Fetch jobs from Firestore
@@ -46,13 +42,15 @@ export default function Home() {
           const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job));
           setJobs(list);
         } else {
-          // Fallback to api data if firestore is empty
-          const res = await fetch("/api/data");
-          const data = await res.json();
-          if (data.jobs) setJobs(data.jobs); 
+          // Only use mock data as last resort fallback
+          setJobs(fallbackJobs);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
+        // Fallback to mock data on error
+        setJobs(fallbackJobs);
+      } finally {
+        setLoading(false);
       }
     };
     loadData();
@@ -224,7 +222,7 @@ export default function Home() {
                 placeholder="Search job title, skills, tags, or company..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={filterInputStyle}
+                style={{ ...filterInputStyle, paddingRight: 40 }}
               />
               <span style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", color: "#64748b" }}>🔍</span>
             </div>
@@ -295,7 +293,18 @@ export default function Home() {
             minHeight: 300,
           }}
         >
-          {currentJobs.length > 0 ? (
+          {loading ? (
+            Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: 24, display: "flex", gap: 16, alignItems: "center", maxWidth: 1000, margin: "0 auto", width: "100%" }}>
+                <div style={{ width: 88, height: 88, borderRadius: 16, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ height: 20, width: "55%", borderRadius: 8, background: "rgba(255,255,255,0.06)" }} />
+                  <div style={{ height: 14, width: "35%", borderRadius: 8, background: "rgba(255,255,255,0.04)" }} />
+                  <div style={{ height: 12, width: "65%", borderRadius: 8, background: "rgba(255,255,255,0.03)" }} />
+                </div>
+              </div>
+            ))
+          ) : currentJobs.length > 0 ? (
             currentJobs.map((job) => <JobCard key={job.id} job={job} onClick={() => setSelectedJob(job)} />)
           ) : (
             <div

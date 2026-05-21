@@ -5,27 +5,15 @@ import { Job } from "@/data/jobs";
 export default function JobCard({ job, onClick }: { job: Job; onClick?: () => void }) {
   const [saved, setSaved] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <article
-      suppressHydrationWarning
+      className="jobcard-article"
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         display: "flex",
-        flexDirection: isMobile ? "column" : "row",
-        alignItems: isMobile ? "flex-start" : "center",
         justifyContent: "space-between",
         background: hovered
           ? "linear-gradient(135deg, rgba(21, 145, 220, 0.12), rgba(255, 255, 255, 0.05))"
@@ -50,19 +38,17 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
       }}
     >
 
-      <div style={{ display: "flex", flexDirection: "row", gap: 16, flex: 1, width: "100%", alignItems: "flex-start" }}>
+      <div className="jobcard-info-wrap" style={{ display: "flex", gap: 16, flex: 1, width: "100%", alignItems: "flex-start" }}>
         {/* Left: Logo */}
         <div
+          className="jobcard-logo"
           style={{
-            width: isMobile ? 80 : 88,
-            height: isMobile ? 80 : 88,
             borderRadius: 16,
             background: "linear-gradient(135deg, rgba(21, 145, 220, 0.3), rgba(255, 255, 255, 0.1))",
             border: "1px solid rgba(21, 145, 220, 0.3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: isMobile ? 36 : 40,
             fontWeight: 800,
             color: "#1591DC",
             flexShrink: 0,
@@ -74,7 +60,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
             <img src={job.logo} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           ) : job.website ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "contain", padding: isMobile ? 8 : 12, background: "#fff", borderRadius: 16 }} />
+            <img src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} className="jobcard-favicon" style={{ width: "100%", height: "100%", objectFit: "contain", background: "#fff", borderRadius: 16 }} />
           ) : (
             job.company.charAt(0).toUpperCase()
           )}
@@ -85,8 +71,8 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           {/* Title and Company */}
           <div>
             <h3
+              className="jobcard-title"
               style={{
-                fontSize: isMobile ? 20 : 22,
                 fontWeight: 700,
                 color: "#f1f5f9",
                 marginBottom: 4,
@@ -98,13 +84,13 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
               {job.title}
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: isMobile ? 18 : 16, color: "#94a3b8", fontWeight: 600 }}>
+              <span className="jobcard-company" style={{ color: "#94a3b8", fontWeight: 600 }}>
                 {job.company}
               </span>
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                <span style={{ ...infoStyle, fontSize: isMobile ? 15 : 15 }}>{job.location}</span>
+                <span style={infoStyle}>{job.location}</span>
                 <span style={{ color: "#475569" }}>•</span>
-                <span style={{ ...infoStyle, fontSize: isMobile ? 15 : 15 }}>{job.salary}</span>
+                <span style={infoStyle}>{job.salary}</span>
               </div>
             </div>
           </div>
@@ -124,9 +110,10 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
             >
               {job.type}
             </span>
-            {job.tags.slice(0, isMobile ? 2 : job.tags.length).map((tag) => (
+            {job.tags.map((tag, idx) => (
               <span
                 key={tag}
+                className={`jobcard-tag ${idx >= 2 ? "hide-on-mobile" : ""}`}
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.08)",
@@ -140,8 +127,9 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 {tag}
               </span>
             ))}
-            {isMobile && job.tags.length > 2 && (
+            {job.tags.length > 2 && (
               <span
+                className="show-on-mobile"
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.08)",
@@ -160,8 +148,8 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
       </div>
 
       {/* Right: Actions */}
-      <div style={{ display: "flex", flexDirection: isMobile ? "column" : "column", alignItems: isMobile ? "stretch" : "flex-end", justifyContent: "space-between", gap: 16, flexShrink: 0, width: isMobile ? "100%" : "auto", marginTop: isMobile ? 16 : 0, borderTop: isMobile ? "1px solid rgba(255,255,255,0.05)" : "none", paddingTop: isMobile ? 16 : 0 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: isMobile ? "space-between" : "flex-end", gap: 16 }}>
+      <div className="jobcard-actions-wrap" style={{ display: "flex", flexShrink: 0, gap: 16 }}>
+        <div className="jobcard-date-save" style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <span style={infoStyle}>{job.postedDate}</span>
           <button
             onClick={(e) => {
@@ -185,9 +173,10 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           </button>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: isMobile ? "center" : "flex-end", gap: 12 }}>
+        <div className="jobcard-btn-wrap" style={{ display: "flex", alignItems: "center", gap: 12 }}>
           {job.urgent && (
             <span
+              className="jobcard-urgent"
               style={{
                 background: "linear-gradient(135deg, #ef4444, #f97316)",
                 color: "#fff",
@@ -197,16 +186,14 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 borderRadius: 50,
                 letterSpacing: 0.5,
                 whiteSpace: "nowrap",
-                display: isMobile ? "none" : "inline-block"
               }}
             >
               URGENT
             </span>
           )}
           <button
+            className="jobcard-button"
             style={{
-              width: isMobile ? "100%" : "auto",
-              padding: isMobile ? "12px 16px" : "10px 24px",
               borderRadius: 8,
               border: "none",
               background: hovered
@@ -214,7 +201,6 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 : "rgba(21, 145, 220, 0.1)",
               color: hovered ? "#fff" : "#1591DC",
               fontWeight: 600,
-              fontSize: isMobile ? 14 : 14,
               cursor: "pointer",
               transition: "all 0.3s",
               letterSpacing: 0.3,
@@ -226,6 +212,102 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
           </button>
         </div>
       </div>
+      <style>{`
+        .jobcard-article {
+          flex-direction: row;
+          align-items: center;
+        }
+        .jobcard-info-wrap {
+          flex-direction: row;
+        }
+        .jobcard-logo {
+          width: 88px;
+          height: 88px;
+          font-size: 40px;
+        }
+        .jobcard-favicon {
+          padding: 12px;
+        }
+        .jobcard-title {
+          font-size: 22px;
+        }
+        .jobcard-company {
+          font-size: 16px;
+        }
+        .show-on-mobile {
+          display: none !important;
+        }
+        .jobcard-actions-wrap {
+          flex-direction: column;
+          align-items: flex-end;
+          justify-content: space-between;
+          width: auto;
+          margin-top: 0;
+          border-top: none;
+          padding-top: 0;
+        }
+        .jobcard-date-save {
+          justify-content: flex-end;
+        }
+        .jobcard-btn-wrap {
+          justify-content: flex-end;
+        }
+        .jobcard-urgent {
+          display: inline-block !important;
+        }
+        .jobcard-button {
+          width: auto;
+          padding: 10px 24px;
+          font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+          .jobcard-article {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+          }
+          .jobcard-logo {
+            width: 80px !important;
+            height: 80px !important;
+            font-size: 36px !important;
+          }
+          .jobcard-favicon {
+            padding: 8px !important;
+          }
+          .jobcard-title {
+            font-size: 20px !important;
+          }
+          .jobcard-company {
+            font-size: 18px !important;
+          }
+          .hide-on-mobile {
+            display: none !important;
+          }
+          .show-on-mobile {
+            display: inline-block !important;
+          }
+          .jobcard-actions-wrap {
+            align-items: stretch !important;
+            width: 100% !important;
+            margin-top: 16px !important;
+            border-top: 1px solid rgba(255,255,255,0.05) !important;
+            padding-top: 16px !important;
+          }
+          .jobcard-date-save {
+            justify-content: space-between !important;
+          }
+          .jobcard-btn-wrap {
+            justify-content: center !important;
+          }
+          .jobcard-urgent {
+            display: none !important;
+          }
+          .jobcard-button {
+            width: 100% !important;
+            padding: 12px 16px !important;
+          }
+        }
+      `}</style>
     </article>
   );
 }

@@ -6,20 +6,26 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "DailyJobs Sri Lanka – Find Your Dream Job Today | Sri Lanka Job Vacancies",
+  title: {
+    default: "DailyJobs Sri Lanka | Job Vacancies 2026 – Find Jobs in Colombo & Sri Lanka",
+    template: "%s | DailyJobs Sri Lanka",
+  },
   description:
-    "DailyJobs Sri Lanka is your #1 destination for the latest job vacancies. Search thousands of jobs from top Sri Lankan companies. Find full-time, part-time, hybrid, remote jobs and internships updated daily.",
+    "Find the latest job vacancies in Sri Lanka 2026. Browse hundreds of jobs in Colombo, Kandy, Galle & remote. Full-time, part-time, internships & contract jobs updated daily. Apply directly to top Sri Lankan companies like Dialog, Sysco LABS, WSO2, 99x and more.",
   keywords:
-    "jobs sri lanka, job vacancies sri lanka, job search sri lanka, vacancies in colombo, dialog vacancies, sysco labs careers, dynamic jobs sl, careers sri lanka, employment sri lanka",
-  authors: [{ name: "DailyJobs Sri Lanka" }],
+    "jobs in sri lanka 2026, job vacancies sri lanka, jobs colombo, job search sri lanka, vacancies in colombo, dialog vacancies, sysco labs careers, wso2 jobs, 99x careers, careers sri lanka, employment sri lanka, internships sri lanka, remote jobs sri lanka, full time jobs sri lanka, part time jobs sri lanka, it jobs sri lanka, engineering jobs sri lanka, marketing jobs sri lanka, finance jobs sri lanka, kandy jobs, galle jobs, negombo jobs, dailyjobs, daily jobs sri lanka",
+  authors: [{ name: "DailyJobs Sri Lanka", url: "https://www.dailyjobs.com" }],
   creator: "DailyJobs Sri Lanka",
   publisher: "DailyJobs Sri Lanka",
+  category: "Jobs & Employment",
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -27,31 +33,36 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "en_LK",
     url: "https://www.dailyjobs.com",
     siteName: "DailyJobs Sri Lanka",
-    title: "DailyJobs Sri Lanka – Find Your Dream Job Today | Sri Lanka Job Vacancies",
+    title: "DailyJobs Sri Lanka | Job Vacancies 2026 – Find Jobs in Colombo & Sri Lanka",
     description:
-      "Browse thousands of job vacancies updated daily. Find your dream job on DailyJobs Sri Lanka – the fastest growing job portal in Sri Lanka.",
+      "Browse hundreds of job vacancies in Sri Lanka updated daily. Find your next full-time, part-time, remote or internship opportunity. Apply directly to top Sri Lankan companies.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "DailyJobs – Find Your Dream Job",
+        alt: "DailyJobs Sri Lanka – Find Your Dream Job",
+        type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DailyJobs Sri Lanka – Find Your Dream Job Today",
+    site: "@dailyjobslk",
+    creator: "@dailyjobslk",
+    title: "DailyJobs Sri Lanka | Latest Job Vacancies 2026",
     description:
-      "Browse thousands of job vacancies updated daily. Find your dream job on DailyJobs Sri Lanka.",
+      "Find the latest jobs in Sri Lanka. Hundreds of vacancies updated daily — apply directly to top companies.",
     images: ["/og-image.jpg"],
-    creator: "@dailyjobs",
   },
   alternates: {
     canonical: "https://www.dailyjobs.com",
+    languages: {
+      "en-LK": "https://www.dailyjobs.com",
+    },
   },
   verification: {
     google: "your-google-site-verification-code",
@@ -64,27 +75,50 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en-LK" className={inter.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="canonical" href="https://www.dailyjobs.com" />
+        <meta name="geo.region" content="LK" />
+        <meta name="geo.placename" content="Sri Lanka" />
+        <meta name="geo.position" content="7.8731;80.7718" />
+        <meta name="ICBM" content="7.8731, 80.7718" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "DailyJobs Sri Lanka",
-              url: "https://www.dailyjobs.com",
-              description:
-                "Find the latest job vacancies and employment opportunities in Sri Lanka on DailyJobs.",
-              potentialAction: {
-                "@type": "SearchAction",
-                target:
-                  "https://www.dailyjobs.com/search?q={search_term_string}",
-                "query-input": "required name=search_term_string",
+            __html: JSON.stringify([
+              {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                name: "DailyJobs Sri Lanka",
+                alternateName: "DailyJobs LK",
+                url: "https://www.dailyjobs.com",
+                description:
+                  "Find the latest job vacancies and employment opportunities in Sri Lanka.",
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target: "https://www.dailyjobs.com/?q={search_term_string}",
+                  "query-input": "required name=search_term_string",
+                },
               },
-            }),
+              {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "DailyJobs Sri Lanka",
+                url: "https://www.dailyjobs.com",
+                logo: "https://www.dailyjobs.com/favicon.ico",
+                contactPoint: {
+                  "@type": "ContactPoint",
+                  contactType: "customer support",
+                  areaServed: "LK",
+                  availableLanguage: "English",
+                },
+                sameAs: [
+                  "https://www.facebook.com/dailyjobslk",
+                  "https://www.linkedin.com/company/dailyjobslk",
+                ],
+              },
+            ]),
           }}
         />
       </head>
