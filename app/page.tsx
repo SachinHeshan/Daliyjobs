@@ -69,13 +69,13 @@ export default function Home() {
   const handleApply = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedJob || !applicantCV) return;
-    
+
     setIsSubmitting(true);
-    
+
     // Simulate network request delay to just show the success message
     setTimeout(() => {
       setSubmitSuccess(true);
-      
+
       // Reset form fields
       setApplicantName("");
       setApplicantEmail("");
@@ -83,7 +83,7 @@ export default function Home() {
       setApplicantCV(null);
       setApplicantCoverLetter("");
       setEmailCopy(false);
-      
+
       setIsSubmitting(false);
     }, 800);
   };
@@ -184,7 +184,7 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main style={{ flex: 1, maxWidth: 1280, width: "100%", margin: "0 auto", padding: "60px 24px" }} id="jobs">
-        
+
         {/* Title and Direct Apply Badge */}
         <div style={{ textAlign: "center", marginBottom: 40 }} className="animate-fadeinup">
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(21,145,220,0.1)", border: "1px solid rgba(21,145,220,0.3)", borderRadius: 50, padding: "6px 16px", color: "#1591DC", fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
@@ -586,7 +586,7 @@ export default function Home() {
               {/* Job Description and Optional Post Image */}
               <div style={{ marginTop: 28 }}>
                 <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 8 }}>JOB DESCRIPTION</span>
-                
+
                 {/* Description content */}
                 <div style={{ color: "#a3a3a3", fontSize: 15, lineHeight: 1.6, marginBottom: 20 }} dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
                 <p style={{ color: "#22c55e", fontSize: 14, fontWeight: 600, marginTop: -10, marginBottom: 20 }}>
@@ -613,17 +613,17 @@ export default function Home() {
               ) : showApplyForm ? (
                 <form onSubmit={handleApply} style={{ marginTop: 32, paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
                   <h4 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>Apply for this position</h4>
-                  
+
                   <div className="job-modal-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                     <input type="text" placeholder="Full Name" required value={applicantName} onChange={e => setApplicantName(e.target.value)} style={filterInputStyle} />
                     <input type="email" placeholder="Email Address" required value={applicantEmail} onChange={e => setApplicantEmail(e.target.value)} style={filterInputStyle} />
                   </div>
-                  
+
                   <input type="tel" placeholder="Phone Number" required value={applicantPhone} onChange={e => setApplicantPhone(e.target.value)} style={filterInputStyle} />
-                  
+
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     <label style={{ fontSize: 14, color: "#a3a3a3", fontWeight: 500 }}>Upload CV (PDF/DOCX) *</label>
-                    <input type="file" accept=".pdf,.doc,.docx" required onChange={e => setApplicantCV(e.target.files?.[0] || null)} style={{...filterInputStyle, padding: "10px"}} />
+                    <input type="file" accept=".pdf,.doc,.docx" required onChange={e => setApplicantCV(e.target.files?.[0] || null)} style={{ ...filterInputStyle, padding: "10px" }} />
                   </div>
 
                   <textarea placeholder="Cover Letter (Optional)" value={applicantCoverLetter} onChange={e => setApplicantCoverLetter(e.target.value)} style={{ ...filterInputStyle, minHeight: 100, resize: "vertical" }} />
@@ -684,6 +684,41 @@ export default function Home() {
             </div>
           </div>
           <style>{`
+            .job-description-content {
+              text-align: justify !important;
+              text-justify: inter-word;
+              word-break: break-word;
+              width: 100%;
+            }
+            .job-description-content * {
+              text-align: justify !important;
+              max-width: 100%;
+              white-space: normal !important;
+            }
+            .job-description-content p, 
+            .job-description-content div, 
+            .job-description-content span {
+              margin-left: 0 !important;
+              margin-right: 0 !important;
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+            }
+            .job-description-content p {
+              margin-top: 0;
+              margin-bottom: 12px;
+            }
+            .job-description-content ul, .job-description-content ol {
+              margin-top: 0;
+              margin-bottom: 12px;
+              padding-left: 20px !important;
+              margin-left: 0 !important;
+            }
+            .job-description-content h1, .job-description-content h2, .job-description-content h3, .job-description-content h4 {
+              margin-top: 16px;
+              margin-bottom: 8px;
+              color: #e2e8f0;
+              text-align: left !important;
+            }
             .job-modal-company-link:hover {
               text-decoration: underline !important;
             }
