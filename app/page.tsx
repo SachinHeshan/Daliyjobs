@@ -686,38 +686,67 @@ export default function Home() {
           <style>{`
             .job-description-content {
               text-align: justify !important;
-              text-justify: inter-word;
               word-break: break-word;
               width: 100%;
+              line-height: 1.8 !important;
+              color: #a3a3a3;
+              font-size: 15px;
             }
             .job-description-content * {
-              text-align: justify !important;
               max-width: 100%;
-              white-space: normal !important;
-            }
-            .job-description-content p, 
-            .job-description-content div, 
-            .job-description-content span {
-              margin-left: 0 !important;
-              margin-right: 0 !important;
-              padding-left: 0 !important;
-              padding-right: 0 !important;
             }
             .job-description-content p {
-              margin-top: 0;
-              margin-bottom: 12px;
+              margin-top: 0 !important;
+              margin-bottom: 1.5em !important;
+              text-align: justify !important;
+              line-height: 1.8 !important;
             }
-            .job-description-content ul, .job-description-content ol {
-              margin-top: 0;
-              margin-bottom: 12px;
-              padding-left: 20px !important;
-              margin-left: 0 !important;
+            .job-description-content ul {
+              list-style-type: disc !important;
+              margin-top: 0.5em !important;
+              margin-bottom: 1.5em !important;
+              padding-left: 24px !important;
+              display: block !important;
             }
-            .job-description-content h1, .job-description-content h2, .job-description-content h3, .job-description-content h4 {
-              margin-top: 16px;
-              margin-bottom: 8px;
-              color: #e2e8f0;
+            .job-description-content ol {
+              list-style-type: decimal !important;
+              margin-top: 0.5em !important;
+              margin-bottom: 1.5em !important;
+              padding-left: 24px !important;
+              display: block !important;
+            }
+            .job-description-content li {
+              margin-bottom: 0.5em !important;
+              display: list-item !important; /* Forces bullets to render! */
+              list-style: inherit !important;
+              text-align: justify !important;
+              line-height: 1.8 !important;
+            }
+            .job-description-content h1, 
+            .job-description-content h2, 
+            .job-description-content h3, 
+            .job-description-content h4 {
+              color: #fff !important;
+              font-weight: 700 !important;
+              margin-top: 1.8em !important;
+              margin-bottom: 0.8em !important;
               text-align: left !important;
+              display: block !important;
+            }
+            .job-description-content h1 { font-size: 1.8em !important; }
+            .job-description-content h2 { font-size: 1.5em !important; }
+            .job-description-content h3 { font-size: 1.3em !important; }
+            .job-description-content h4 { font-size: 1.1em !important; }
+            
+            /* If the dashboard editor outputs bold text inside a paragraph as a header */
+            .job-description-content p strong {
+              color: #fff !important;
+              font-weight: 700 !important;
+              display: inline-block;
+              margin-top: 0.8em !important;
+            }
+            .job-description-content br {
+              display: inline !important;
             }
             .job-modal-company-link:hover {
               text-decoration: underline !important;
