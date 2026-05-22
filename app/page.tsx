@@ -556,7 +556,7 @@ export default function Home() {
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(21, 145, 220, 0.1)", display: "flex", alignItems: "center", justify: "center", flexShrink: 0, padding: 10 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(21, 145, 220, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 10 }}>
                   <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#1591DC" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
                 <div>
@@ -566,7 +566,7 @@ export default function Home() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(16, 185, 129, 0.1)", display: "flex", alignItems: "center", justify: "center", flexShrink: 0, padding: 10 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(16, 185, 129, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 10 }}>
                   <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
                 <div>
@@ -576,7 +576,7 @@ export default function Home() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(245, 158, 11, 0.1)", display: "flex", alignItems: "center", justify: "center", flexShrink: 0, padding: 10 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(245, 158, 11, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 10 }}>
                   <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
                 <div>
