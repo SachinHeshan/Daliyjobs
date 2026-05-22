@@ -6,6 +6,7 @@ import Banner from "@/components/Banner";
 import JobCard from "@/components/JobCard";
 import Footer from "@/components/Footer";
 import BottomNavbar from "@/components/BottomNavbar";
+import MobileJobDetails from "@/components/MobileJobDetails";
 import { Job, mockJobs as fallbackJobs } from "@/data/jobs";
 import { db, storage } from "@/lib/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
@@ -25,6 +26,14 @@ export default function Home() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [banners, setBanners] = useState<any[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -398,8 +407,34 @@ export default function Home() {
       {/* Mobile Sticky Navigation */}
       <BottomNavbar />
 
-      {/* Job Details Modal */}
-      {selectedJob && (
+      {/* Mobile Job Details — full-screen page for phones */}
+      {selectedJob && isMobile && (
+        <MobileJobDetails
+          job={selectedJob}
+          onClose={() => { setSelectedJob(null); setShowApplyForm(false); setSubmitSuccess(false); }}
+          onApply={() => setShowApplyForm(true)}
+          showApplyForm={showApplyForm}
+          setShowApplyForm={setShowApplyForm}
+          applicantName={applicantName}
+          setApplicantName={setApplicantName}
+          applicantEmail={applicantEmail}
+          setApplicantEmail={setApplicantEmail}
+          applicantPhone={applicantPhone}
+          setApplicantPhone={setApplicantPhone}
+          applicantCV={applicantCV}
+          setApplicantCV={setApplicantCV}
+          applicantCoverLetter={applicantCoverLetter}
+          setApplicantCoverLetter={setApplicantCoverLetter}
+          emailCopy={emailCopy}
+          setEmailCopy={setEmailCopy}
+          isSubmitting={isSubmitting}
+          submitSuccess={submitSuccess}
+          handleApply={handleApply}
+        />
+      )}
+
+      {/* Job Details Modal — desktop overlay */}
+      {selectedJob && !isMobile && (
         <div
           style={{
             position: "fixed",
