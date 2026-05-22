@@ -77,7 +77,7 @@ export default function RootLayout({
   return (
     <html lang="en-LK" className={inter.variable}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
         <link rel="canonical" href="https://www.dailyjobs.com" />
         <meta name="geo.region" content="LK" />
         <meta name="geo.placename" content="Sri Lanka" />
@@ -106,7 +106,7 @@ export default function RootLayout({
                 "@type": "Organization",
                 name: "DailyJobs Sri Lanka",
                 url: "https://www.dailyjobs.com",
-                logo: "https://www.dailyjobs.com/favicon.ico",
+                logo: "https://www.dailyjobs.com/icon.png",
                 contactPoint: {
                   "@type": "ContactPoint",
                   contactType: "customer support",

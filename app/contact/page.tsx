@@ -72,7 +72,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 style={{ color: "#1591DC", fontSize: 14, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>Phone Inquiry</h3>
-                  <p style={{ color: "#fff", fontWeight: 600 }}>+94 (11) 234-5678</p>
+                  <p style={{ color: "#fff", fontWeight: 600 }}>0711010575</p>
                 </div>
                 <div>
                   <h3 style={{ color: "#1591DC", fontSize: 14, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>Colombo HQ</h3>

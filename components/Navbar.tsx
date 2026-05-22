@@ -49,18 +49,29 @@ export default function Navbar() {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div
               style={{
-                width: 38,
-                height: 38,
-                borderRadius: 10,
-                background: "linear-gradient(135deg,#1591DC,#ffffff)",
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #448cfb 0%, #c3dcfd 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                overflow: "hidden",
-                boxShadow: "0 0 20px rgba(21,145,220,0.5)",
+                boxShadow: "0 0 20px rgba(68,140,251,0.5)",
+                flexShrink: 0,
               }}
             >
-              <img src="/favicon.ico" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <span
+                style={{
+                  color: "#000",
+                  fontSize: 26,
+                  fontWeight: 900,
+                  fontFamily: "Arial, sans-serif",
+                  transform: "rotate(-15deg)",
+                  marginLeft: "2px", // centers the tilted D visually
+                }}
+              >
+                D
+              </span>
             </div>
             <span
               style={{

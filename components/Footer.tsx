@@ -116,7 +116,7 @@ export default function Footer() {
             📧 support@dailyjobs.com
           </p>
           <p style={{ color: "#fff", fontWeight: 600 }}>
-            📞 +94 (11) 234-5678
+            📞 0711010575
           </p>
         </div>
       </div>
