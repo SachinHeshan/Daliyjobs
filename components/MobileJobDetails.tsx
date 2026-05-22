@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Job } from "@/data/jobs";
 
 interface MobileJobDetailsProps {
@@ -47,6 +47,15 @@ export default function MobileJobDetails({
   handleApply,
 }: MobileJobDetailsProps) {
   const [saved, setSaved] = useState(false);
+  const applyRef = useRef<HTMLDivElement>(null);
+
+  const handleApplyNowClick = () => {
+    setShowApplyForm(true);
+    // Scroll to apply section after state update
+    setTimeout(() => {
+      applyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  };
 
   return (
     <>
@@ -64,74 +73,109 @@ export default function MobileJobDetails({
           animation: "mobileSlideUp 0.32s cubic-bezier(0.34, 1.4, 0.64, 1) both",
         }}
       >
-        {/* ── Top Bar ── */}
+        {/* ── Home Page Navigation Bar ── */}
         <div
           style={{
             position: "sticky",
             top: 0,
             zIndex: 10,
-            background: "rgba(8,12,18,0.94)",
+            background: "rgba(8,12,18,0.96)",
             backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
             borderBottom: "1px solid rgba(255,255,255,0.06)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "14px 18px",
+            padding: "0 18px",
           }}
         >
-          {/* Back button */}
-          <button
-            onClick={onClose}
+          {/* Breadcrumb row */}
+          <div
             style={{
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 12,
-              padding: "8px 14px",
-              color: "#94a3b8",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 6,
-              fontFamily: "inherit",
+              padding: "10px 0 6px",
+              borderBottom: "1px solid rgba(255,255,255,0.04)",
             }}
           >
-            ← Back
-          </button>
+            <button
+              onClick={onClose}
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                color: "#1591DC",
+                fontSize: 13,
+                fontWeight: 600,
+                fontFamily: "inherit",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1591DC" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              Home
+            </button>
+            <span style={{ color: "#334155", fontSize: 13 }}>›</span>
+            <span
+              style={{
+                fontSize: 13,
+                color: "#94a3b8",
+                fontWeight: 500,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: "calc(100vw - 160px)",
+              }}
+            >
+              Job Details
+            </span>
+          </div>
 
-          <span
+          {/* Title + Save row */}
+          <div
             style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: "#64748b",
-              letterSpacing: 0.5,
-              textTransform: "uppercase",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+              padding: "10px 0",
             }}
           >
-            Job Details
-          </span>
-
-          {/* Save button */}
-          <button
-            onClick={() => setSaved(!saved)}
-            aria-label={saved ? "Unsave job" : "Save job"}
-            style={{
-              background: saved
-                ? "rgba(245,158,11,0.12)"
-                : "rgba(255,255,255,0.06)",
-              border: `1px solid ${saved ? "rgba(245,158,11,0.4)" : "rgba(255,255,255,0.1)"}`,
-              borderRadius: 12,
-              padding: "8px 14px",
-              color: saved ? "#f59e0b" : "#64748b",
-              fontSize: 18,
-              cursor: "pointer",
-              transition: "all 0.2s",
-              lineHeight: 1,
-            }}
-          >
-            {saved ? "★" : "☆"}
-          </button>
+            <span
+              style={{
+                fontSize: 14,
+                fontWeight: 700,
+                color: "#e2e8f0",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                flex: 1,
+              }}
+            >
+              {job.title}
+            </span>
+            <button
+              onClick={() => setSaved(!saved)}
+              aria-label={saved ? "Unsave job" : "Save job"}
+              style={{
+                background: saved ? "rgba(245,158,11,0.12)" : "rgba(255,255,255,0.06)",
+                border: `1px solid ${saved ? "rgba(245,158,11,0.4)" : "rgba(255,255,255,0.1)"}`,
+                borderRadius: 10,
+                padding: "6px 12px",
+                color: saved ? "#f59e0b" : "#64748b",
+                fontSize: 17,
+                cursor: "pointer",
+                transition: "all 0.2s",
+                lineHeight: 1,
+                flexShrink: 0,
+              }}
+            >
+              {saved ? "★" : "☆"}
+            </button>
+          </div>
         </div>
 
         {/* ── Hero Section ── */}
@@ -375,6 +419,7 @@ export default function MobileJobDetails({
           )}
 
           {/* ── Apply Form (inline, not modal) ── */}
+          <div ref={applyRef} />
           {showApplyForm && (
             <div style={{ marginTop: 32, paddingTop: 28, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
               {submitSuccess ? (
@@ -561,7 +606,7 @@ export default function MobileJobDetails({
               Close
             </button>
             <button
-              onClick={() => setShowApplyForm(true)}
+              onClick={handleApplyNowClick}
               style={{
                 flex: 2,
                 background: "linear-gradient(135deg, #1591DC, #0d74b5)",
