@@ -424,31 +424,97 @@ export default function Home() {
           <div
             className="job-modal-container"
             style={{
-              background: "#0d0d0d",
-              border: "1px solid rgba(21, 145, 220, 0.3)",
+              background: "rgba(13, 13, 13, 0.96)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(21, 145, 220, 0.2)",
               borderRadius: 24,
               width: "100%",
-              maxWidth: 680,
-              maxHeight: "90vh",
+              maxWidth: 820,
+              maxHeight: "88vh",
               overflowY: "auto",
               overflowX: "hidden",
-              boxShadow: "0 25px 50px -12px rgba(21, 145, 220, 0.3)",
+              boxShadow: "0 25px 60px -15px rgba(0, 0, 0, 0.9)",
               position: "relative",
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header Banner */}
+            {/* Elegant Header with Logo & Close Button */}
             <div
-              className="job-modal-header"
+              className="job-modal-header-premium"
               style={{
-                height: 120,
-                background: "linear-gradient(135deg, rgba(21, 145, 220, 0.2) 0%, rgba(0,0,0,0) 100%)",
-                position: "relative",
-                padding: "24px 32px",
+                padding: "32px 32px 24px 32px",
+                borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
                 display: "flex",
-                alignItems: "flex-end",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                gap: 20,
+                position: "relative",
               }}
             >
+              <div style={{ display: "flex", gap: 20, alignItems: "center", flex: 1 }}>
+                {/* Logo */}
+                <div
+                  className="job-modal-logo-premium"
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 16,
+                    background: "linear-gradient(135deg, rgba(21, 145, 220, 0.2), rgba(255, 255, 255, 0.05))",
+                    border: "1px solid rgba(21, 145, 220, 0.3)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 28,
+                    fontWeight: 800,
+                    color: "#fff",
+                    overflow: "hidden",
+                    flexShrink: 0,
+                  }}
+                >
+                  {selectedJob.logo && (selectedJob.logo.startsWith("http") || selectedJob.logo.startsWith("/")) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={selectedJob.logo} alt={selectedJob.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  ) : selectedJob.website ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={`https://www.google.com/s2/favicons?domain=${selectedJob.website}&sz=128`} alt={selectedJob.company} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 10, background: "#fff", borderRadius: 16 }} />
+                  ) : (
+                    selectedJob.company.charAt(0).toUpperCase()
+                  )}
+                </div>
+
+                {/* Title and Company */}
+                <div style={{ flex: 1 }}>
+                  <h3 style={{ fontSize: 24, fontWeight: 800, color: "#fff", marginBottom: 6, lineHeight: 1.2 }}>{selectedJob.title}</h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    {selectedJob.website ? (
+                      <a
+                        href={selectedJob.website.startsWith('http') ? selectedJob.website : `https://${selectedJob.website}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="job-modal-company-link-premium"
+                        style={{ fontSize: 15, color: "#1591DC", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}
+                        title={`Visit ${selectedJob.company} website`}
+                      >
+                        {selectedJob.company} <span style={{ fontSize: "0.8em" }}>↗</span>
+                      </a>
+                    ) : (
+                      <span style={{ fontSize: 15, color: "#1591DC", fontWeight: 700 }}>{selectedJob.company}</span>
+                    )}
+
+                    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                      {selectedJob.urgent && (
+                        <span style={{ background: "linear-gradient(135deg, #ef4444, #f97316)", color: "#fff", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 50, letterSpacing: 0.5 }}>
+                          URGENT
+                        </span>
+                      )}
+                      <span style={{ background: "rgba(21, 145, 220, 0.12)", border: "1px solid rgba(21, 145, 220, 0.25)", color: "#1591DC", fontSize: 11, fontWeight: 600, padding: "2px 10px", borderRadius: 50 }}>
+                        {selectedJob.type}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Close Button */}
               <button
                 onClick={() => {
@@ -457,123 +523,86 @@ export default function Home() {
                   setSubmitSuccess(false);
                 }}
                 style={{
-                  position: "absolute",
-                  top: 20,
-                  right: 20,
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: "50%",
-                  width: 36,
-                  height: 36,
+                  width: 38,
+                  height: 38,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "#a3a3a3",
-                  fontSize: 18,
+                  color: "#94a3b8",
+                  fontSize: 16,
                   cursor: "pointer",
-                  transition: "all 0.2s",
+                  transition: "all 0.2s ease",
+                  flexShrink: 0,
                 }}
+                className="job-modal-close-btn"
               >
                 ✕
               </button>
+            </div>
 
-              {/* Logo Badge */}
-              <div
-                className="job-modal-logo"
-                style={{
-                  width: 72,
-                  height: 72,
-                  borderRadius: 16,
-                  background: "linear-gradient(135deg, rgba(21, 145, 220, 0.4), rgba(255, 255, 255, 0.15))",
-                  border: "1px solid rgba(21, 145, 220, 0.4)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 32,
-                  fontWeight: 800,
-                  color: "#fff",
-                  position: "absolute",
-                  bottom: -24,
-                  left: 32,
-                  boxShadow: "0 10px 20px rgba(0,0,0,0.5)",
-                  overflow: "hidden",
-                }}
-              >
-                {selectedJob.logo && (selectedJob.logo.startsWith("http") || selectedJob.logo.startsWith("/")) ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={selectedJob.logo} alt={selectedJob.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                ) : selectedJob.website ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={`https://www.google.com/s2/favicons?domain=${selectedJob.website}&sz=128`} alt={selectedJob.company} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 12, background: "#fff", borderRadius: 16 }} />
-                ) : (
-                  selectedJob.company.charAt(0).toUpperCase()
-                )}
+            {/* Quick Facts Grid Bar */}
+            <div 
+              className="job-modal-facts-bar"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: 16,
+                padding: "20px 32px",
+                background: "rgba(255, 255, 255, 0.01)",
+                borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(21, 145, 220, 0.1)", display: "flex", alignItems: "center", justify: "center", flexShrink: 0, padding: 10 }}>
+                  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#1591DC" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div>
+                  <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.5 }}>LOCATION</span>
+                  <span style={{ fontSize: 13, color: "#e2e8f0", fontWeight: 600 }}>{selectedJob.location}</span>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(16, 185, 129, 0.1)", display: "flex", alignItems: "center", justify: "center", flexShrink: 0, padding: 10 }}>
+                  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div>
+                  <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.5 }}>SALARY RANGE</span>
+                  <span style={{ fontSize: 13, color: "#e2e8f0", fontWeight: 600 }}>{selectedJob.salary}</span>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(245, 158, 11, 0.1)", display: "flex", alignItems: "center", justify: "center", flexShrink: 0, padding: 10 }}>
+                  <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div>
+                  <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.5 }}>POSTED DATE</span>
+                  <span style={{ fontSize: 13, color: "#e2e8f0", fontWeight: 600 }}>{selectedJob.postedDate}</span>
+                </div>
               </div>
             </div>
 
-            {/* Modal Content */}
-            <div className="job-modal-body" style={{ padding: "48px 32px 32px 32px" }}>
-              {/* Job Title and Badges */}
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
-                <div>
-                  <h3 style={{ fontSize: 24, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{selectedJob.title}</h3>
-                  {selectedJob.website ? (
-                    <a
-                      href={selectedJob.website.startsWith('http') ? selectedJob.website : `https://${selectedJob.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="job-modal-company-link"
-                      style={{ fontSize: 16, color: "#1591DC", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}
-                      title={`Visit ${selectedJob.company} website`}
-                    >
-                      {selectedJob.company} <span style={{ fontSize: "0.8em" }}>↗</span>
-                    </a>
-                  ) : (
-                    <span style={{ fontSize: 16, color: "#1591DC", fontWeight: 700 }}>{selectedJob.company}</span>
-                  )}
-                </div>
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  {selectedJob.urgent && (
-                    <span style={{ background: "linear-gradient(135deg, #ef4444, #f97316)", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 50, letterSpacing: 0.5 }}>
-                      URGENT
-                    </span>
-                  )}
-                  <span style={{ background: "rgba(21, 145, 220, 0.15)", border: "1px solid rgba(21, 145, 220, 0.3)", color: "#1591DC", fontSize: 12, fontWeight: 600, padding: "4px 12px", borderRadius: 50 }}>
-                    {selectedJob.type}
-                  </span>
-                </div>
-              </div>
-
-              {/* Job Metadata Grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginTop: 24, padding: 16, background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.05)" }}>
-                <div>
-                  <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 2 }}>📍 LOCATION</span>
-                  <span style={{ fontSize: 14, color: "#fff", fontWeight: 500 }}>{selectedJob.location}</span>
-                </div>
-                <div>
-                  <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 2 }}>💰 SALARY RANGE</span>
-                  <span style={{ fontSize: 14, color: "#fff", fontWeight: 500 }}>{selectedJob.salary}</span>
-                </div>
-                <div>
-                  <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 2 }}>⏰ POSTED DATE</span>
-                  <span style={{ fontSize: 14, color: "#fff", fontWeight: 500 }}>{selectedJob.postedDate}</span>
-                </div>
-              </div>
-
-              {/* Tags */}
-              <div style={{ marginTop: 24 }}>
-                <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 8 }}>REQUIRED SKILLS</span>
+            {/* Modal Body Content */}
+            <div className="job-modal-body-premium" style={{ padding: 32 }}>
+              
+              {/* Required Skills (Tags) */}
+              <div>
+                <span style={{ display: "block", fontSize: 11, color: "#64748b", fontWeight: 700, letterSpacing: 1, marginBottom: 8 }}>REQUIRED SKILLS</span>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   {selectedJob.tags.map((tag) => (
                     <span
                       key={tag}
                       style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.08)",
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.06)",
                         color: "#94a3b8",
                         fontSize: 12,
                         fontWeight: 500,
-                        padding: "6px 14px",
+                        padding: "5px 12px",
                         borderRadius: 50,
                       }}
                     >
@@ -583,112 +612,170 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Job Description and Optional Post Image */}
+              {/* Job Description */}
               <div style={{ marginTop: 28 }}>
-                <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 8 }}>JOB DESCRIPTION</span>
+                <span style={{ display: "block", fontSize: 11, color: "#64748b", fontWeight: 700, letterSpacing: 1, marginBottom: 12 }}>JOB DESCRIPTION</span>
 
-                {/* Description content */}
-                <div style={{ color: "#a3a3a3", fontSize: 15, lineHeight: 1.6, marginBottom: 20 }} dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
-                <p style={{ color: "#22c55e", fontSize: 14, fontWeight: 600, marginTop: -10, marginBottom: 20 }}>
-                  It would be better if you apply using your own email address.
+                <div className="job-description-content" dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
+                
+                <p style={{ color: "#22c55e", fontSize: 13.5, fontWeight: 600, marginTop: 24, marginBottom: 12 }}>
+                  💡 It would be better if you apply using your own email address.
                 </p>
 
+                {/* Optional Post Image */}
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {(selectedJob as any).postImage && (
-                  <div style={{ marginTop: 16, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
+                  <div style={{ marginTop: 24, borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }} className="job-modal-post-img-container">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={(selectedJob as any).postImage} alt="Job Post" style={{ width: "100%", height: "auto", display: "block" }} />
+                    <img src={(selectedJob as any).postImage} alt="Job Post Details" style={{ width: "100%", height: "auto", display: "block" }} />
                   </div>
                 )}
               </div>
 
-              {/* Call to Action Footer / Application Form */}
-              {submitSuccess ? (
-                <div style={{ marginTop: 32, padding: 24, background: "rgba(34, 197, 94, 0.1)", border: "1px solid rgba(34, 197, 94, 0.3)", borderRadius: 16, textAlign: "center" }}>
-                  <span style={{ fontSize: 48, display: "block", marginBottom: 16 }}>✅</span>
-                  <h4 style={{ color: "#22c55e", fontSize: 20, fontWeight: 700, marginBottom: 8 }}>Application Submitted Successfully!</h4>
-                  <p style={{ color: "#a3a3a3", fontSize: 15, marginBottom: 24 }}>Your application has been successfully sent to the employer.</p>
-                  <button onClick={() => { setShowApplyForm(false); setSubmitSuccess(false); setSelectedJob(null); }} style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, cursor: "pointer", width: "100%" }}>Close</button>
+              {/* Application Form Block */}
+              {showApplyForm && (
+                <div className="job-modal-form-section" style={{ marginTop: 32, paddingTop: 32, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                  {submitSuccess ? (
+                    <div style={{ padding: 32, background: "rgba(34, 197, 94, 0.08)", border: "1px solid rgba(34, 197, 94, 0.2)", borderRadius: 20, textAlign: "center" }}>
+                      <span style={{ fontSize: 44, display: "block", marginBottom: 12 }}>✅</span>
+                      <h4 style={{ color: "#22c55e", fontSize: 19, fontWeight: 700, marginBottom: 6 }}>Application Submitted Successfully!</h4>
+                      <p style={{ color: "#a3a3a3", fontSize: 14.5, marginBottom: 20 }}>Your candidates details have been delivered directly to the employer.</p>
+                      <button onClick={() => { setShowApplyForm(false); setSubmitSuccess(false); setSelectedJob(null); }} style={{ background: "#22c55e", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, cursor: "pointer", width: "100%", transition: "all 0.2s" }} className="form-action-btn">Close Details</button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleApply} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+                      <h4 style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 2 }}>Apply for this position</h4>
+
+                      <div className="job-modal-form-grid-premium" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                        <input type="text" placeholder="Full Name" required value={applicantName} onChange={e => setApplicantName(e.target.value)} style={{ ...filterInputStyle, fontSize: 16 }} />
+                        <input type="email" placeholder="Email Address" required value={applicantEmail} onChange={e => setApplicantEmail(e.target.value)} style={{ ...filterInputStyle, fontSize: 16 }} />
+                      </div>
+
+                      <input type="tel" placeholder="Phone Number" required value={applicantPhone} onChange={e => setApplicantPhone(e.target.value)} style={{ ...filterInputStyle, fontSize: 16 }} />
+
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        <label style={{ fontSize: 13.5, color: "#94a3b8", fontWeight: 600 }}>Upload CV (PDF/DOCX) *</label>
+                        <input type="file" accept=".pdf,.doc,.docx" required onChange={e => setApplicantCV(e.target.files?.[0] || null)} style={{ ...filterInputStyle, padding: "12px", fontSize: 14 }} />
+                      </div>
+
+                      <textarea placeholder="Cover Letter (Optional)" value={applicantCoverLetter} onChange={e => setApplicantCoverLetter(e.target.value)} style={{ ...filterInputStyle, minHeight: 110, resize: "vertical", fontSize: 16 }} />
+
+                      <label style={{ display: "flex", alignItems: "center", gap: 10, color: "#a3a3a3", fontSize: 13.5, cursor: "pointer", userSelect: "none" }}>
+                        <input type="checkbox" checked={emailCopy} onChange={e => setEmailCopy(e.target.checked)} style={{ width: 16, height: 16, cursor: "pointer" }} />
+                        Email me a copy of my job application (optional)
+                      </label>
+
+                      <div className="job-modal-buttons-premium" style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 12 }}>
+                        <button type="button" onClick={() => setShowApplyForm(false)} disabled={isSubmitting} style={{ background: "rgba(255,255,255,0.04)", color: "#fff", border: "none", borderRadius: 12, padding: "12px 24px", fontWeight: 600, cursor: "pointer" }} className="form-cancel-btn">
+                          Cancel
+                        </button>
+                        <button type="submit" disabled={isSubmitting} style={{ background: "linear-gradient(135deg, #1591DC, #0d74b5)", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, cursor: isSubmitting ? "not-allowed" : "pointer", opacity: isSubmitting ? 0.7 : 1 }} className="form-submit-btn">
+                          {isSubmitting ? "Submitting..." : "Submit Application"}
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </div>
-              ) : showApplyForm ? (
-                <form onSubmit={handleApply} style={{ marginTop: 32, paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-                  <h4 style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>Apply for this position</h4>
+              )}
 
-                  <div className="job-modal-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                    <input type="text" placeholder="Full Name" required value={applicantName} onChange={e => setApplicantName(e.target.value)} style={filterInputStyle} />
-                    <input type="email" placeholder="Email Address" required value={applicantEmail} onChange={e => setApplicantEmail(e.target.value)} style={filterInputStyle} />
-                  </div>
-
-                  <input type="tel" placeholder="Phone Number" required value={applicantPhone} onChange={e => setApplicantPhone(e.target.value)} style={filterInputStyle} />
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <label style={{ fontSize: 14, color: "#a3a3a3", fontWeight: 500 }}>Upload CV (PDF/DOCX) *</label>
-                    <input type="file" accept=".pdf,.doc,.docx" required onChange={e => setApplicantCV(e.target.files?.[0] || null)} style={{ ...filterInputStyle, padding: "10px" }} />
-                  </div>
-
-                  <textarea placeholder="Cover Letter (Optional)" value={applicantCoverLetter} onChange={e => setApplicantCoverLetter(e.target.value)} style={{ ...filterInputStyle, minHeight: 100, resize: "vertical" }} />
-
-                  <label style={{ display: "flex", alignItems: "center", gap: 8, color: "#a3a3a3", fontSize: 14, cursor: "pointer" }}>
-                    <input type="checkbox" checked={emailCopy} onChange={e => setEmailCopy(e.target.checked)} />
-                    Email me a copy of my job application (optional)
-                  </label>
-
-                  <div className="job-modal-buttons" style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 16 }}>
-                    <button type="button" onClick={() => setShowApplyForm(false)} disabled={isSubmitting} style={{ background: "rgba(255,255,255,0.05)", color: "#fff", border: "none", borderRadius: 12, padding: "12px 24px", fontWeight: 600, cursor: "pointer" }}>
-                      Cancel
-                    </button>
-                    <button type="submit" disabled={isSubmitting} style={{ background: "linear-gradient(135deg, #1591DC, #0d74b5)", color: "#fff", border: "none", borderRadius: 12, padding: "12px 32px", fontWeight: 700, cursor: isSubmitting ? "not-allowed" : "pointer", opacity: isSubmitting ? 0.7 : 1 }}>
-                      {isSubmitting ? "Submitting..." : "Submit Application"}
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <div className="job-modal-buttons" style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 32, paddingTop: 20 }}>
+              {/* Static CTA Bar (PC and Mobile standard layout when form not visible) */}
+              {!showApplyForm && !submitSuccess && (
+                <div 
+                  className="job-modal-actions-bar"
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 12,
+                    marginTop: 32,
+                    paddingTop: 24,
+                    borderTop: "1px solid rgba(255, 255, 255, 0.05)"
+                  }}
+                >
                   <button
                     type="button"
-                    onClick={() => {
-                      setSelectedJob(null);
-                      setShowApplyForm(false);
-                      setSubmitSuccess(false);
-                    }}
+                    onClick={() => setSelectedJob(null)}
                     style={{
-                      background: "rgba(255,255,255,0.05)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#fff",
-                      border: "none",
                       borderRadius: 12,
                       padding: "12px 24px",
                       fontWeight: 600,
                       cursor: "pointer",
+                      transition: "all 0.2s",
                     }}
+                    className="job-modal-standard-close"
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowApplyForm(true)}
+                    className="job-modal-action-apply-btn"
                     style={{
                       background: "linear-gradient(135deg, #1591DC, #0d74b5)",
                       color: "#fff",
                       border: "none",
                       borderRadius: 12,
-                      padding: "12px 32px",
+                      padding: "12px 36px",
                       fontWeight: 700,
                       cursor: "pointer",
-                      boxShadow: "0 4px 15px rgba(21, 145, 220, 0.4)",
+                      boxShadow: "0 4px 15px rgba(21, 145, 220, 0.3)",
+                      transition: "all 0.2s ease",
                     }}
                   >
-                    Apply to Job
+                    Apply Now
                   </button>
                 </div>
               )}
             </div>
+
+            {/* Mobile-Only Sticky Apply Bar (Peaks at mobile UX!) */}
+            {!showApplyForm && !submitSuccess && (
+              <div className="job-modal-mobile-sticky-bar">
+                <button
+                  type="button"
+                  onClick={() => setShowApplyForm(true)}
+                  style={{
+                    background: "linear-gradient(135deg, #1591DC, #0d74b5)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 12,
+                    padding: "14px 24px",
+                    fontWeight: 700,
+                    width: "100%",
+                    fontSize: 15,
+                    boxShadow: "0 4px 20px rgba(21, 145, 220, 0.4)",
+                  }}
+                >
+                  Apply Now
+                </button>
+              </div>
+            )}
+
           </div>
           <style>{`
+            .job-modal-close-btn:hover {
+              background: rgba(255,255,255,0.08) !important;
+              color: #fff !important;
+              transform: rotate(90deg);
+            }
+            .job-modal-company-link-premium:hover {
+              text-decoration: underline !important;
+            }
+            .job-modal-action-apply-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 20px rgba(21, 145, 220, 0.5) !important;
+            }
+            .job-modal-standard-close:hover {
+              background: rgba(255,255,255,0.08) !important;
+            }
             .job-description-content {
-              text-align: justify !important;
-              word-break: break-word;
+              text-align: left !important;
+              word-break: normal !important;
+              overflow-wrap: break-word !important;
               width: 100%;
-              line-height: 1.8 !important;
+              line-height: 1.6 !important;
               color: #a3a3a3;
               font-size: 15px;
             }
@@ -697,30 +784,30 @@ export default function Home() {
             }
             .job-description-content p {
               margin-top: 0 !important;
-              margin-bottom: 1.5em !important;
-              text-align: justify !important;
-              line-height: 1.8 !important;
+              margin-bottom: 1em !important;
+              text-align: left !important;
+              line-height: 1.6 !important;
             }
             .job-description-content ul {
               list-style-type: disc !important;
               margin-top: 0.5em !important;
-              margin-bottom: 1.5em !important;
+              margin-bottom: 1em !important;
               padding-left: 24px !important;
               display: block !important;
             }
             .job-description-content ol {
               list-style-type: decimal !important;
               margin-top: 0.5em !important;
-              margin-bottom: 1.5em !important;
+              margin-bottom: 1em !important;
               padding-left: 24px !important;
               display: block !important;
             }
             .job-description-content li {
               margin-bottom: 0.5em !important;
-              display: list-item !important; /* Forces bullets to render! */
+              display: list-item !important;
               list-style: inherit !important;
-              text-align: justify !important;
-              line-height: 1.8 !important;
+              text-align: left !important;
+              line-height: 1.6 !important;
             }
             .job-description-content h1, 
             .job-description-content h2, 
@@ -733,12 +820,11 @@ export default function Home() {
               text-align: left !important;
               display: block !important;
             }
-            .job-description-content h1 { font-size: 1.8em !important; }
-            .job-description-content h2 { font-size: 1.5em !important; }
-            .job-description-content h3 { font-size: 1.3em !important; }
+            .job-description-content h1 { font-size: 1.7em !important; }
+            .job-description-content h2 { font-size: 1.4em !important; }
+            .job-description-content h3 { font-size: 1.25em !important; }
             .job-description-content h4 { font-size: 1.1em !important; }
             
-            /* If the dashboard editor outputs bold text inside a paragraph as a header */
             .job-description-content p strong {
               color: #fff !important;
               font-weight: 700 !important;
@@ -748,8 +834,39 @@ export default function Home() {
             .job-description-content br {
               display: inline !important;
             }
-            .job-modal-company-link:hover {
-              text-decoration: underline !important;
+            .job-modal-mobile-sticky-bar {
+              display: none;
+            }
+            @media (max-width: 768px) {
+              .job-modal-facts-bar {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+                padding: 16px 24px !important;
+              }
+              .job-modal-header-premium {
+                padding: 24px 24px 16px 24px !important;
+              }
+              .job-modal-body-premium {
+                padding: 24px 24px 80px 24px !important; /* Extra bottom padding for sticky bar */
+              }
+              .job-modal-mobile-sticky-bar {
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(13, 13, 13, 0.9);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(255,255,255,0.06);
+                padding: 12px 24px;
+                z-index: 100;
+              }
+              .job-modal-actions-bar {
+                display: none !important; /* Hide standard buttons in favor of sticky footer */
+              }
+              .job-modal-form-grid-premium {
+                grid-template-columns: 1fr !important;
+              }
             }
             @media (max-width: 600px) {
               .filter-top-row { flex-direction: column; }
