@@ -84,9 +84,23 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
               {job.title}
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span className="jobcard-company" style={{ color: "#94a3b8", fontWeight: 600 }}>
-                {job.company}
-              </span>
+              {job.website ? (
+                <a
+                  href={job.website.startsWith('http') ? job.website : `https://${job.website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="jobcard-company jobcard-company-link"
+                  style={{ color: "#1591DC", fontWeight: 600, textDecoration: "none", display: "inline-block" }}
+                  onClick={(e) => e.stopPropagation()}
+                  title={`Visit ${job.company} website`}
+                >
+                  {job.company} <span style={{ fontSize: "0.8em" }}>↗</span>
+                </a>
+              ) : (
+                <span className="jobcard-company" style={{ color: "#94a3b8", fontWeight: 600 }}>
+                  {job.company}
+                </span>
+              )}
               <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                 <span style={infoStyle}>{job.location}</span>
                 <span style={{ color: "#475569" }}>•</span>
@@ -233,6 +247,9 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         }
         .jobcard-company {
           font-size: 16px;
+        }
+        .jobcard-company-link:hover {
+          text-decoration: underline !important;
         }
         .show-on-mobile {
           display: none !important;

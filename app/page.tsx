@@ -517,7 +517,20 @@ export default function Home() {
               <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
                 <div>
                   <h3 style={{ fontSize: 24, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{selectedJob.title}</h3>
-                  <span style={{ fontSize: 16, color: "#1591DC", fontWeight: 700 }}>{selectedJob.company}</span>
+                  {selectedJob.website ? (
+                    <a
+                      href={selectedJob.website.startsWith('http') ? selectedJob.website : `https://${selectedJob.website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="job-modal-company-link"
+                      style={{ fontSize: 16, color: "#1591DC", fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}
+                      title={`Visit ${selectedJob.company} website`}
+                    >
+                      {selectedJob.company} <span style={{ fontSize: "0.8em" }}>↗</span>
+                    </a>
+                  ) : (
+                    <span style={{ fontSize: 16, color: "#1591DC", fontWeight: 700 }}>{selectedJob.company}</span>
+                  )}
                 </div>
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                   {selectedJob.urgent && (
@@ -671,6 +684,9 @@ export default function Home() {
             </div>
           </div>
           <style>{`
+            .job-modal-company-link:hover {
+              text-decoration: underline !important;
+            }
             @media (max-width: 600px) {
               .filter-top-row { flex-direction: column; }
               .filter-input-wrap, .filter-select-wrap { min-width: 100% !important; }
