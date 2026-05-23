@@ -48,6 +48,7 @@ export default function JobClientPage({ job }: { job: Job }) {
         </div>
 
         <div
+          className="job-client-container"
           style={{
             background: "rgba(13, 13, 13, 0.96)",
             border: "1px solid rgba(21, 145, 220, 0.2)",
@@ -59,6 +60,7 @@ export default function JobClientPage({ job }: { job: Job }) {
         >
           {/* Header */}
           <div
+            className="job-client-header"
             style={{
               padding: "32px",
               borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
@@ -125,6 +127,7 @@ export default function JobClientPage({ job }: { job: Job }) {
 
           {/* Quick Facts */}
           <div
+            className="job-client-facts"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
@@ -164,7 +167,7 @@ export default function JobClientPage({ job }: { job: Job }) {
           </div>
 
           {/* Body Content */}
-          <div style={{ padding: 32 }}>
+          <div className="job-client-body" style={{ padding: 32 }}>
             <div>
               <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 700, letterSpacing: 1, marginBottom: 12 }}>REQUIRED SKILLS</span>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -205,7 +208,7 @@ export default function JobClientPage({ job }: { job: Job }) {
                 ) : (
                   <form onSubmit={handleApply} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                     <h4 style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 4 }}>Apply for this position</h4>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <div className="form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                       <input type="text" placeholder="Full Name" required value={applicantName} onChange={e => setApplicantName(e.target.value)} className="form-input" />
                       <input type="email" placeholder="Email Address" required value={applicantEmail} onChange={e => setApplicantEmail(e.target.value)} className="form-input" />
                     </div>
@@ -219,7 +222,7 @@ export default function JobClientPage({ job }: { job: Job }) {
                       <input type="checkbox" checked={emailCopy} onChange={e => setEmailCopy(e.target.checked)} style={{ width: 18, height: 18, cursor: "pointer" }} />
                       Email me a copy of my job application (optional)
                     </label>
-                    <div style={{ display: "flex", justifyContent: "flex-end", gap: 16, marginTop: 16 }}>
+                    <div className="form-buttons" style={{ display: "flex", justifyContent: "flex-end", gap: 16, marginTop: 16 }}>
                       <button type="button" onClick={() => setShowApplyForm(false)} disabled={isSubmitting} style={{ background: "rgba(255,255,255,0.04)", color: "#fff", border: "none", borderRadius: 12, padding: "14px 28px", fontWeight: 600, cursor: "pointer", fontSize: 15 }}>
                         Cancel
                       </button>
@@ -233,7 +236,7 @@ export default function JobClientPage({ job }: { job: Job }) {
             )}
 
             {!showApplyForm && !submitSuccess && (
-              <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 40, paddingTop: 32, borderTop: "1px solid rgba(255, 255, 255, 0.05)" }}>
+              <div className="form-buttons" style={{ display: "flex", justifyContent: "flex-end", marginTop: 40, paddingTop: 32, borderTop: "1px solid rgba(255, 255, 255, 0.05)" }}>
                 <button onClick={() => setShowApplyForm(true)} style={{ background: "linear-gradient(135deg, #1591DC, #0d74b5)", color: "#fff", border: "none", borderRadius: 12, padding: "14px 40px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 15px rgba(21, 145, 220, 0.3)", fontSize: 16 }}>
                   Apply Now
                 </button>
@@ -262,6 +265,16 @@ export default function JobClientPage({ job }: { job: Job }) {
         .form-input:focus {
           border-color: #1591DC;
         }
+        .job-description-content {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          word-break: break-word;
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+        .job-description-content * {
+          max-width: 100%;
+        }
         .job-description-content h1, .job-description-content h2, .job-description-content h3, .job-description-content h4 {
           color: #fff; margin-top: 24px; margin-bottom: 12px; font-weight: 700;
         }
@@ -273,6 +286,36 @@ export default function JobClientPage({ job }: { job: Job }) {
         }
         .job-description-content li {
           margin-bottom: 8px;
+        }
+        @media (max-width: 768px) {
+          .job-client-container {
+            border-radius: 0px !important;
+            border-left: none !important;
+            border-right: none !important;
+          }
+          .job-client-header {
+            padding: 24px 16px !important;
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 16px !important;
+          }
+          .job-client-body {
+            padding: 24px 16px !important;
+          }
+          .job-client-facts {
+            grid-template-columns: 1fr !important;
+            padding: 16px !important;
+          }
+          .form-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .form-buttons {
+            flex-direction: column;
+            width: 100%;
+          }
+          .form-buttons button {
+            width: 100%;
+          }
         }
       `}</style>
     </div>
