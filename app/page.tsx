@@ -101,6 +101,19 @@ export default function Home() {
         job.type === selectedType;
 
       return matchSearch && matchLocation && matchType;
+    }).sort((a, b) => {
+      // Primary sort: Date (Newest first)
+      const dateA = new Date(a.postedDate || 0).getTime();
+      const dateB = new Date(b.postedDate || 0).getTime();
+      
+      if (dateA !== dateB) {
+        return dateB - dateA;
+      }
+      
+      // Secondary sort: Urgent jobs at the top for that specific day
+      const urgentA = a.urgent ? 1 : 0;
+      const urgentB = b.urgent ? 1 : 0;
+      return urgentB - urgentA;
     });
   }, [searchQuery, selectedLocation, selectedType, jobs]);
 
