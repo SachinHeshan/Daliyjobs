@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import { slugify } from "@/lib/slugify";
 import { useState, useEffect } from "react";
 import { Job } from "@/data/jobs";
 
@@ -7,11 +9,14 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
   const [hovered, setHovered] = useState(false);
 
   return (
-    <article
-      className="jobcard-article"
-      onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <Link 
+      href={`/job/${slugify(job.title)}`}
+      style={{ textDecoration: "none", color: "inherit", display: "block" }}
+    >
+      <article
+        className="jobcard-article"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       style={{
         display: "flex",
         justifyContent: "space-between",
@@ -326,6 +331,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         }
       `}</style>
     </article>
+    </Link>
   );
 }
 
