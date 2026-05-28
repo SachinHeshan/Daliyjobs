@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Have questions, support requests, or advertising ideas? Contact DailyJobs Sri Lanka. Send us a message directly and our team will reply within 24 hours.",
   keywords: "contact dailyjobs sri lanka, support, hire, post job vacancy sri lanka, support contact details",
   alternates: {
-    canonical: "https://www.dailyjobs.com/contact",
+    canonical: "https://dailysjobs.com/contact",
   },
 };
 
@@ -28,13 +28,13 @@ export default function ContactPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.dailyjobs.com",
+                "item": "https://dailysjobs.com",
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Contact",
-                "item": "https://www.dailyjobs.com/contact",
+                "item": "https://dailysjobs.com/contact",
               },
             ],
           }),

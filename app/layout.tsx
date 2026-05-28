@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "Find the latest job vacancies in Sri Lanka 2026. Browse hundreds of jobs in Colombo, Kandy, Galle & remote. Full-time, part-time, internships & contract jobs updated daily. Apply directly to top Sri Lankan companies like Dialog, Sysco LABS, WSO2, 99x and more.",
   keywords:
     "jobs in sri lanka 2026, job vacancies sri lanka, jobs colombo, job search sri lanka, vacancies in colombo, dialog vacancies, sysco labs careers, wso2 jobs, 99x careers, careers sri lanka, employment sri lanka, internships sri lanka, remote jobs sri lanka, full time jobs sri lanka, part time jobs sri lanka, it jobs sri lanka, engineering jobs sri lanka, marketing jobs sri lanka, finance jobs sri lanka, kandy jobs, galle jobs, negombo jobs, dailyjobs, daily jobs sri lanka",
-  authors: [{ name: "DailyJobs Sri Lanka", url: "https://www.dailyjobs.com" }],
+  authors: [{ name: "DailyJobs Sri Lanka", url: "https://dailysjobs.com" }],
   creator: "DailyJobs Sri Lanka",
   publisher: "DailyJobs Sri Lanka",
   category: "Jobs & Employment",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_LK",
-    url: "https://www.dailyjobs.com",
+    url: "https://dailysjobs.com",
     siteName: "DailyJobs Sri Lanka",
     title: "DailyJobs Sri Lanka | Job Vacancies 2026 – Find Jobs in Colombo & Sri Lanka",
     description:
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
   alternates: {
-    canonical: "https://www.dailyjobs.com",
+    canonical: "https://dailysjobs.com",
     languages: {
-      "en-LK": "https://www.dailyjobs.com",
+      "en-LK": "https://dailysjobs.com",
     },
   },
   verification: {
@@ -78,7 +78,7 @@ export default function RootLayout({
     <html lang="en-LK" className={inter.variable}>
       <head>
         <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
-        <link rel="canonical" href="https://www.dailyjobs.com" />
+        <link rel="canonical" href="https://dailysjobs.com" />
         <meta name="geo.region" content="LK" />
         <meta name="geo.placename" content="Sri Lanka" />
         <meta name="geo.position" content="7.8731;80.7718" />
@@ -92,12 +92,12 @@ export default function RootLayout({
                 "@type": "WebSite",
                 name: "DailyJobs Sri Lanka",
                 alternateName: "DailyJobs LK",
-                url: "https://www.dailyjobs.com",
+                url: "https://dailysjobs.com",
                 description:
                   "Find the latest job vacancies and employment opportunities in Sri Lanka.",
                 potentialAction: {
                   "@type": "SearchAction",
-                  target: "https://www.dailyjobs.com/?q={search_term_string}",
+                  target: "https://dailysjobs.com/?q={search_term_string}",
                   "query-input": "required name=search_term_string",
                 },
               },
@@ -105,8 +105,8 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "Organization",
                 name: "DailyJobs Sri Lanka",
-                url: "https://www.dailyjobs.com",
-                logo: "https://www.dailyjobs.com/icon.png",
+                url: "https://dailysjobs.com",
+                logo: "https://dailysjobs.com/icon.png",
                 contactPoint: {
                   "@type": "ContactPoint",
                   contactType: "customer support",

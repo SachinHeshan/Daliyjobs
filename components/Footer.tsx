@@ -113,7 +113,7 @@ export default function Footer() {
             Have questions or want to post a job? Reach out directly.
           </p>
           <p style={{ color: "#fff", fontWeight: 600, marginBottom: 8 }}>
-            📧 support@dailyjobs.com
+            📧 support@dailysjobs.com
           </p>
           <p style={{ color: "#fff", fontWeight: 600 }}>
             📞 0711010575

@@ -141,7 +141,7 @@ export default function Home() {
               "hiringOrganization": {
                 "@type": "Organization",
                 "name": job.company,
-                "sameAs": "https://www.dailyjobs.com",
+                "sameAs": "https://dailysjobs.com",
               },
               "jobLocation": {
                 "@type": "Place",

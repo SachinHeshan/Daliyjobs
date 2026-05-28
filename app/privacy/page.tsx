@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
         <section style={{ marginBottom: 30 }}>
           <h2 style={{ color: "#fff", fontSize: 24, fontWeight: 700, marginBottom: 15 }}>1. Introduction</h2>
           <p>
-            Welcome to DailyJobs Sri Lanka. This Privacy Policy explains how we collect, use, and share information about you when you visit our website (www.dailyjobs.com).
+            Welcome to DailyJobs Sri Lanka. This Privacy Policy explains how we collect, use, and share information about you when you visit our website (www.dailysjobs.com).
           </p>
         </section>
 

@@ -18,7 +18,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/dashboard/"],
       },
     ],
-    sitemap: "https://www.dailyjobs.com/sitemap.xml",
-    host: "https://www.dailyjobs.com",
+    sitemap: "https://dailysjobs.com/sitemap.xml",
+    host: "https://dailysjobs.com",
   };
 }

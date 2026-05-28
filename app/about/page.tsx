@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Learn how DailyJobs Sri Lanka connects candidates directly to Sri Lankan hiring managers without sign-up, registration, or login barriers. Free job search dashboard.",
   keywords: "about dailyjobs, about dailyjobs sri lanka, no login job site, free job search platform, job search engine, direct hire",
   alternates: {
-    canonical: "https://www.dailyjobs.com/about",
+    canonical: "https://dailysjobs.com/about",
   },
 };
 
@@ -28,13 +28,13 @@ export default function AboutPage() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.dailyjobs.com",
+                "item": "https://dailysjobs.com",
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "About",
-                "item": "https://www.dailyjobs.com/about",
+                "item": "https://dailysjobs.com/about",
               },
             ],
           }),

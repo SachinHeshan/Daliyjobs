@@ -36,11 +36,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${job.title} at ${job.company}`,
       description: `Apply for ${job.title} at ${job.company} on DailyJobs.`,
-      url: `https://daliyjobs.vercel.app/job/${slug}`,
+      url: `https://dailysjobs.com/job/${slug}`,
       siteName: "DailyJobs",
       images: [
         {
-          url: job.logo || "https://daliyjobs.vercel.app/icon.png",
+          url: job.logo || "https://dailysjobs.com/icon.png",
           width: 800,
           height: 600,
         },
@@ -92,7 +92,7 @@ export default async function JobPage({ params }: Props) {
             "hiringOrganization": {
               "@type": "Organization",
               "name": job.company,
-              "sameAs": job.website ? (job.website.startsWith("http") ? job.website : `https://${job.website}`) : "https://www.dailyjobs.com",
+              "sameAs": job.website ? (job.website.startsWith("http") ? job.website : `https://${job.website}`) : "https://dailysjobs.com",
               "logo": job.logo
             },
             "jobLocation": {
