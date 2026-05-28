@@ -13,6 +13,7 @@ export interface Job {
   urgent?: boolean;
   website?: string;
   applyEmail?: string;
+  createdAt?: number;
 }
 
 export const mockJobs: Job[] = [

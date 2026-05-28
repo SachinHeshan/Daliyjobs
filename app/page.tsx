@@ -102,12 +102,12 @@ export default function Home() {
 
       return matchSearch && matchLocation && matchType;
     }).sort((a, b) => {
-      // Primary sort: Date (Newest first)
-      const dateA = new Date(a.postedDate || 0).getTime();
-      const dateB = new Date(b.postedDate || 0).getTime();
+      // Primary sort: Exact creation time (if available) or Date (Newest first)
+      const timeA = a.createdAt || new Date(a.postedDate || 0).getTime();
+      const timeB = b.createdAt || new Date(b.postedDate || 0).getTime();
       
-      if (dateA !== dateB) {
-        return dateB - dateA;
+      if (timeA !== timeB) {
+        return timeB - timeA;
       }
       
       // Secondary sort: Urgent jobs at the top for that specific day

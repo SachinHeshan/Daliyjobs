@@ -35,6 +35,7 @@ interface Job {
   urgent?: boolean;
   website?: string;
   applyEmail?: string;
+  createdAt?: number;
 }
 
 export default function ManageJobs() {
@@ -130,6 +131,7 @@ export default function ManageJobs() {
       website: editingJob.website || "",
       applyEmail: editingJob.applyEmail || "",
       postImage: (editingJob as any).postImage || "",
+      createdAt: editingJob.createdAt || Date.now(),
     };
 
     setLoading(true);
@@ -181,6 +183,7 @@ export default function ManageJobs() {
       salary: "", logo: "", tags: [], description: "", website: "", applyEmail: "",
       postedDate: new Date().toISOString().split("T")[0],
       postedTime: "Just now", urgent: false,
+      createdAt: Date.now(),
     });
     setTagsInput("");
     setCurrency("LKR");
