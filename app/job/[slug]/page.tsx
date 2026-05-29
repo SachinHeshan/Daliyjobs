@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "DailyJobs",
       images: [
         {
-          url: job.logo || "https://dailysjobs.com/icon.png",
+          url: job.logo || "https://dailysjobs.com/logo.png",
           width: 800,
           height: 600,
         },

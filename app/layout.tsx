@@ -6,6 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dailysjobs.com"),
   title: {
     default: "DailyJobs Sri Lanka | Job Vacancies 2026 – Find Jobs in Colombo & Sri Lanka",
     template: "%s | DailyJobs Sri Lanka",
@@ -77,7 +78,6 @@ export default function RootLayout({
   return (
     <html lang="en-LK" className={inter.variable}>
       <head>
-        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
         <link rel="canonical" href="https://dailysjobs.com" />
         <meta name="geo.region" content="LK" />
         <meta name="geo.placename" content="Sri Lanka" />
@@ -111,7 +111,7 @@ export default function RootLayout({
                 "@type": "Organization",
                 name: "DailyJobs Sri Lanka",
                 url: "https://dailysjobs.com",
-                logo: "https://dailysjobs.com/icon.png",
+                logo: "https://dailysjobs.com/logo.png",
                 contactPoint: {
                   "@type": "ContactPoint",
                   contactType: "customer support",

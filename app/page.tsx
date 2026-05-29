@@ -105,11 +105,11 @@ export default function Home() {
       // Primary sort: Exact creation time (if available) or Date (Newest first)
       const timeA = a.createdAt || new Date(a.postedDate || 0).getTime();
       const timeB = b.createdAt || new Date(b.postedDate || 0).getTime();
-      
+
       if (timeA !== timeB) {
         return timeB - timeA;
       }
-      
+
       // Secondary sort: Urgent jobs at the top for that specific day
       const urgentA = a.urgent ? 1 : 0;
       const urgentB = b.urgent ? 1 : 0;

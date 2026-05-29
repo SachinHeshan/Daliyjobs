@@ -182,7 +182,7 @@ export default function JobClientPage({ job }: { job: Job }) {
             <div style={{ marginTop: 32 }}>
               <span style={{ display: "block", fontSize: 12, color: "#64748b", fontWeight: 700, letterSpacing: 1, marginBottom: 16 }}>JOB DESCRIPTION</span>
               <div className="job-description-content" dangerouslySetInnerHTML={{ __html: job.description }} style={{ color: "#a3a3a3", fontSize: 16, lineHeight: 1.7 }} />
-              
+
               <p style={{ color: "#22c55e", fontSize: 14, fontWeight: 600, marginTop: 24, marginBottom: 12 }}>
                 💡 It would be better if you apply using your own email address.
               </p>
