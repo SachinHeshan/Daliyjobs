@@ -83,6 +83,11 @@ export default function RootLayout({
         <meta name="geo.placename" content="Sri Lanka" />
         <meta name="geo.position" content="7.8731;80.7718" />
         <meta name="ICBM" content="7.8731, 80.7718" />
+        <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137070437132737"
+          crossOrigin="anonymous"
+        ></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
