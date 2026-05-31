@@ -36,6 +36,7 @@ interface Job {
   website?: string;
   applyEmail?: string;
   createdAt?: number;
+  category?: string;
 }
 
 export default function ManageJobs() {
@@ -130,6 +131,7 @@ export default function ManageJobs() {
       urgent: editingJob.urgent || false,
       website: editingJob.website || "",
       applyEmail: editingJob.applyEmail || "",
+      category: editingJob.category || "",
       postImage: (editingJob as any).postImage || "",
       createdAt: editingJob.createdAt || Date.now(),
     };
@@ -181,6 +183,7 @@ export default function ManageJobs() {
     setEditingJob({
       title: "", company: "", location: "", type: "Full-time",
       salary: "", logo: "", tags: [], description: "", website: "", applyEmail: "",
+      category: "",
       postedDate: new Date().toISOString().split("T")[0],
       postedTime: "Just now", urgent: false,
       createdAt: Date.now(),
@@ -221,14 +224,27 @@ export default function ManageJobs() {
               </select>
               <input placeholder="Salary Amount" required value={salaryAmount} onChange={e => setSalaryAmount(e.target.value)} style={inputStyle} />
             </div>
-            <select required value={editingJob.type || "Full-time"} onChange={e => setEditingJob({...editingJob, type: e.target.value})} style={inputStyle}>
-              <option value="Full-time" style={{ background: "#0a0a0a" }}>Full-time</option>
-              <option value="Part-time" style={{ background: "#0a0a0a" }}>Part-time</option>
-              <option value="Internship" style={{ background: "#0a0a0a" }}>Internship</option>
-              <option value="Remote" style={{ background: "#0a0a0a" }}>Remote</option>
-              <option value="Hybrid" style={{ background: "#0a0a0a" }}>Hybrid</option>
-              <option value="Onsite" style={{ background: "#0a0a0a" }}>Onsite</option>
-            </select>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <select required value={editingJob.type || "Full-time"} onChange={e => setEditingJob({...editingJob, type: e.target.value})} style={inputStyle}>
+                <option value="Full-time" style={{ background: "#0a0a0a" }}>Full-time</option>
+                <option value="Part-time" style={{ background: "#0a0a0a" }}>Part-time</option>
+                <option value="Internship" style={{ background: "#0a0a0a" }}>Internship</option>
+                <option value="Remote" style={{ background: "#0a0a0a" }}>Remote</option>
+                <option value="Hybrid" style={{ background: "#0a0a0a" }}>Hybrid</option>
+                <option value="Onsite" style={{ background: "#0a0a0a" }}>Onsite</option>
+              </select>
+              <select required value={editingJob.category || ""} onChange={e => setEditingJob({...editingJob, category: e.target.value})} style={inputStyle}>
+                <option value="" disabled style={{ background: "#0a0a0a" }}>Select a Category</option>
+                <option value="Technology & IT" style={{ background: "#0a0a0a" }}>Technology & IT</option>
+                <option value="Marketing & Design" style={{ background: "#0a0a0a" }}>Marketing & Design</option>
+                <option value="Sales & Business" style={{ background: "#0a0a0a" }}>Sales & Business</option>
+                <option value="Finance & Accountancy" style={{ background: "#0a0a0a" }}>Finance & Accountancy</option>
+                <option value="Customer Service" style={{ background: "#0a0a0a" }}>Customer Service</option>
+                <option value="Education & Healthcare" style={{ background: "#0a0a0a" }}>Education & Healthcare</option>
+                <option value="Engineering & Construction" style={{ background: "#0a0a0a" }}>Engineering & Construction</option>
+                <option value="Other" style={{ background: "#0a0a0a" }}>Other</option>
+              </select>
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <input placeholder="Company Website Link (for Favicon logo)" value={editingJob.website || ""} onChange={e => setEditingJob({...editingJob, website: e.target.value})} style={inputStyle} />
               <input placeholder="Company Logo URL (Optional)" value={editingJob.logo || ""} onChange={e => setEditingJob({...editingJob, logo: e.target.value})} style={inputStyle} />

@@ -90,17 +90,18 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
               </h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 {job.website ? (
-                  <a
-                    href={job.website.startsWith('http') ? job.website : `https://${job.website}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <span
                     className="jobcard-company jobcard-company-link"
-                    style={{ color: "#1591DC", fontWeight: 600, textDecoration: "none", display: "inline-block" }}
-                    onClick={(e) => e.stopPropagation()}
+                    style={{ color: "#1591DC", fontWeight: 600, textDecoration: "none", display: "inline-block", cursor: "pointer" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(job.website?.startsWith('http') ? job.website : `https://${job.website}`, '_blank', 'noopener,noreferrer');
+                    }}
                     title={`Visit ${job.company} website`}
                   >
                     {job.company} <span style={{ fontSize: "0.8em" }}>↗</span>
-                  </a>
+                  </span>
                 ) : (
                   <span className="jobcard-company" style={{ color: "#94a3b8", fontWeight: 600 }}>
                     {job.company}
@@ -170,12 +171,15 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         <div className="jobcard-actions-wrap" style={{ display: "flex", flexShrink: 0, gap: 16 }}>
           <div className="jobcard-date-save" style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <span style={infoStyle}>{job.postedDate}</span>
-            <button
+            <div
               onClick={(e) => {
                 e.stopPropagation();
+                e.preventDefault();
                 setSaved(!saved);
               }}
               aria-label={saved ? "Unsave job" : "Save job"}
+              role="button"
+              tabIndex={0}
               style={{
                 background: "none",
                 border: "none",
@@ -186,10 +190,11 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 transform: saved ? "scale(1.2)" : "scale(1)",
                 padding: 4,
                 lineHeight: 1,
+                display: "inline-block",
               }}
             >
               {saved ? "★" : "☆"}
-            </button>
+            </div>
           </div>
 
           <div className="jobcard-btn-wrap" style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -210,7 +215,7 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 URGENT
               </span>
             )}
-            <button
+            <div
               className="jobcard-button"
               style={{
                 borderRadius: 8,
@@ -224,11 +229,12 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
                 transition: "all 0.3s",
                 letterSpacing: 0.3,
                 fontFamily: "inherit",
-                textAlign: "center"
+                textAlign: "center",
+                display: "inline-block",
               }}
             >
               {hovered ? "Apply Now →" : "View Details"}
-            </button>
+            </div>
           </div>
         </div>
         <style>{`
