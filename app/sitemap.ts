@@ -62,5 +62,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
+  // Extract unique locations and categories
+  const locations = new Set<string>();
+  const categories = new Set<string>();
+
+  uniqueJobs.forEach((job) => {
+    if (job.location) {
+      if (job.location.toLowerCase().includes("remote")) locations.add("Remote");
+      else if (job.location.toLowerCase().includes("colombo")) locations.add("Colombo");
+      else if (job.location.toLowerCase().includes("kandy")) locations.add("Kandy");
+      else if (job.location.toLowerCase().includes("galle")) locations.add("Galle");
+      else if (job.location.toLowerCase().includes("negombo")) locations.add("Negombo");
+      else if (job.location.toLowerCase().includes("jaffna")) locations.add("Jaffna");
+      else if (job.location.toLowerCase().includes("gampaha")) locations.add("Gampaha");
+      else locations.add(job.location);
+    }
+    if (job.category) {
+      categories.add(job.category);
+    }
+  });
+
+  locations.forEach((loc) => {
+    routes.push({
+      url: `${baseUrl}/jobs-in-${slugify(loc)}`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    });
+  });
+
+  categories.forEach((cat) => {
+    routes.push({
+      url: `${baseUrl}/job-category/${slugify(cat)}-jobs`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    });
+  });
+
   return routes;
 }

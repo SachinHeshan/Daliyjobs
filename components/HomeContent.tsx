@@ -11,7 +11,7 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Job, mockJobs as fallbackJobs } from "@/data/jobs";
-export default function HomeContent({ categorySlug }: { categorySlug?: string }) {
+export default function HomeContent({ categorySlug, locationSlug }: { categorySlug?: string, locationSlug?: string }) {
   const router = useRouter();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -104,6 +104,22 @@ export default function HomeContent({ categorySlug }: { categorySlug?: string })
     });
     return ["All Locations", ...Array.from(new Set(locs))];
   }, [jobs]);
+
+  useEffect(() => {
+    if (locationSlug && locations.length > 1) {
+      const matched = locations.find(l => slugify(l) === locationSlug || l.toLowerCase() === locationSlug.replace(/-/g, ' ').toLowerCase());
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (matched) {
+        setSelectedLocation(matched);
+      } else {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setSelectedLocation(locationSlug.charAt(0).toUpperCase() + locationSlug.slice(1).replace(/-/g, ' '));
+      }
+    } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedLocation(locationSlug ? locationSlug.charAt(0).toUpperCase() + locationSlug.slice(1).replace(/-/g, ' ') : "");
+    }
+  }, [locationSlug, locations]);
 
   // Filter jobs based on search terms, location, and type
   const filteredJobs = useMemo(() => {
@@ -249,7 +265,14 @@ export default function HomeContent({ categorySlug }: { categorySlug?: string })
             <div className="filter-select-wrap" style={{ flex: 1, minWidth: 180 }}>
               <select
                 value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (!val || val === "All Locations") {
+                    router.push("/", { scroll: false });
+                  } else {
+                    router.push(`/jobs-in-${slugify(val)}`, { scroll: false });
+                  }
+                }}
                 style={filterSelectStyle}
               >
                 {locations.map((loc) => (
