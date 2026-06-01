@@ -11,7 +11,7 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Job, mockJobs as fallbackJobs } from "@/data/jobs";
-export default function HomeContent({ categorySlug, locationSlug }: { categorySlug?: string, locationSlug?: string }) {
+export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { categorySlug?: string, locationSlug?: string, typeSlug?: string }) {
   const router = useRouter();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,7 +67,13 @@ export default function HomeContent({ categorySlug, locationSlug }: { categorySl
     setCurrentPage(1);
   }, [searchQuery, selectedLocation, selectedType, selectedCategory]);
 
-
+  useEffect(() => {
+    if (typeSlug) {
+      setSelectedType(typeSlug);
+    } else {
+      setSelectedType("All");
+    }
+  }, [typeSlug]);
 
   // Extract unique categories from jobs
   const categories = useMemo(() => {
@@ -290,7 +296,14 @@ export default function HomeContent({ categorySlug, locationSlug }: { categorySl
             {["All", "Full-time", "Part-time", "Contract", "Internship", "Remote"].map((type) => (
               <button
                 key={type}
-                onClick={() => setSelectedType(type)}
+                onClick={() => {
+                  if (type === "All") {
+                    router.push("/", { scroll: false });
+                  } else {
+                    const slug = type.replace("-", "").toLowerCase();
+                    router.push(`/${slug}`, { scroll: false });
+                  }
+                }}
                 style={{
                   border: "none",
                   outline: "none",

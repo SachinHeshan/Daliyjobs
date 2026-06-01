@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { slugify } from "@/lib/slugify";
 
 export default function Footer() {
   return (
@@ -71,11 +72,29 @@ export default function Footer() {
             {["Technology & IT", "Marketing & Design", "Sales & Business", "Finance & Accountancy", "Customer Service"].map((cat) => (
               <li key={cat}>
                 <Link
-                  href="/#jobs"
+                  href={`/job-category/${slugify(cat)}-jobs`}
                   className="footer-link"
                   style={{ color: "#64748b", textDecoration: "none", transition: "color 0.2s" }}
                 >
                   {cat}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Job Types Column */}
+        <div>
+          <h4 style={{ color: "#fff", fontWeight: 700, fontSize: 16, marginBottom: 20 }}>Job Types</h4>
+          <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            {["Full-time", "Part-time", "Contract", "Internship", "Remote"].map((type) => (
+              <li key={type}>
+                <Link
+                  href={`/${type.replace("-", "").toLowerCase()}`}
+                  className="footer-link"
+                  style={{ color: "#64748b", textDecoration: "none", transition: "color 0.2s" }}
+                >
+                  {type} Jobs
                 </Link>
               </li>
             ))}
