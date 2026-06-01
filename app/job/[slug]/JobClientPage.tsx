@@ -287,6 +287,15 @@ export default function JobClientPage({ job }: { job: Job }) {
         .job-description-content li {
           margin-bottom: 8px;
         }
+        /* Quill-specific format styles */
+        .job-description-content .ql-align-center { text-align: center; }
+        .job-description-content .ql-align-right { text-align: right; }
+        .job-description-content .ql-align-justify { text-align: justify; }
+        .job-description-content .ql-size-small { font-size: 0.75em; }
+        .job-description-content .ql-size-large { font-size: 1.5em; }
+        .job-description-content .ql-size-huge { font-size: 2.5em; }
+        .job-description-content blockquote { border-left: 4px solid #1591DC; padding-left: 16px; margin-left: 0; color: #94a3b8; font-style: italic; }
+        .job-description-content pre.ql-syntax { background-color: #000; color: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); overflow-x: auto; }
         @media (max-width: 768px) {
           .job-client-container {
             border-radius: 0px !important;

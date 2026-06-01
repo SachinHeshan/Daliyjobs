@@ -39,7 +39,7 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
         // Fetch jobs from Firestore
         const snap = await getDocs(collection(db, "job-vacancies"));
         if (!snap.empty) {
-          const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job));
+          const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job)).filter(job => job.approved !== false);
           setJobs(list);
         } else {
           // Only use mock data as last resort fallback

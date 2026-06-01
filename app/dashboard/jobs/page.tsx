@@ -134,6 +134,7 @@ export default function ManageJobs() {
       category: editingJob.category || "",
       postImage: (editingJob as any).postImage || "",
       createdAt: editingJob.createdAt || Date.now(),
+      approved: true,
     };
 
     setLoading(true);

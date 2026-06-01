@@ -48,6 +48,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard/jobs" style={{ ...navItemStyle, background: pathname === "/dashboard/jobs" ? "rgba(21,145,220,0.1)" : "transparent", color: pathname === "/dashboard/jobs" ? "#1591DC" : "#a3a3a3" }}>
             Manage Jobs
           </Link>
+          <Link href="/dashboard/preview-jobs" style={{ ...navItemStyle, background: pathname === "/dashboard/preview-jobs" ? "rgba(21,145,220,0.1)" : "transparent", color: pathname === "/dashboard/preview-jobs" ? "#1591DC" : "#a3a3a3" }}>
+            Preview Jobs
+          </Link>
           <Link href="/dashboard/banners" style={{ ...navItemStyle, background: pathname === "/dashboard/banners" ? "rgba(21,145,220,0.1)" : "transparent", color: pathname === "/dashboard/banners" ? "#1591DC" : "#a3a3a3" }}>
             Manage Banners
           </Link>

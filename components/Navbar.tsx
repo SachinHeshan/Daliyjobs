@@ -136,6 +136,22 @@ export default function Navbar() {
           <Link
             href="/#jobs"
             style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#fff",
+              textDecoration: "none",
+              fontWeight: 600,
+              fontSize: 14,
+              padding: "9px 20px",
+              borderRadius: 50,
+              transition: "all 0.2s",
+            }}
+          >
+            Browse Jobs
+          </Link>
+          <Link
+            href="/post-job"
+            style={{
               background: "linear-gradient(135deg,#1591DC,#0d74b5)",
               color: "#fff",
               textDecoration: "none",
@@ -147,7 +163,7 @@ export default function Navbar() {
               transition: "all 0.2s",
             }}
           >
-            Browse Jobs
+            Post a Job
           </Link>
         </div>
 
@@ -217,6 +233,7 @@ export default function Navbar() {
             { label: "Jobs", href: "/#jobs" },
             { label: "About", href: "/about" },
             { label: "Contact", href: "/contact" },
+            { label: "Post a Job", href: "/post-job" },
           ].map((item) => (
             <Link
               key={item.label}

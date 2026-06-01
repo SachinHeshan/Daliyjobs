@@ -15,6 +15,7 @@ export interface Job {
   applyEmail?: string;
   createdAt?: number;
   category?: string;
+  approved?: boolean;
 }
 
 export const mockJobs: Job[] = [
