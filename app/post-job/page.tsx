@@ -149,13 +149,22 @@ export default function PostJobPage() {
                 <label style={labelStyle}>Category *</label>
                 <select required name="category" value={formData.category} onChange={handleChange} style={inputStyle}>
                   <option value="" disabled style={{ background: "#0a0a0a" }}>Select Category</option>
-                  <option value="Technology & IT" style={{ background: "#0a0a0a" }}>Technology & IT</option>
-                  <option value="Marketing & Design" style={{ background: "#0a0a0a" }}>Marketing & Design</option>
-                  <option value="Sales & Business" style={{ background: "#0a0a0a" }}>Sales & Business</option>
-                  <option value="Finance & Accountancy" style={{ background: "#0a0a0a" }}>Finance & Accountancy</option>
+                  <option value="Banking & Finance Jobs" style={{ background: "#0a0a0a" }}>Banking & Finance Jobs</option>
+                  <option value="Caregiver Jobs" style={{ background: "#0a0a0a" }}>Caregiver Jobs</option>
+                  <option value="Construction Jobs" style={{ background: "#0a0a0a" }}>Construction Jobs</option>
                   <option value="Customer Service" style={{ background: "#0a0a0a" }}>Customer Service</option>
+                  <option value="Driver Jobs" style={{ background: "#0a0a0a" }}>Driver Jobs</option>
                   <option value="Education & Healthcare" style={{ background: "#0a0a0a" }}>Education & Healthcare</option>
                   <option value="Engineering & Construction" style={{ background: "#0a0a0a" }}>Engineering & Construction</option>
+                  <option value="Finance & Accountancy" style={{ background: "#0a0a0a" }}>Finance & Accountancy</option>
+                  <option value="Government Jobs" style={{ background: "#0a0a0a" }}>Government Jobs</option>
+                  <option value="Healthcare Jobs" style={{ background: "#0a0a0a" }}>Healthcare Jobs</option>
+                  <option value="Hotel & Restaurant Jobs" style={{ background: "#0a0a0a" }}>Hotel & Restaurant Jobs</option>
+                  <option value="Marketing & Design" style={{ background: "#0a0a0a" }}>Marketing & Design</option>
+                  <option value="Overseas Jobs" style={{ background: "#0a0a0a" }}>Overseas Jobs</option>
+                  <option value="Sales & Business" style={{ background: "#0a0a0a" }}>Sales & Business</option>
+                  <option value="Security Jobs" style={{ background: "#0a0a0a" }}>Security Jobs</option>
+                  <option value="Technology & IT" style={{ background: "#0a0a0a" }}>Technology & IT</option>
                   <option value="Other" style={{ background: "#0a0a0a" }}>Other</option>
                 </select>
               </div>
