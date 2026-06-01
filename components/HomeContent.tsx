@@ -39,7 +39,7 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
         // Fetch jobs from Firestore
         const snap = await getDocs(collection(db, "job-vacancies"));
         if (!snap.empty) {
-          const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job)).filter(job => job.approved !== false);
+          const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job));
           setJobs(list);
         } else {
           // Only use mock data as last resort fallback
@@ -290,6 +290,31 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
             </div>
           </div>
 
+          {/* Job Category Selector Row */}
+          <div className="filter-category-row" style={{ display: "flex", gap: 16, width: "100%" }}>
+            <div className="filter-select-wrap" style={{ flex: 1 }}>
+              <select
+                value={selectedCategory}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (!val || val === "All") {
+                    router.push("/", { scroll: false });
+                  } else {
+                    router.push(`/job-category/${slugify(val)}-jobs`, { scroll: false });
+                  }
+                }}
+                style={filterSelectStyle}
+              >
+                <option value="All" style={{ background: "#0a0a0a" }}>All Categories</option>
+                {categories.filter(c => c !== "All").map((cat) => (
+                  <option key={cat} value={cat} style={{ background: "#0a0a0a" }}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           {/* Bottom row: category pills */}
           <div className="filter-pills-row" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
             <span style={{ fontSize: 13, color: "#64748b", fontWeight: 600, marginRight: 8 }}>Filter by Job Type:</span>
@@ -338,53 +363,7 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
           </div>
         </section>
 
-        {/* Job Categories Section */}
-        {categories.length > 1 && (
-          <section style={{ marginBottom: 40 }} className="animate-fadeinup">
-            <h3 style={{ fontSize: 24, fontWeight: 700, color: "#fff", marginBottom: 20 }}>
-              Browse by Category
-            </h3>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => {
-                    if (cat === "All") {
-                      router.push("/", { scroll: false });
-                    } else {
-                      router.push(`/job-category/${slugify(cat)}-jobs`, { scroll: false });
-                    }
-                  }}
-                  style={{
-                    padding: "12px 24px",
-                    borderRadius: 12,
-                    background: selectedCategory === cat ? "linear-gradient(135deg, #1591DC, #0d74b5)" : "rgba(255,255,255,0.03)",
-                    border: selectedCategory === cat ? "1px solid #1591DC" : "1px solid rgba(255,255,255,0.08)",
-                    color: selectedCategory === cat ? "#fff" : "#a3a3a3",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                    boxShadow: selectedCategory === cat ? "0 4px 15px rgba(21, 145, 220, 0.4)" : "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedCategory !== cat) {
-                      (e.target as HTMLButtonElement).style.background = "rgba(255,255,255,0.08)";
-                      (e.target as HTMLButtonElement).style.color = "#fff";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedCategory !== cat) {
-                      (e.target as HTMLButtonElement).style.background = "rgba(255,255,255,0.03)";
-                      (e.target as HTMLButtonElement).style.color = "#a3a3a3";
-                    }
-                  }}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </section>
-        )}
+
 
         {/* Jobs Grid Listing */}
         <section
