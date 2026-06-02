@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import { Job } from "@/data/jobs";
 import ShareMenu from "@/components/ShareMenu";
 import { formatJobTime } from "../lib/formatJobTime";
+import { db } from "@/lib/firebase";
+import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
 
 interface MobileJobDetailsProps {
   job: Job;
@@ -53,21 +55,48 @@ export default function MobileJobDetails({
   const applyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (job) {
-      const viewKey = `mock_views_${job.id}`;
-      let views = parseInt(localStorage.getItem(viewKey) || "0", 10);
-      
-      // If it's the first time EVER generating views for this job
-      if (views === 0) {
-        views = job.views || Math.floor(Math.random() * 500) + 100;
+    if (!job) return;
+
+    const trackView = async () => {
+      const sessionKey = `viewed_${job.id}`;
+      const hasViewedInSession = sessionStorage.getItem(sessionKey);
+
+      try {
+        const jobRef = doc(db, "job-vacancies", String(job.id));
+        const jobSnap = await getDoc(jobRef);
+
+        let currentViews = 0;
+
+        if (!hasViewedInSession) {
+          // Increment view
+          if (jobSnap.exists()) {
+            await updateDoc(jobRef, { views: increment(1) });
+            currentViews = (jobSnap.data().views || 0) + 1;
+          } else {
+            // Document doesn't exist (e.g. mock job), initialize it
+            currentViews = (job.views || Math.floor(Math.random() * 500) + 100) + 1;
+            await setDoc(jobRef, { views: currentViews }, { merge: true });
+          }
+          sessionStorage.setItem(sessionKey, "true");
+        } else {
+          // Already viewed, just fetch latest
+          if (jobSnap.exists()) {
+            currentViews = jobSnap.data().views || 0;
+          } else {
+            currentViews = job.views || Math.floor(Math.random() * 500) + 100;
+          }
+        }
+        
+        setViewCount(currentViews);
+      } catch (error) {
+        console.error("Failed to update view count in DB:", error);
+        const fallbackViews = job.views || Math.floor(Math.random() * 500) + 100;
+        setViewCount(hasViewedInSession ? fallbackViews : fallbackViews + 1);
+        if (!hasViewedInSession) sessionStorage.setItem(sessionKey, "true");
       }
-      
-      // Increment views on every load
-      views += 1;
-      localStorage.setItem(viewKey, views.toString());
-      
-      setViewCount(views);
-    }
+    };
+
+    trackView();
   }, [job]);
 
   const handleApplyNowClick = () => {
