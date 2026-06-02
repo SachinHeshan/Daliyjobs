@@ -4,8 +4,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { Job, mockJobs } from "@/data/jobs";
 import { slugify } from "@/lib/slugify";
 
-export const runtime = 'edge';
-
 // Image metadata
 export const alt = 'Job Details on DailyJobs';
 export const size = {
@@ -26,6 +24,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     const jobs = snap.docs.map(d => ({ id: d.id, ...d.data() } as Job));
     job = jobs.find((j) => slugify(j.title) === slug) || mockJobs.find((j) => slugify(j.title) === slug);
   } catch (error) {
+    console.error("Error fetching job for OG image:", error);
     job = mockJobs.find((j) => slugify(j.title) === slug);
   }
 
