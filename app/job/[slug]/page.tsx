@@ -34,17 +34,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${job.title} | ${job.company} - DailyJobs`,
     description: `Hiring Now: ${job.title} at ${job.company}. Type: ${job.type}, Salary: ${job.salary}, Location: ${job.location}. Apply now!`,
     openGraph: {
-      title: `🚨 HIRING NOW: ${job.title} | ${job.company}`,
+      title: `${job.title} at ${job.company} - ${job.location} | DailyJobs`,
       description: `💼 Type: ${job.type} • 💰 Salary: ${job.salary} • 📍 Location: ${job.location} • Apply now on DailyJobs!`,
       url: `https://dailysjobs.com/job/${slug}`,
       siteName: "DailyJobs",
-      images: [
-        {
-          url: job.logo || "https://dailysjobs.com/logo.png",
-          width: 800,
-          height: 600,
-        },
-      ],
       locale: "en_US",
       type: "website",
     },
