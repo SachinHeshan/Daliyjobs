@@ -490,17 +490,22 @@ export default function MobileJobDetails({
           )}
 
           {/* Share, Views, Time Bar */}
-          <div style={{ marginTop: 24, padding: "16px 12px", borderRadius: 14, border: "1px solid rgba(255, 255, 255, 0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#94a3b8", fontSize: "13px", background: "rgba(255,255,255,0.02)", gap: "8px", overflowX: "auto", scrollbarWidth: "none" }}>
-            <div style={{ display: "flex", flexShrink: 0 }}>
-              <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
+          <div style={{ marginTop: 24, borderRadius: 14, border: "1px solid rgba(255, 255, 255, 0.05)", background: "rgba(255,255,255,0.02)" }}>
+            {/* Row 1: Share button - full width */}
+            <div style={{ padding: "4px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+              <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} isMobile={true} fullWidth={true} />
             </div>
-            
-            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
-              <span style={{ fontSize: "14px" }}>👁</span> {viewCount > 0 ? viewCount.toLocaleString() : "..."}
-            </div>
-            
-            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
-              <span style={{ fontSize: "14px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span> {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+            {/* Row 2: Views + Time */}
+            <div style={{ display: "flex", alignItems: "center", padding: "10px 16px" }}>
+              <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "13px", fontWeight: 500 }}>
+                <span style={{ fontSize: "15px" }}>👁</span>
+                <span>Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}</span>
+              </div>
+              <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.1)", margin: "0 12px", flexShrink: 0 }} />
+              <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "13px", fontWeight: 500, justifyContent: "flex-end" }}>
+                <span style={{ fontSize: "15px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span>
+                <span>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}</span>
+              </div>
             </div>
           </div>
 

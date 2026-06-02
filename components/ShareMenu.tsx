@@ -3,9 +3,11 @@ import { useState, useRef, useEffect } from "react";
 interface ShareMenuProps {
   jobUrl: string;
   jobTitle: string;
+  isMobile?: boolean;
+  fullWidth?: boolean;
 }
 
-export default function ShareMenu({ jobUrl, jobTitle }: ShareMenuProps) {
+export default function ShareMenu({ jobUrl, jobTitle, isMobile, fullWidth }: ShareMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
@@ -89,34 +91,42 @@ export default function ShareMenu({ jobUrl, jobTitle }: ShareMenuProps) {
   ];
 
   return (
-    <div className="share-menu-container" style={{ position: "relative", display: "inline-block" }} ref={menuRef}>
+    <div className="share-menu-container" style={{ position: "relative", display: fullWidth ? "block" : "inline-block", width: fullWidth ? "100%" : undefined }} ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{
           background: isOpen ? "rgba(21, 145, 220, 0.15)" : "rgba(255, 255, 255, 0.06)",
           border: isOpen ? "1px solid rgba(21, 145, 220, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
           color: isOpen ? "#1591DC" : "#e2e8f0",
-          padding: "8px 16px",
-          borderRadius: "50px",
-          fontSize: "14px",
+          padding: isMobile ? "10px 16px" : "8px 16px",
+          borderRadius: fullWidth ? "10px" : "50px",
+          fontSize: isMobile ? "13px" : "14px",
           fontWeight: 600,
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          justifyContent: fullWidth ? "center" : "flex-start",
+          gap: isMobile ? "8px" : "8px",
           transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
           whiteSpace: "nowrap",
           flexShrink: 0,
+          width: fullWidth ? "100%" : undefined,
         }}
       >
-        <span>↗️</span> {isOpen ? "Close" : "Share Job"}
+        <span>↗️</span> {isOpen ? "Close Share" : "Share Job"}
       </button>
 
       <div
         style={{
           position: "absolute",
-          top: "calc(100% + 12px)",
-          left: 0,
+          ...(isMobile ? {
+            bottom: "calc(100% + 12px)",
+            top: "auto",
+            left: 0,
+          } : {
+            top: "calc(100% + 12px)",
+            left: 0,
+          }),
           display: "flex",
           alignItems: "center",
           gap: "10px",
@@ -130,7 +140,7 @@ export default function ShareMenu({ jobUrl, jobTitle }: ShareMenuProps) {
           visibility: isOpen ? "visible" : "hidden",
           transform: isOpen ? "translateY(0) scale(1)" : "translateY(-10px) scale(0.95)",
           transition: "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
-          transformOrigin: "top left",
+          transformOrigin: isMobile ? "bottom left" : "top left",
         }}
       >
         {shareOptions.map((option) => (
