@@ -269,16 +269,16 @@ export default function JobClientPage({ job }: { job: Job }) {
               )}
 
               {/* Share, Views, Time Bar */}
-              <div style={{ marginTop: 32, padding: "20px 24px", borderRadius: 16, border: "1px solid rgba(255, 255, 255, 0.05)", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", color: "#94a3b8", fontSize: "14px", background: "rgba(255,255,255,0.02)" }}>
-                <div style={{ justifySelf: "start" }}>
+              <div style={{ marginTop: 32, padding: "20px 24px", borderRadius: 16, border: "1px solid rgba(255, 255, 255, 0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#94a3b8", fontSize: "14px", background: "rgba(255,255,255,0.02)" }}>
+                <div style={{ display: "flex", flexShrink: 0 }}>
                   <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
                 </div>
                 
-                <div style={{ justifySelf: "center", display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
                   <span style={{ fontSize: "16px" }}>👁</span> Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}
                 </div>
                 
-                <div style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
                   <span style={{ fontSize: "16px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span> {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
                 </div>
               </div>

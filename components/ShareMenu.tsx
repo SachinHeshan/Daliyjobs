@@ -105,6 +105,8 @@ export default function ShareMenu({ jobUrl, jobTitle }: ShareMenuProps) {
           alignItems: "center",
           gap: "8px",
           transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          whiteSpace: "nowrap",
+          flexShrink: 0,
         }}
       >
         <span>↗️</span> {isOpen ? "Close" : "Share Job"}
