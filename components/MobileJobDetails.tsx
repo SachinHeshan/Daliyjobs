@@ -489,24 +489,46 @@ export default function MobileJobDetails({
             </div>
           )}
 
-          {/* Share, Views, Time Bar */}
-          <div style={{ marginTop: 24, borderRadius: 14, border: "1px solid rgba(255, 255, 255, 0.05)", background: "rgba(255,255,255,0.02)" }}>
-            {/* Row 1: Share button - full width */}
-            <div style={{ padding: "4px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-              <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} isMobile={true} fullWidth={true} />
-            </div>
-            {/* Row 2: Views + Time */}
-            <div style={{ display: "flex", alignItems: "center", padding: "10px 16px" }}>
-              <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "13px", fontWeight: 500 }}>
-                <span style={{ fontSize: "15px" }}>👁</span>
-                <span>Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}</span>
+          {/* Share, Views, Time — Vertical Mobile Card */}
+          <div style={{ marginTop: 24, borderRadius: 16, border: "1px solid rgba(255, 255, 255, 0.07)", background: "rgba(255,255,255,0.02)", overflow: "visible" }}>
+
+            {/* Row 1: Share Job */}
+            <div style={{ position: "relative", padding: "14px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(21,145,220,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1591DC" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
               </div>
-              <div style={{ width: "1px", height: "16px", background: "rgba(255,255,255,0.1)", margin: "0 12px", flexShrink: 0 }} />
-              <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "13px", fontWeight: 500, justifyContent: "flex-end" }}>
-                <span style={{ fontSize: "15px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span>
-                <span>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}</span>
+              <div style={{ flex: 1 }}>
+                <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Share</span>
+                <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} isMobile={true} />
               </div>
             </div>
+
+            {/* Row 2: Viewed Count */}
+            <div style={{ padding: "14px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(99,102,241,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <div>
+                <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Views</span>
+                <span style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 600 }}>
+                  {viewCount > 0 ? viewCount.toLocaleString() : "..."} views
+                </span>
+              </div>
+            </div>
+
+            {/* Row 3: Job Post Time */}
+            <div style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(245,158,11,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Posted</span>
+                <span style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 600 }}>
+                  {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+                </span>
+              </div>
+            </div>
+
           </div>
 
           {/* ── Apply Form (inline, not modal) ── */}
