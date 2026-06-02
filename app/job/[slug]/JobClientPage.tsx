@@ -268,19 +268,59 @@ export default function JobClientPage({ job }: { job: Job }) {
                 </div>
               )}
 
-              {/* Share, Views, Time Bar */}
-              <div style={{ marginTop: 32, padding: "20px 24px", borderRadius: 16, border: "1px solid rgba(255, 255, 255, 0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#94a3b8", fontSize: "14px", background: "rgba(255,255,255,0.02)" }}>
-                <div style={{ display: "flex", flexShrink: 0 }}>
-                  <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
+              {/* Share, Views, Time Bar — Desktop: horizontal row | Mobile: vertical stacked cards */}
+              <div className="job-footer-bar" style={{ marginTop: 32, borderRadius: 16, border: "1px solid rgba(255, 255, 255, 0.05)", color: "#94a3b8", fontSize: "14px", background: "rgba(255,255,255,0.02)", overflow: "visible" }}>
+
+                {/* Desktop layout (hidden on mobile via CSS) */}
+                <div className="job-footer-desktop" style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ display: "flex", flexShrink: 0 }}>
+                    <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
+                    <span style={{ fontSize: "16px" }}>👁</span> Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
+                    <span style={{ fontSize: "16px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span> {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+                  </div>
                 </div>
-                
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
-                  <span style={{ fontSize: "16px" }}>👁</span> Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}
+
+                {/* Mobile layout (hidden on desktop via CSS) */}
+                <div className="job-footer-mobile" style={{ display: "none" }}>
+                  {/* Share Job row */}
+                  <div style={{ position: "relative", padding: "14px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ flex: 1 }}>
+                      <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Share</span>
+                      <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} isMobile={true} />
+                    </div>
+                  </div>
+
+                  {/* Viewed Count row */}
+                  <div style={{ padding: "14px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(99,102,241,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <div>
+                      <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Views</span>
+                      <span style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 600, whiteSpace: "nowrap" }}>
+                        {viewCount > 0 ? viewCount.toLocaleString() : "..."} views
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Job Post Time row */}
+                  <div style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(245,158,11,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div>
+                      <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Posted</span>
+                      <span style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 600, whiteSpace: "nowrap" }}>
+                        {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
-                  <span style={{ fontSize: "16px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span> {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
-                </div>
+
               </div>
             </div>
 
@@ -412,6 +452,15 @@ export default function JobClientPage({ job }: { job: Job }) {
           }
           .form-buttons button {
             width: 100%;
+          }
+          .job-footer-desktop {
+            display: none !important;
+          }
+          .job-footer-mobile {
+            display: block !important;
+          }
+          .job-footer-bar {
+            border-radius: 14px !important;
           }
         }
       `}</style>
