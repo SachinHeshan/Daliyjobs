@@ -3,6 +3,7 @@ import Link from "next/link";
 import { slugify } from "@/lib/slugify";
 import { useState, useEffect } from "react";
 import { Job } from "@/data/jobs";
+import { formatJobTime } from "@/lib/formatJobTime";
 
 export default function JobCard({ job, onClick }: { job: Job; onClick?: () => void }) {
   const [saved, setSaved] = useState(false);
@@ -170,7 +171,10 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
         {/* Right: Actions */}
         <div className="jobcard-actions-wrap" style={{ display: "flex", flexShrink: 0, gap: 16 }}>
           <div className="jobcard-date-save" style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <span style={infoStyle}>{job.postedDate}</span>
+            <span style={{ ...infoStyle, gap: 6, fontWeight: 500 }}>
+              <span style={{ fontSize: "14px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span>
+              {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+            </span>
             <div
               onClick={(e) => {
                 e.stopPropagation();

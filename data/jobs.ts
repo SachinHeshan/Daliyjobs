@@ -16,6 +16,7 @@ export interface Job {
   createdAt?: number;
   category?: string;
   approved?: boolean;
+  views?: number;
 }
 
 export const mockJobs: Job[] = [
@@ -26,6 +27,7 @@ export const mockJobs: Job[] = [
     location: "Colombo, Western Province",
     postedTime: "1 hour ago",
     postedDate: "2026-05-20",
+    createdAt: Date.now() - (45 * 60 * 1000), // 45 mins ago
     type: "Full-time",
     salary: "LKR 350,000 - 500,000 / mo",
     logo: "🍔",
@@ -41,6 +43,7 @@ export const mockJobs: Job[] = [
     location: "Colombo (Hybrid)",
     postedTime: "3 hours ago",
     postedDate: "2026-05-20",
+    createdAt: Date.now() - (2 * 60 * 60 * 1000), // 2 hours ago
     type: "Full-time",
     salary: "LKR 200,000 - 320,000 / mo",
     logo: "🎨",
@@ -55,6 +58,7 @@ export const mockJobs: Job[] = [
     location: "Colombo, Sri Lanka",
     postedTime: "5 hours ago",
     postedDate: "2026-05-20",
+    createdAt: Date.now() - (23 * 60 * 60 * 1000), // 23 hours ago
     type: "Full-time",
     salary: "LKR 150,000 - 220,000 / mo",
     logo: "🔌",
@@ -69,6 +73,7 @@ export const mockJobs: Job[] = [
     location: "Colombo / Remote",
     postedTime: "1 day ago",
     postedDate: "2026-05-19",
+    createdAt: Date.now() - (48 * 60 * 60 * 1000), // > 24 hours ago
     type: "Full-time",
     salary: "LKR 250,000 - 380,000 / mo",
     logo: "🔍",

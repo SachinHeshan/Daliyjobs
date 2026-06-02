@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BottomNavbar from "@/components/BottomNavbar";
 import { Job } from "@/data/jobs";
 import Link from "next/link";
+import ShareMenu from "@/components/ShareMenu";
+import { formatJobTime } from "../../../lib/formatJobTime";
 
 export default function JobClientPage({ job }: { job: Job }) {
   const [showApplyForm, setShowApplyForm] = useState(false);
@@ -17,6 +19,26 @@ export default function JobClientPage({ job }: { job: Job }) {
   const [emailCopy, setEmailCopy] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [viewCount, setViewCount] = useState<number>(0);
+
+  // Safely set views on client-side to prevent hydration mismatch and simulate a true counter
+  useEffect(() => {
+    if (job) {
+      const viewKey = `mock_views_${job.id}`;
+      let views = parseInt(localStorage.getItem(viewKey) || "0", 10);
+      
+      // If it's the first time EVER generating views for this job
+      if (views === 0) {
+        views = job.views || Math.floor(Math.random() * 500) + 100;
+      }
+      
+      // Increment views on every load
+      views += 1;
+      localStorage.setItem(viewKey, views.toString());
+      
+      setViewCount(views);
+    }
+  }, [job]);
 
   const handleApply = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,7 +183,7 @@ export default function JobClientPage({ job }: { job: Job }) {
               </div>
               <div>
                 <span style={{ display: "block", fontSize: 11, color: "#64748b", fontWeight: 700 }}>POSTED</span>
-                <span style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 600 }}>{job.postedDate}</span>
+                <span style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 600 }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}</span>
               </div>
             </div>
           </div>
@@ -215,6 +237,21 @@ export default function JobClientPage({ job }: { job: Job }) {
                   )}
                 </div>
               )}
+
+              {/* Share, Views, Time Bar */}
+              <div style={{ marginTop: 32, padding: "20px 24px", borderRadius: 16, border: "1px solid rgba(255, 255, 255, 0.05)", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", color: "#94a3b8", fontSize: "14px", background: "rgba(255,255,255,0.02)" }}>
+                <div style={{ justifySelf: "start" }}>
+                  <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
+                </div>
+                
+                <div style={{ justifySelf: "center", display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
+                  <span style={{ fontSize: "16px" }}>👁</span> Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}
+                </div>
+                
+                <div style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: "8px", fontWeight: 500 }}>
+                  <span style={{ fontSize: "16px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span> {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+                </div>
+              </div>
             </div>
 
             {/* Application Form */}

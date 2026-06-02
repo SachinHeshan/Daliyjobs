@@ -1,6 +1,8 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Job } from "@/data/jobs";
+import ShareMenu from "@/components/ShareMenu";
+import { formatJobTime } from "../lib/formatJobTime";
 
 interface MobileJobDetailsProps {
   job: Job;
@@ -47,7 +49,26 @@ export default function MobileJobDetails({
   handleApply,
 }: MobileJobDetailsProps) {
   const [saved, setSaved] = useState(false);
+  const [viewCount, setViewCount] = useState<number>(0);
   const applyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (job) {
+      const viewKey = `mock_views_${job.id}`;
+      let views = parseInt(localStorage.getItem(viewKey) || "0", 10);
+      
+      // If it's the first time EVER generating views for this job
+      if (views === 0) {
+        views = job.views || Math.floor(Math.random() * 500) + 100;
+      }
+      
+      // Increment views on every load
+      views += 1;
+      localStorage.setItem(viewKey, views.toString());
+      
+      setViewCount(views);
+    }
+  }, [job]);
 
   const handleApplyNowClick = () => {
     setShowApplyForm(true);
@@ -365,7 +386,7 @@ export default function MobileJobDetails({
               </svg>
               <span style={{ fontSize: 10, color: "#f59e0b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase" }}>Posted</span>
             </div>
-            <span style={{ fontSize: 13, color: "#e2e8f0", fontWeight: 600 }}>{job.postedDate}</span>
+            <span style={{ fontSize: 13, color: "#e2e8f0", fontWeight: 600 }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}</span>
           </div>
         </div>
 
@@ -438,6 +459,21 @@ export default function MobileJobDetails({
               )}
             </div>
           )}
+
+          {/* Share, Views, Time Bar */}
+          <div style={{ marginTop: 24, padding: "16px 12px", borderRadius: 14, border: "1px solid rgba(255, 255, 255, 0.05)", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", color: "#94a3b8", fontSize: "12px", background: "rgba(255,255,255,0.02)" }}>
+            <div style={{ justifySelf: "start" }}>
+              <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
+            </div>
+            
+            <div style={{ justifySelf: "center", display: "flex", alignItems: "center", gap: "4px", fontWeight: 500 }}>
+              <span style={{ fontSize: "14px" }}>👁</span> Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}
+            </div>
+            
+            <div style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: "4px", fontWeight: 500 }}>
+              <span style={{ fontSize: "14px" }}>{formatJobTime(job.postedDate, job.postedTime, job.createdAt).icon}</span> {formatJobTime(job.postedDate, job.postedTime, job.createdAt).label}
+            </div>
+          </div>
 
           {/* ── Apply Form (inline, not modal) ── */}
           <div ref={applyRef} />
