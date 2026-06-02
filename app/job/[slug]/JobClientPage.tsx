@@ -190,8 +190,29 @@ export default function JobClientPage({ job }: { job: Job }) {
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {(job as any).postImage && (
                 <div style={{ marginTop: 24, borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={(job as any).postImage} alt="Job Post Details" style={{ width: "100%", height: "auto", display: "block" }} />
+                  {(job as any).postImage.toLowerCase().includes('.pdf') ? (
+                    <div style={{ padding: 40, textAlign: "center", background: "rgba(21, 145, 220, 0.05)" }}>
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1591DC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: "0 auto 16px" }}>
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      <h3 style={{ color: "#fff", fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Job Post Document (PDF)</h3>
+                      <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+                        <a href={(job as any).postImage} target="_blank" rel="noopener noreferrer" style={{ background: "linear-gradient(135deg, #1591DC, #0d74b5)", color: "#fff", padding: "10px 24px", borderRadius: 8, textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          View PDF
+                        </a>
+                        <a href={(job as any).postImage} download target="_blank" rel="noopener noreferrer" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", padding: "10px 24px", borderRadius: 8, textDecoration: "none", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          Download PDF
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={(job as any).postImage} alt="Job Post Details" style={{ width: "100%", height: "auto", display: "block" }} />
+                  )}
                 </div>
               )}
             </div>

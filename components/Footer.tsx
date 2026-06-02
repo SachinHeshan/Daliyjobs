@@ -156,18 +156,53 @@ export default function Footer() {
         }}
       >
         <p>© {new Date().getFullYear()} DailyJobs. All rights reserved. Built for job seekers worldwide.</p>
-        <div style={{ display: "flex", gap: 16 }}>
-          {["Facebook", "Twitter", "LinkedIn", "GitHub"].map((network) => (
-            <span key={network} style={{ fontSize: 12, color: "#475569", cursor: "pointer" }}>
-              {network}
-            </span>
-          ))}
+        <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+          <a
+            href="https://www.facebook.com/profile.php?id=61590313618471"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon facebook-icon"
+            aria-label="Facebook"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+            </svg>
+          </a>
+          <a
+            href="https://www.tiktok.com/@daliyjobs7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-icon tiktok-icon"
+            aria-label="TikTok"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 15.68a6.34 6.34 0 006.27 6.32 6.32 6.32 0 006.26-6.3V8.89a8.1 8.1 0 004.47 1.34V6.78a5.53 5.53 0 01-2.41-.09z"/>
+            </svg>
+          </a>
         </div>
       </div>
 
       <style jsx global>{`
         .footer-link:hover {
           color: #1591DC !important;
+        }
+        .social-icon {
+          color: #64748b;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .social-icon:hover {
+          transform: translateY(-4px) scale(1.15);
+        }
+        .facebook-icon:hover {
+          color: #1877F2;
+          filter: drop-shadow(0 6px 16px rgba(24, 119, 242, 0.5));
+        }
+        .tiktok-icon:hover {
+          color: #fff;
+          filter: drop-shadow(0 6px 16px rgba(255, 255, 255, 0.4));
         }
       `}</style>
     </footer>

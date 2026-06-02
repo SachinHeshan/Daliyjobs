@@ -47,6 +47,7 @@ export default function ManageJobs() {
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [currency, setCurrency] = useState("LKR");
   const [salaryAmount, setSalaryAmount] = useState("");
+  const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -82,6 +83,11 @@ export default function ManageJobs() {
     try {
       const snap = await getDocs(collection(db, "job-vacancies"));
       const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job));
+      list.sort((a, b) => {
+        const timeA = a.createdAt || 0;
+        const timeB = b.createdAt || 0;
+        return timeB - timeA;
+      });
       setJobs(list);
     } catch (err) {
       console.error("Error fetching jobs:", err);
@@ -167,6 +173,32 @@ export default function ManageJobs() {
     }
   };
 
+  const handleBulkDelete = async () => {
+    if (!confirm(`Are you sure you want to delete ${selectedJobs.length} selected jobs?`)) return;
+    setLoading(true);
+    try {
+      await Promise.all(selectedJobs.map(id => deleteDoc(doc(db, "job-vacancies", id))));
+      setSelectedJobs([]);
+      await fetchJobs();
+    } catch (err) {
+      console.error("Error bulk deleting jobs:", err);
+      alert("Failed to delete selected jobs: " + (err as Error).message);
+      setLoading(false);
+    }
+  };
+
+  const toggleSelectJob = (id: string) => {
+    setSelectedJobs(prev => prev.includes(id) ? prev.filter(jId => jId !== id) : [...prev, id]);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedJobs.length === jobs.length && jobs.length > 0) {
+      setSelectedJobs([]);
+    } else {
+      setSelectedJobs(jobs.map(j => j.id));
+    }
+  };
+
   const startEdit = (job: Job) => {
     setEditingJob(job);
     setTagsInput(job.tags?.join(", ") || "");
@@ -199,8 +231,18 @@ export default function ManageJobs() {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-        <h1 style={{ fontSize: 32, fontWeight: 800, color: "#fff" }}>Manage Jobs</h1>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <h1 style={{ fontSize: 32, fontWeight: 800, color: "#fff" }}>Manage Jobs</h1>
+          <span style={{ background: "rgba(21,145,220,0.15)", color: "#1591DC", padding: "4px 12px", borderRadius: 20, fontSize: 14, fontWeight: 700 }}>
+            {jobs.length} Total Jobs
+          </span>
+        </div>
         <div style={{ display: "flex", gap: 12 }}>
+          {selectedJobs.length > 0 && (
+            <button onClick={handleBulkDelete} style={{ ...btnStyle, background: "#ef4444" }}>
+              Trash Selected ({selectedJobs.length})
+            </button>
+          )}
           {jobs.length === 0 && (
             <button onClick={seedMockData} style={{ ...btnStyle, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
               🌱 Seed Mock Data
@@ -273,7 +315,7 @@ export default function ManageJobs() {
             <ReactQuill theme="snow" modules={quillModules} value={editingJob.description || ""} onChange={(val: string) => setEditingJob({...editingJob, description: val})} style={{ minHeight: 150 }} />
           </div>
           
-          <input placeholder="Job Post Image URL (Optional)" value={(editingJob as any).postImage || ""} onChange={e => setEditingJob({...editingJob, postImage: e.target.value} as any)} style={inputStyle} />
+          <input placeholder="Job Post URL (Image/PDF) (Optional)" value={(editingJob as any).postImage || ""} onChange={e => setEditingJob({...editingJob, postImage: e.target.value} as any)} style={inputStyle} />
 
           <label style={{ display: "flex", alignItems: "center", gap: 8, color: "#a3a3a3", fontSize: 14 }}>
             <input type="checkbox" checked={editingJob.urgent || false} onChange={e => setEditingJob({...editingJob, urgent: e.target.checked})} />
@@ -287,20 +329,39 @@ export default function ManageJobs() {
       )}
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {jobs.length > 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "0 12px", marginBottom: 4 }}>
+            <input 
+              type="checkbox" 
+              checked={selectedJobs.length === jobs.length && jobs.length > 0} 
+              onChange={toggleSelectAll} 
+              style={{ width: 16, height: 16, cursor: "pointer" }}
+            />
+            <span style={{ color: "#94a3b8", fontSize: 14 }}>Select All</span>
+          </div>
+        )}
         {jobs.length === 0 && <p style={{ color: "#64748b", textAlign: "center", padding: 40 }}>No jobs yet. Click &quot;Add New Job&quot; to create one.</p>}
         {jobs.map((job) => (
-          <div key={job.id} style={{ background: "rgba(255,255,255,0.02)", padding: "16px 24px", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                {job.logo && job.logo.startsWith("http") ? (
-                  <img src={job.logo} alt="Logo" style={{ width: 40, height: 40, borderRadius: 8, objectFit: "cover" }} />
-                ) : (
-                  <span style={{ fontSize: 20 }}>{job.logo}</span>
-                )}
-                <h3 style={{ fontSize: 18, color: "#fff", fontWeight: 700 }}>{job.title}</h3>
-                {job.urgent && <span style={{ background: "rgba(239,68,68,0.2)", color: "#ef4444", fontSize: 11, padding: "2px 8px", borderRadius: 4, fontWeight: 600 }}>URGENT</span>}
+          <div key={job.id} style={{ background: selectedJobs.includes(job.id) ? "rgba(21,145,220,0.05)" : "rgba(255,255,255,0.02)", padding: "16px 24px", borderRadius: 12, border: selectedJobs.includes(job.id) ? "1px solid rgba(21,145,220,0.3)" : "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <input 
+                type="checkbox" 
+                checked={selectedJobs.includes(job.id)} 
+                onChange={() => toggleSelectJob(job.id)}
+                style={{ width: 18, height: 18, cursor: "pointer", flexShrink: 0 }}
+              />
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  {job.logo && job.logo.startsWith("http") ? (
+                    <img src={job.logo} alt="Logo" style={{ width: 40, height: 40, borderRadius: 8, objectFit: "cover" }} />
+                  ) : (
+                    <span style={{ fontSize: 20 }}>{job.logo}</span>
+                  )}
+                  <h3 style={{ fontSize: 18, color: "#fff", fontWeight: 700 }}>{job.title}</h3>
+                  {job.urgent && <span style={{ background: "rgba(239,68,68,0.2)", color: "#ef4444", fontSize: 11, padding: "2px 8px", borderRadius: 4, fontWeight: 600 }}>URGENT</span>}
+                </div>
+                <p style={{ color: "#a3a3a3", fontSize: 14 }}>{job.company} • {job.location} • {job.type}</p>
               </div>
-              <p style={{ color: "#a3a3a3", fontSize: 14 }}>{job.company} • {job.location} • {job.type}</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => startEdit(job)} style={{ ...btnActionStyle, color: "#1591DC", background: "rgba(21,145,220,0.1)" }}>Edit</button>

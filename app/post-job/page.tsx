@@ -193,7 +193,7 @@ export default function PostJobPage() {
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <label style={labelStyle}>Image Poster Link (Optional)</label>
+              <label style={labelStyle}>Job Poster Link (Image/PDF URL) (Optional)</label>
               <input type="url" name="postImage" value={formData.postImage} onChange={handleChange} style={inputStyle} placeholder="https://..." />
             </div>
 

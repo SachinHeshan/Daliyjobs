@@ -132,8 +132,16 @@ export default function PreviewJobs() {
 
                     {job.postImage && (
                       <div style={{ marginBottom: 24 }}>
-                        <p style={labelStyle}>Image Poster</p>
-                        <img src={job.postImage} alt="Job Poster" style={{ maxWidth: "100%", maxHeight: 300, borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)" }} />
+                        <p style={labelStyle}>Image / PDF Poster</p>
+                        {job.postImage.toLowerCase().includes('.pdf') ? (
+                          <div style={{ padding: 24, textAlign: "center", background: "rgba(21, 145, 220, 0.05)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)" }}>
+                            <a href={job.postImage} target="_blank" rel="noopener noreferrer" style={{ color: "#1591DC", textDecoration: "none", fontWeight: 600 }}>
+                              View PDF Document
+                            </a>
+                          </div>
+                        ) : (
+                          <img src={job.postImage} alt="Job Poster" style={{ maxWidth: "100%", maxHeight: 300, borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)" }} />
+                        )}
                       </div>
                     )}
 
