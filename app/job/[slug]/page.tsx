@@ -32,10 +32,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${job.title} | ${job.company} - DailyJobs`,
-    description: job.description.replace(/<[^>]+>/g, "").substring(0, 160) + "...",
+    description: `Hiring Now: ${job.title} at ${job.company}. Type: ${job.type}, Salary: ${job.salary}, Location: ${job.location}. Apply now!`,
     openGraph: {
-      title: `${job.title} at ${job.company}`,
-      description: `Apply for ${job.title} at ${job.company} on DailyJobs.`,
+      title: `🚨 HIRING NOW: ${job.title} | ${job.company}`,
+      description: `💼 Type: ${job.type} • 💰 Salary: ${job.salary} • 📍 Location: ${job.location} • Apply now on DailyJobs!`,
       url: `https://dailysjobs.com/job/${slug}`,
       siteName: "DailyJobs",
       images: [
