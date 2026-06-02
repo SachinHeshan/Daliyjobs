@@ -58,7 +58,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             display: 'flex',
             width: '100%',
             height: '80px',
-            backgroundColor: '#1591DC',
+            backgroundColor: '#3100f3ff',
             alignItems: 'center',
             paddingLeft: '60px',
           }}
@@ -66,7 +66,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           <div
             style={{
               backgroundColor: '#ffffff',
-              color: '#1591DC',
+              color: '#ff0d05ff',
               padding: '6px 16px',
               borderRadius: '20px',
               fontSize: '24px',
@@ -76,7 +76,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               alignItems: 'center',
             }}
           >
-            HIRING NOW!
+            HIRING NOW !
           </div>
         </div>
 
@@ -181,7 +181,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           {/* Bottom Right: DailyJobs Logo Box */}
           <div
             style={{
-              backgroundColor: '#1591DC',
+              backgroundColor: '#3100f3ff',
               color: '#ffffff',
               fontSize: '64px',
               fontWeight: 800,
@@ -192,7 +192,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               lineHeight: 1,
             }}
           >
-            DailyJobs
+            DailysJobs
           </div>
         </div>
       </div>
