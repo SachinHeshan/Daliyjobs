@@ -5,6 +5,8 @@ import { Job, mockJobs } from "@/data/jobs";
 import { slugify } from "@/lib/slugify";
 import JobClientPage from "./JobClientPage";
 
+export const revalidate = 60; // Revalidate every 60 seconds for fresh Firebase data
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -79,9 +81,9 @@ export default async function JobPage({ params }: Props) {
             "@type": "JobPosting",
             "title": job.title,
             "description": job.description,
-            "datePosted": job.postedDate,
+            "datePosted": job.postedDate || new Date(job.createdAt || Date.now()).toISOString().split('T')[0],
             "validThrough": "2026-12-31",
-            "employmentType": job.type.toUpperCase() === "FULL-TIME" ? "FULL_TIME" : "PART_TIME",
+            "employmentType": job.type.toUpperCase().includes("FULL") ? "FULL_TIME" : job.type.toUpperCase().includes("PART") ? "PART_TIME" : job.type.toUpperCase().includes("CONTRACT") ? "CONTRACTOR" : job.type.toUpperCase().includes("INTERN") ? "INTERN" : "OTHER",
             "hiringOrganization": {
               "@type": "Organization",
               "name": job.company,
