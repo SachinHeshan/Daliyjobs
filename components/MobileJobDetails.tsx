@@ -5,6 +5,7 @@ import ShareMenu from "@/components/ShareMenu";
 import { formatJobTime } from "../lib/formatJobTime";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+import { slugify } from "@/lib/slugify";
 
 interface MobileJobDetailsProps {
   job: Job;
@@ -499,7 +500,7 @@ export default function MobileJobDetails({
               </div>
               <div style={{ flex: 1 }}>
                 <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Share</span>
-                <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} isMobile={true} />
+                <ShareMenu jobUrl={`https://dailysjobs.com/job/${slugify(job.title)}`} jobTitle={job.title} isMobile={true} />
               </div>
             </div>
 

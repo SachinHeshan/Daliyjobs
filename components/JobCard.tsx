@@ -4,6 +4,7 @@ import { slugify } from "@/lib/slugify";
 import { useState, useEffect } from "react";
 import { Job } from "@/data/jobs";
 import { formatJobTime } from "@/lib/formatJobTime";
+import Image from "next/image";
 
 export default function JobCard({ job, onClick }: { job: Job; onClick?: () => void }) {
   const [saved, setSaved] = useState(false);
@@ -62,11 +63,9 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
             }}
           >
             {job.logo && (job.logo.startsWith("http") || job.logo.startsWith("/")) ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={job.logo} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <Image src={job.logo} alt={job.company} width={88} height={88} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
             ) : job.website ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} className="jobcard-favicon" style={{ width: "100%", height: "100%", objectFit: "contain", background: "#fff", borderRadius: 16 }} />
+              <Image src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} className="jobcard-favicon" width={88} height={88} style={{ width: "100%", height: "100%", objectFit: "contain", background: "#fff", borderRadius: 16 }} loading="lazy" />
             ) : (
               job.company.charAt(0).toUpperCase()
             )}

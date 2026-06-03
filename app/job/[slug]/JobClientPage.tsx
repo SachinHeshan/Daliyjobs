@@ -10,6 +10,7 @@ import ShareMenu from "@/components/ShareMenu";
 import { formatJobTime } from "../../../lib/formatJobTime";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
+import { slugify } from "@/lib/slugify";
 
 export default function JobClientPage({ job }: { job: Job }) {
   const [showApplyForm, setShowApplyForm] = useState(false);
@@ -274,7 +275,7 @@ export default function JobClientPage({ job }: { job: Job }) {
                 {/* Desktop layout (hidden on mobile via CSS) */}
                 <div className="job-footer-desktop" style={{ padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ display: "flex", flexShrink: 0 }}>
-                    <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} />
+                    <ShareMenu jobUrl={`https://dailysjobs.com/job/${slugify(job.title)}`} jobTitle={job.title} />
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>
                     <span style={{ fontSize: "16px" }}>👁</span> Viewed: {viewCount > 0 ? viewCount.toLocaleString() : "..."}
@@ -290,7 +291,7 @@ export default function JobClientPage({ job }: { job: Job }) {
                   <div style={{ position: "relative", padding: "14px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 12 }}>
                     <div style={{ flex: 1 }}>
                       <span style={{ display: "block", fontSize: 10, color: "#64748b", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", marginBottom: 2 }}>Share</span>
-                      <ShareMenu jobUrl={typeof window !== "undefined" ? window.location.href : `https://dailysjobs.com/job/${job.id}`} jobTitle={job.title} isMobile={true} />
+                      <ShareMenu jobUrl={`https://dailysjobs.com/job/${slugify(job.title)}`} jobTitle={job.title} isMobile={true} />
                     </div>
                   </div>
 

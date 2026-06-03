@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Banner({ banners }: { banners: any[] }) {
@@ -44,18 +45,25 @@ export default function Banner({ banners }: { banners: any[] }) {
       aria-label="Featured job banners"
     >
       {/* Background Image */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: b.image 
-            ? `url(${b.image}) center/cover no-repeat` 
-            : (b.gradient || "linear-gradient(135deg, #1591DC 0%, #0d74b5 50%, #000000 100%)"),
-          transition: "background 0.8s ease",
-          opacity: 1, // Full opacity for the image
-          zIndex: 0,
-        }}
-      />
+      {b.image ? (
+        <Image
+          src={b.image}
+          alt={b.title || "Banner"}
+          fill
+          priority
+          style={{ objectFit: "cover", zIndex: 0, transition: "opacity 0.8s ease" }}
+        />
+      ) : (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: b.gradient || "linear-gradient(135deg, #1591DC 0%, #0d74b5 50%, #000000 100%)",
+            transition: "background 0.8s ease",
+            zIndex: 0,
+          }}
+        />
+      )}
 
       <div
         style={{
