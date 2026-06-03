@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://dailysjobs.com"),
   title: {
-    default: "DailyJobs Sri Lanka | Top Job Vacancies 2026",
+    default: "DailyJobs Sri Lanka | Latest Job Vacancies in 2026",
     template: "%s | DailyJobs Sri Lanka",
   },
   description:

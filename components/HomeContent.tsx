@@ -503,13 +503,27 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
 
       {/* SEO Content Section to prevent "Thin Content" */}
       <section style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px", color: "#a3a3a3", fontSize: 14, lineHeight: 1.6, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <h2 style={{ color: "#fff", fontSize: 18, marginBottom: 12, fontWeight: 700 }}>About DailyJobs Sri Lanka</h2>
-        <p style={{ marginBottom: 12 }}>
-          DailyJobs is Sri Lanka's premier online job portal, dedicated to connecting talented professionals with the country's top employers. Whether you are searching for software engineering roles in Colombo, hospitality and tourism jobs in Galle, financial sector positions in Kandy, or remote work-from-home opportunities nationwide, we ensure our job board is updated daily with the freshest and most highly sought-after vacancies.
-        </p>
-        <p>
-          We feature a diverse array of employment types including full-time careers, part-time jobs, flexible contract work, and valuable internship positions suited for school leavers and undergraduates. By allowing you to apply directly to top-tier Sri Lankan companies and innovative startups, DailyJobs streamlines your recruitment journey. Accelerate your career growth, discover new professional pathways, and find your dream job in Sri Lanka today with our comprehensive and easy-to-use platform.
-        </p>
+        <h2 style={{ color: "#fff", fontSize: 20, marginBottom: 16, fontWeight: 700 }}>About DailyJobs Sri Lanka: Your Ultimate Career Hub</h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "32px" }}>
+          <div>
+            <h3 style={{ color: "#e2e8f0", fontSize: 16, marginBottom: 12, fontWeight: 600 }}>Connecting Talent with Top Employers</h3>
+            <p style={{ marginBottom: 12 }}>
+              DailyJobs is Sri Lanka's premier online job portal, dedicated to connecting talented professionals with the country's top employers. Whether you are searching for innovative software engineering roles in Colombo, hospitality and tourism jobs in Galle, fast-paced financial sector positions in Kandy, or highly flexible remote work-from-home opportunities nationwide, we ensure our job board is updated daily with the freshest and most highly sought-after vacancies.
+            </p>
+            <p>
+              Our platform bridges the gap between ambitious job seekers and industry-leading corporations. From multinational tech giants to fast-growing local startups, Sri Lankan recruiters trust DailyJobs to find exactly the right talent. We streamline the recruitment process by offering direct application pathways, bypassing unnecessary middle-men and giving you direct access to hiring managers.
+            </p>
+          </div>
+          <div>
+            <h3 style={{ color: "#e2e8f0", fontSize: 16, marginBottom: 12, fontWeight: 600 }}>Diverse Career Opportunities</h3>
+            <p style={{ marginBottom: 12 }}>
+              We feature a incredibly diverse array of employment types carefully curated to match any lifestyle and career stage. This includes highly competitive full-time careers for seasoned professionals, part-time jobs for students looking for extra income, flexible contract work for freelancers, and valuable internship positions perfectly suited for school leavers, fresh graduates, and undergraduates looking to gain their very first industry experience.
+            </p>
+            <p>
+              Navigating the Sri Lankan job market has never been easier. By using our advanced search filters, you can sort vacancies by job category, specific locations across the island, and your preferred working models. Accelerate your career growth, discover exciting new professional pathways, and find your dream job in Sri Lanka today with our comprehensive, mobile-friendly, and completely free-to-use career platform.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Footer Details */}

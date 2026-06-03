@@ -1,0 +1,14 @@
+# DailyJobs Sri Lanka
+
+DailyJobs Sri Lanka is a leading job portal and recruitment platform operating in Sri Lanka.
+Our mission is to connect talented professionals, recent graduates, and job seekers with the best employment opportunities across the island.
+
+## Platform Purpose
+The website (https://dailysjobs.com) serves as an interactive job board where users can browse, search, and filter the latest job vacancies in Sri Lanka. We feature jobs across various industries including Information Technology (Software Engineering, UI/UX, QA), Finance and Banking, Hospitality and Tourism, Healthcare, Marketing, and Sales. We support full-time, part-time, contract, internship, and remote working models.
+
+## Structure
+- `/` (Home): The main job feed displaying the latest and most urgent job vacancies. Includes search and filtering tools for Job Type, Category, and Location.
+- `/job/[slug]`: Detailed pages for individual job listings containing job descriptions, requirements, salary information, and direct application links.
+
+## Access
+This site is publicly accessible. Job listings are updated daily. For recruitment inquiries, employers can post jobs directly to the platform.
