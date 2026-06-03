@@ -90,141 +90,226 @@ export default function ShareMenu({ jobUrl, jobTitle, isMobile, fullWidth }: Sha
     },
   ];
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   return (
-    <div className="share-menu-container" style={{ position: "relative", display: fullWidth ? "block" : "inline-block", width: fullWidth ? "100%" : undefined }} ref={menuRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          background: isOpen ? "rgba(21, 145, 220, 0.15)" : "rgba(255, 255, 255, 0.06)",
-          border: isOpen ? "1px solid rgba(21, 145, 220, 0.3)" : "1px solid rgba(255, 255, 255, 0.1)",
-          color: isOpen ? "#1591DC" : "#e2e8f0",
-          padding: isMobile ? "10px 16px" : "8px 16px",
-          borderRadius: fullWidth ? "10px" : "50px",
-          fontSize: isMobile ? "13px" : "14px",
-          fontWeight: 600,
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: fullWidth ? "center" : "flex-start",
-          gap: isMobile ? "8px" : "8px",
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          whiteSpace: "nowrap",
-          flexShrink: 0,
-          width: fullWidth ? "100%" : undefined,
-        }}
-      >
-        <span>↗️</span> {isOpen ? "Close Share" : "Share Job"}
-      </button>
-
-      <div
-        style={{
-          position: "absolute",
-          ...(isMobile ? {
-            bottom: "calc(100% + 12px)",
-            top: "auto",
-            left: 0,
-          } : {
-            top: "calc(100% + 12px)",
-            left: 0,
-          }),
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          background: "rgba(13, 13, 13, 0.98)",
-          border: "1px solid rgba(255, 255, 255, 0.1)",
-          borderRadius: "16px",
-          boxShadow: "0 15px 40px rgba(0, 0, 0, 0.6)",
-          padding: "10px 14px",
-          zIndex: 1000,
-          opacity: isOpen ? 1 : 0,
-          visibility: isOpen ? "visible" : "hidden",
-          transform: isOpen ? "translateY(0) scale(1)" : "translateY(-10px) scale(0.95)",
-          transition: "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
-          transformOrigin: isMobile ? "bottom left" : "top left",
-        }}
-      >
-        {shareOptions.map((option) => (
-          <a
-            key={option.name}
-            href={option.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={option.name}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "42px",
-              height: "42px",
-              borderRadius: "50%",
-              background: "transparent",
-              color: "#94a3b8",
-              textDecoration: "none",
-              fontSize: "20px",
-              transition: "transform 0.2s, color 0.3s, filter 0.3s",
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.15) translateY(-2px)";
-              e.currentTarget.style.color = option.hoverColor;
-              e.currentTarget.style.filter = `drop-shadow(0 6px 16px ${option.hoverColor}66)`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1) translateY(0)";
-              e.currentTarget.style.color = "#94a3b8";
-              e.currentTarget.style.filter = "none";
-            }}
-          >
-            {option.icon}
-          </a>
-        ))}
-        
-        <div style={{ width: "1px", height: "24px", background: "rgba(255, 255, 255, 0.1)", margin: "0 2px" }}></div>
-
+    <>
+      <div className="share-menu-container" style={{ display: fullWidth ? "block" : "inline-block", width: fullWidth ? "100%" : undefined }}>
         <button
-          onClick={handleCopyLink}
-          title="Copy Link"
+          onClick={() => setIsOpen(true)}
           style={{
+            background: "rgba(255, 255, 255, 0.06)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            color: "#e2e8f0",
+            padding: isMobile ? "10px 16px" : "8px 16px",
+            borderRadius: fullWidth ? "10px" : "50px",
+            fontSize: isMobile ? "13px" : "14px",
+            fontWeight: 600,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: fullWidth ? "center" : "flex-start",
+            gap: "8px",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            whiteSpace: "nowrap",
+            width: fullWidth ? "100%" : undefined,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(21, 145, 220, 0.15)";
+            e.currentTarget.style.borderColor = "rgba(21, 145, 220, 0.3)";
+            e.currentTarget.style.color = "#1591DC";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            e.currentTarget.style.color = "#e2e8f0";
+          }}
+        >
+          <span>↗️</span> Share Job
+        </button>
+      </div>
+
+      {/* Full-screen Modal Overlay */}
+      {isOpen && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "42px",
-            height: "42px",
-            borderRadius: "50%",
-            background: "transparent",
-            border: "none",
-            color: copied ? "#10b981" : "#94a3b8",
-            cursor: "pointer",
-            transition: "transform 0.2s, color 0.3s, filter 0.3s",
-            flexShrink: 0,
-            padding: 0,
+            background: "rgba(0, 0, 0, 0.6)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            padding: "20px",
+            animation: "shareFadeIn 0.3s ease-out forwards",
           }}
-          onMouseEnter={(e) => {
-            if (!copied) {
-              e.currentTarget.style.transform = "scale(1.15) translateY(-2px)";
-              e.currentTarget.style.color = "#fff";
-              e.currentTarget.style.filter = "drop-shadow(0 6px 16px rgba(255, 255, 255, 0.4))";
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!copied) {
-              e.currentTarget.style.transform = "scale(1) translateY(0)";
-              e.currentTarget.style.color = "#94a3b8";
-              e.currentTarget.style.filter = "none";
-            }
-          }}
+          onClick={() => setIsOpen(false)}
         >
-          {copied ? (
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-            </svg>
-          ) : (
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-            </svg>
-          )}
-        </button>
-      </div>
-    </div>
+          {/* Modal Content */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "rgba(13, 13, 13, 0.95)",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              borderRadius: "24px",
+              padding: "24px",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              maxWidth: "400px",
+              width: "100%",
+              animation: "shareScaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h3 style={{ margin: 0, color: "#fff", fontSize: "18px", fontWeight: 700 }}>Share this job</h3>
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#64748b",
+                  cursor: "pointer",
+                  padding: "4px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px" }}>
+              {shareOptions.map((option) => (
+                <a
+                  key={option.name}
+                  href={option.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={option.name}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
+                    width: "70px",
+                    color: "#94a3b8",
+                    textDecoration: "none",
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                    e.currentTarget.style.color = option.hoverColor;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.color = "#94a3b8";
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "56px",
+                      height: "56px",
+                      borderRadius: "50%",
+                      background: "rgba(255, 255, 255, 0.05)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "24px",
+                      border: "1px solid rgba(255, 255, 255, 0.05)",
+                    }}
+                  >
+                    {option.icon}
+                  </div>
+                  <span style={{ fontSize: "12px", fontWeight: 500 }}>{option.name}</span>
+                </a>
+              ))}
+
+              <button
+                onClick={handleCopyLink}
+                title="Copy Link"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "8px",
+                  width: "70px",
+                  color: copied ? "#10b981" : "#94a3b8",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  transition: "all 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  if (!copied) {
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                    e.currentTarget.style.color = "#fff";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!copied) {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.color = "#94a3b8";
+                  }
+                }}
+              >
+                <div
+                  style={{
+                    width: "56px",
+                    height: "56px",
+                    borderRadius: "50%",
+                    background: copied ? "rgba(16, 185, 129, 0.1)" : "rgba(255, 255, 255, 0.05)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "24px",
+                    border: copied ? "1px solid rgba(16, 185, 129, 0.2)" : "1px solid rgba(255, 255, 255, 0.05)",
+                  }}
+                >
+                  {copied ? (
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  ) : (
+                    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                  )}
+                </div>
+                <span style={{ fontSize: "12px", fontWeight: 500 }}>{copied ? "Copied!" : "Copy"}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes shareFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes shareScaleIn {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+      `}</style>
+    </>
   );
 }

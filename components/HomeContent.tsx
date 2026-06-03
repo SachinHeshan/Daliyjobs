@@ -231,9 +231,9 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
             <span>🇱🇰</span>
             <span>Sri Lanka&apos;s Direct Job Portal</span>
           </div>
-          <h2 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, color: "#fff", marginBottom: 12, letterSpacing: "-0.5px" }}>
+          <h1 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, color: "#fff", marginBottom: 12, letterSpacing: "-0.5px" }}>
             Explore Sri Lankan Job Vacancies
-          </h2>
+          </h1>
           <p style={{ color: "#a3a3a3", fontSize: 16, maxWidth: 600, margin: "0 auto" }}>
             Direct connections to local recruiters. Find your next full-time position, hybrid role, or internship in seconds.
           </p>
@@ -315,52 +315,79 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
             </div>
           </div>
 
-          {/* Bottom row: category pills */}
-          <div className="filter-pills-row" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-            <span style={{ fontSize: 13, color: "#64748b", fontWeight: 600, marginRight: 8 }}>Filter by Job Type:</span>
-            {["All", "Full-time", "Part-time", "Contract", "Internship", "Remote"].map((type) => (
-              <button
-                key={type}
-                onClick={() => {
-                  if (type === "All") {
-                    router.push("/", { scroll: false });
-                  } else {
-                    const slug = type.replace("-", "").toLowerCase();
-                    router.push(`/${slug}`, { scroll: false });
-                  }
-                }}
-                style={{
-                  border: "none",
-                  outline: "none",
-                  cursor: "pointer",
-                  borderRadius: 50,
-                  padding: "8px 18px",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  transition: "all 0.2s ease",
-                  background: selectedType === type
-                    ? "linear-gradient(135deg, #1591DC, #0d74b5)"
-                    : "rgba(255, 255, 255, 0.05)",
-                  color: selectedType === type ? "#fff" : "#a3a3a3",
-                  boxShadow: selectedType === type ? "0 4px 15px rgba(21, 145, 220, 0.4)" : "none",
-                }}
-                onMouseEnter={(e) => {
-                  if (selectedType !== type) {
-                    (e.target as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.1)";
-                    (e.target as HTMLButtonElement).style.color = "#fff";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (selectedType !== type) {
-                    (e.target as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.05)";
-                    (e.target as HTMLButtonElement).style.color = "#94a3b8";
-                  }
-                }}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
+          {/* Bottom row: Job Type Filter (Select on Mobile, Pills on Desktop) */}
+          {isMobile ? (
+            <div className="filter-category-row" style={{ display: "flex", gap: 16, width: "100%" }}>
+              <div className="filter-select-wrap" style={{ flex: 1 }}>
+                <select
+                  value={selectedType}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "All") {
+                      router.push("/", { scroll: false });
+                    } else {
+                      const slug = val.replace("-", "").toLowerCase();
+                      router.push(`/${slug}`, { scroll: false });
+                    }
+                  }}
+                  style={filterSelectStyle}
+                >
+                  <option value="All" style={{ background: "#0a0a0a" }}>All Job Types</option>
+                  {["Full-time", "Part-time", "Contract", "Internship", "Remote"].map((type) => (
+                    <option key={type} value={type} style={{ background: "#0a0a0a" }}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          ) : (
+            <div className="filter-pills-row" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+              <span style={{ fontSize: 13, color: "#64748b", fontWeight: 600, marginRight: 8 }}>Filter by Job Type:</span>
+              {["All", "Full-time", "Part-time", "Contract", "Internship", "Remote"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => {
+                    if (type === "All") {
+                      router.push("/", { scroll: false });
+                    } else {
+                      const slug = type.replace("-", "").toLowerCase();
+                      router.push(`/${slug}`, { scroll: false });
+                    }
+                  }}
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    cursor: "pointer",
+                    borderRadius: 50,
+                    padding: "8px 18px",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    transition: "all 0.2s ease",
+                    background: selectedType === type
+                      ? "linear-gradient(135deg, #1591DC, #0d74b5)"
+                      : "rgba(255, 255, 255, 0.05)",
+                    color: selectedType === type ? "#fff" : "#a3a3a3",
+                    boxShadow: selectedType === type ? "0 4px 15px rgba(21, 145, 220, 0.4)" : "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedType !== type) {
+                      (e.target as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.1)";
+                      (e.target as HTMLButtonElement).style.color = "#fff";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedType !== type) {
+                      (e.target as HTMLButtonElement).style.background = "rgba(255, 255, 255, 0.05)";
+                      (e.target as HTMLButtonElement).style.color = "#94a3b8";
+                    }
+                  }}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          )}
         </section>
 
 
@@ -473,6 +500,17 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
           </div>
         )}
       </main>
+
+      {/* SEO Content Section to prevent "Thin Content" */}
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 24px", color: "#a3a3a3", fontSize: 14, lineHeight: 1.6, borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <h2 style={{ color: "#fff", fontSize: 18, marginBottom: 12, fontWeight: 700 }}>About DailyJobs Sri Lanka</h2>
+        <p style={{ marginBottom: 12 }}>
+          DailyJobs is Sri Lanka's premier online job portal, dedicated to connecting talented professionals with the country's top employers. Whether you are searching for software engineering roles in Colombo, hospitality and tourism jobs in Galle, financial sector positions in Kandy, or remote work-from-home opportunities nationwide, we ensure our job board is updated daily with the freshest and most highly sought-after vacancies.
+        </p>
+        <p>
+          We feature a diverse array of employment types including full-time careers, part-time jobs, flexible contract work, and valuable internship positions suited for school leavers and undergraduates. By allowing you to apply directly to top-tier Sri Lankan companies and innovative startups, DailyJobs streamlines your recruitment journey. Accelerate your career growth, discover new professional pathways, and find your dream job in Sri Lanka today with our comprehensive and easy-to-use platform.
+        </p>
+      </section>
 
       {/* Footer Details */}
       <Footer />

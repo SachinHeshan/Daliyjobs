@@ -8,11 +8,11 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://dailysjobs.com"),
   title: {
-    default: "DailyJobs Sri Lanka | Job Vacancies 2026 – Find Jobs in Colombo & Sri Lanka",
+    default: "DailyJobs Sri Lanka | Top Job Vacancies 2026",
     template: "%s | DailyJobs Sri Lanka",
   },
   description:
-    "Find the latest job vacancies in Sri Lanka 2026. Browse hundreds of jobs in Colombo, Kandy, Galle & remote. Full-time, part-time, internships & contract jobs updated daily. Apply directly to top Sri Lankan companies like Dialog, Sysco LABS, WSO2, 99x and more.",
+    "Find the latest job vacancies in Sri Lanka 2026. Browse full-time, part-time & remote jobs in Colombo and across the country. Apply directly today!",
   keywords:
     "airport job vacancies, bank job vacancies, banking job vacancies, brandix job vacancies, call center job vacancies, cashier job vacancies, dubai job vacancies, express job, express jobs, finance job vacancies, foreign job vacancies, galle job vacancies, government job, government job vacancies, government job vacancies 2025, government job vacancies 2026, government job vacancies in sri lanka, government job vacancy, hotel job vacancies, hr job vacancies, job bank, job in sri lanka, job search, jobs, jobs in dubai, jobs sri lanka, keells job vacancies, labour department vacancies, lanka jobs, latest job vacancies, manager job vacancies, marketing job vacancies, navy job vacancies, office assistant job vacancies, part time jobs, private job vacancies, receptionist job vacancies, sales executive job vacancies, security job vacancies, sri lanka government jobs, sri lanka job vacancies, sri lanka jobs, supermarket job vacancies, teacher job vacancies, teaching job vacancies, top jobs, topjobs, vacancies, vacancy, warehouse job vacancies, work from home jobs, airport jobs sri lanka, bank jobs sri lanka, banking careers sri lanka, call center jobs sri lanka, cashier jobs sri lanka, dubai jobs for sri lankans, hotel jobs sri lanka, it jobs sri lanka, part time jobs sri lanka, government careers sri lanka, dailyjobs, daily jobs sri lanka",
   authors: [{ name: "DailyJobs Sri Lanka", url: "https://dailysjobs.com" }],
@@ -78,7 +78,18 @@ export default function RootLayout({
   return (
     <html lang="en-LK" className={inter.variable}>
       <head>
-        <link rel="canonical" href="https://dailysjobs.com" />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-E30THT2875"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-E30THT2875');
+            `,
+          }}
+        />
         <meta name="geo.region" content="LK" />
         <meta name="geo.placename" content="Sri Lanka" />
         <meta name="geo.position" content="7.8731;80.7718" />

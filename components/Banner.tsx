@@ -109,78 +109,7 @@ export default function Banner({ banners }: { banners: any[] }) {
         </div>
       </div>
 
-      {/* Controls */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 24,
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          zIndex: 2,
-        }}
-      >
-        <button
-          onClick={goPrev}
-          aria-label="Previous banner"
-          style={{
-            background: "rgba(0,0,0,0.5)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: "50%",
-            width: 36,
-            height: 36,
-            cursor: "pointer",
-            color: "#fff",
-            fontSize: 16,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "all 0.2s",
-          }}
-        >
-          ‹
-        </button>
-        {banners.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Banner ${i + 1}`}
-            style={{
-              width: i === active ? 24 : 8,
-              height: 8,
-              borderRadius: 4,
-              background: i === active ? "#fff" : "rgba(255,255,255,0.5)",
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.3s",
-              padding: 0,
-              boxShadow: "0 2px 4px rgba(0,0,0,0.5)",
-            }}
-          />
-        ))}
-        <button
-          onClick={goNext}
-          aria-label="Next banner"
-          style={{
-            background: "rgba(0,0,0,0.5)",
-            border: "1px solid rgba(255,255,255,0.15)",
-            borderRadius: "50%",
-            width: 36,
-            height: 36,
-            cursor: "pointer",
-            color: "#fff",
-            fontSize: 16,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "all 0.2s",
-          }}
-        >
-          ›
-        </button>
-      </div>
+
 
       {/* Marquee strip */}
       <div
