@@ -6,6 +6,7 @@ import { formatJobTime } from "../lib/formatJobTime";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
 import { slugify } from "@/lib/slugify";
+import Image from "next/image";
 
 interface MobileJobDetailsProps {
   job: Job;
@@ -257,14 +258,24 @@ export default function MobileJobDetails({
               }}
             >
               {job.logo && (job.logo.startsWith("http") || job.logo.startsWith("/")) ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={job.logo} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <Image
+                  src={job.logo}
+                  alt={job.company}
+                  width={64}
+                  height={64}
+                  sizes="64px"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
               ) : job.website ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`}
                   alt={job.company}
+                  width={64}
+                  height={64}
+                  sizes="64px"
                   style={{ width: "100%", height: "100%", objectFit: "contain", padding: 10, background: "#fff", borderRadius: 18 }}
+                  loading="lazy"
                 />
               ) : (
                 job.company.charAt(0).toUpperCase()

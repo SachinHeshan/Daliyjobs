@@ -51,6 +51,7 @@ export default function Banner({ banners }: { banners: any[] }) {
           alt={b.title || "Banner"}
           fill
           priority
+          sizes="100vw"
           style={{ objectFit: "cover", zIndex: 0, transition: "opacity 0.8s ease" }}
         />
       ) : (

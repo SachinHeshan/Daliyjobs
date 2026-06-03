@@ -7,6 +7,7 @@ import BottomNavbar from "@/components/BottomNavbar";
 import { Job } from "@/data/jobs";
 import Link from "next/link";
 import ShareMenu from "@/components/ShareMenu";
+import Image from "next/image";
 import { formatJobTime } from "../../../lib/formatJobTime";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
@@ -140,11 +141,25 @@ export default function JobClientPage({ job }: { job: Job }) {
               }}
             >
               {job.logo && (job.logo.startsWith("http") || job.logo.startsWith("/")) ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={job.logo} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <Image
+                  src={job.logo}
+                  alt={job.company}
+                  width={72}
+                  height={72}
+                  sizes="72px"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  priority
+                />
               ) : job.website ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "contain", padding: 10, background: "#fff", borderRadius: 16 }} />
+                <Image
+                  src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`}
+                  alt={job.company}
+                  width={72}
+                  height={72}
+                  sizes="72px"
+                  style={{ width: "100%", height: "100%", objectFit: "contain", padding: 10, background: "#fff", borderRadius: 16 }}
+                  priority
+                />
               ) : (
                 job.company.charAt(0).toUpperCase()
               )}

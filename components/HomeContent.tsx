@@ -403,17 +403,22 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
         >
           {loading ? (
             Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: 24, display: "flex", gap: 16, alignItems: "center", maxWidth: 1000, margin: "0 auto", width: "100%" }}>
-                <div style={{ width: 88, height: 88, borderRadius: 16, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} />
+              <div key={i} className="skeleton-card" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: 24, display: "flex", gap: 16, alignItems: "center", maxWidth: 1000, margin: "0 auto", width: "100%", overflow: "hidden", position: "relative" }}>
+                <div style={{ width: 88, height: 88, borderRadius: 16, background: "rgba(255,255,255,0.06)", flexShrink: 0 }} className="shimmer" />
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
-                  <div style={{ height: 20, width: "55%", borderRadius: 8, background: "rgba(255,255,255,0.06)" }} />
-                  <div style={{ height: 14, width: "35%", borderRadius: 8, background: "rgba(255,255,255,0.04)" }} />
-                  <div style={{ height: 12, width: "65%", borderRadius: 8, background: "rgba(255,255,255,0.03)" }} />
+                  <div style={{ height: 22, width: "55%", borderRadius: 8, background: "rgba(255,255,255,0.06)" }} className="shimmer" />
+                  <div style={{ height: 14, width: "35%", borderRadius: 8, background: "rgba(255,255,255,0.04)" }} className="shimmer" />
+                  <div style={{ height: 12, width: "65%", borderRadius: 8, background: "rgba(255,255,255,0.03)" }} className="shimmer" />
+                  <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+                    <div style={{ height: 22, width: 70, borderRadius: 50, background: "rgba(255,255,255,0.04)" }} className="shimmer" />
+                    <div style={{ height: 22, width: 90, borderRadius: 50, background: "rgba(255,255,255,0.03)" }} className="shimmer" />
+                  </div>
                 </div>
+                <div style={{ width: 100, height: 36, borderRadius: 8, background: "rgba(255,255,255,0.04)", flexShrink: 0 }} className="shimmer" />
               </div>
             ))
           ) : currentJobs.length > 0 ? (
-            currentJobs.map((job) => <JobCard key={job.id} job={job} />)
+            currentJobs.map((job, index) => <JobCard key={job.id} job={job} priority={index < 3} />)
           ) : (
             <div
               style={{

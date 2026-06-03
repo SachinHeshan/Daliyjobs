@@ -61,12 +61,40 @@ body {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
 .animate-fadeinup  { animation: fadeInUp 0.7s ease forwards; }
 .animate-slideinleft  { animation: slideInLeft 0.7s ease forwards; }
 .animate-slideinright { animation: slideInRight 0.7s ease forwards; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Shimmer skeleton loader */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 1.6s ease-in-out infinite;
+}
+
+/* Content-visibility: skip rendering offscreen job cards */
+.jobcard-article {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 140px;
+}
 
 /* Glassmorphism */
 .glass {

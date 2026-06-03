@@ -6,7 +6,7 @@ import { Job } from "@/data/jobs";
 import { formatJobTime } from "@/lib/formatJobTime";
 import Image from "next/image";
 
-export default function JobCard({ job, onClick }: { job: Job; onClick?: () => void }) {
+export default function JobCard({ job, onClick, priority = false }: { job: Job; onClick?: () => void; priority?: boolean }) {
   const [saved, setSaved] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -63,9 +63,28 @@ export default function JobCard({ job, onClick }: { job: Job; onClick?: () => vo
             }}
           >
             {job.logo && (job.logo.startsWith("http") || job.logo.startsWith("/")) ? (
-              <Image src={job.logo} alt={job.company} width={88} height={88} style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
+              <Image
+                src={job.logo}
+                alt={job.company}
+                width={88}
+                height={88}
+                sizes="(max-width: 768px) 80px, 88px"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                loading={priority ? "eager" : "lazy"}
+                fetchPriority={priority ? "high" : "auto"}
+              />
             ) : job.website ? (
-              <Image src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`} alt={job.company} className="jobcard-favicon" width={88} height={88} style={{ width: "100%", height: "100%", objectFit: "contain", background: "#fff", borderRadius: 16 }} loading="lazy" />
+              <Image
+                src={`https://www.google.com/s2/favicons?domain=${job.website}&sz=128`}
+                alt={job.company}
+                className="jobcard-favicon"
+                width={88}
+                height={88}
+                sizes="(max-width: 768px) 80px, 88px"
+                style={{ width: "100%", height: "100%", objectFit: "contain", background: "#fff", borderRadius: 16 }}
+                loading={priority ? "eager" : "lazy"}
+                fetchPriority={priority ? "high" : "auto"}
+              />
             ) : (
               job.company.charAt(0).toUpperCase()
             )}
