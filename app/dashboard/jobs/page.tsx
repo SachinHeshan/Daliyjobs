@@ -155,11 +155,13 @@ export default function ManageJobs() {
       // Trigger Google Indexing API
       try {
         const jobUrl = `https://dailysjobs.com/job/${slugify(jobData.title)}`;
-        await fetch('/api/google-index', {
+        const res = await fetch('/api/google-index', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: jobUrl, type: "URL_UPDATED" })
         });
+        const indexData = await res.json();
+        console.log("Google Indexing Update:", indexData);
       } catch (indexError) {
         console.error("Failed to trigger google indexing:", indexError);
       }
@@ -184,11 +186,13 @@ export default function ManageJobs() {
       if (jobToDelete) {
         try {
           const jobUrl = `https://dailysjobs.com/job/${slugify(jobToDelete.title)}`;
-          await fetch('/api/google-index', {
+          const res = await fetch('/api/google-index', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url: jobUrl, type: "URL_DELETED" })
           });
+          const indexData = await res.json();
+          console.log("Google Indexing Delete:", indexData);
         } catch (e) {
           console.error("Index error:", e);
         }
