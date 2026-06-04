@@ -28,7 +28,21 @@ export default function Banner({ banners }: { banners: any[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, banners, animating]);
 
-  if (!banners || banners.length === 0) return null;
+  if (!banners || banners.length === 0) {
+    return (
+      <section
+        style={{
+          marginTop: 70,
+          position: "relative",
+          overflow: "hidden",
+          width: "100%",
+          height: "clamp(300px, 40vw, 500px)",
+          background: "rgba(255,255,255,0.02)",
+        }}
+        className="shimmer"
+      />
+    );
+  }
 
   const b = banners[active];
 

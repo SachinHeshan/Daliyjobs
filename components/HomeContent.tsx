@@ -26,34 +26,41 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // Fetch banners FIRST — independently so they appear immediately
   useEffect(() => {
-    const loadData = async () => {
+    const loadBanners = async () => {
       try {
-        // Fetch banners from Firestore
         const bannersSnap = await getDocs(collection(db, "banners"));
         if (!bannersSnap.empty) {
           const list = bannersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
           setBanners(list);
         }
+      } catch (error) {
+        console.error("Error fetching banners:", error);
+      }
+    };
+    loadBanners();
+  }, []);
 
-        // Fetch jobs from Firestore
+  // Fetch jobs separately (can take longer)
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
         const snap = await getDocs(collection(db, "job-vacancies"));
         if (!snap.empty) {
           const list = snap.docs.map(d => ({ id: d.id, ...d.data() } as unknown as Job));
           setJobs(list);
         } else {
-          // Only use mock data as last resort fallback
           setJobs(fallbackJobs);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        // Fallback to mock data on error
+        console.error("Error fetching jobs:", error);
         setJobs(fallbackJobs);
       } finally {
         setLoading(false);
       }
     };
-    loadData();
+    loadJobs();
   }, []);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -306,7 +313,39 @@ export default function HomeContent({ categorySlug, locationSlug, typeSlug }: { 
                 style={filterSelectStyle}
               >
                 <option value="All" style={{ background: "#0a0a0a" }}>All Categories</option>
-                {categories.filter(c => c !== "All").map((cat) => (
+                {[
+                  "IT Software / Database / QA / Web / Graphics / GIS",
+                  "IT Hardware / Networks / Systems",
+                  "Accounting / Auditing / Finance",
+                  "Banking / Finance / Insurance",
+                  "Sales / Marketing / Merchandising",
+                  "Human Resources / Training",
+                  "Corporate Management / Business Analysis",
+                  "Office Administration / Secretarial / Reception",
+                  "Civil Engineering / Interior Design / Architecture",
+                  "IT Telecommunications",
+                  "Customer Relations / Public Relations",
+                  "Logistics / Warehouse / Transport",
+                  "Mechanical / Automotive / Electrical Engineering",
+                  "Manufacturing / Operations",
+                  "Media / Advertising / Communication",
+                  "Hotel / Restaurant / Hospitality",
+                  "Travel / Tourism",
+                  "Sports / Fitness / Recreation",
+                  "Medical / Nursing / Healthcare",
+                  "Legal / Law",
+                  "Supervision / Quality Control",
+                  "Apparel / Clothing",
+                  "Ticketing / Airline / Marine",
+                  "Education / Teaching",
+                  "Research & Development / Science",
+                  "Agriculture / Dairy / Environment",
+                  "Security Services",
+                  "Fashion / Design / Beauty",
+                  "International Development",
+                  "KPO / BPO",
+                  "Imports / Exports",
+                ].map((cat) => (
                   <option key={cat} value={cat} style={{ background: "#0a0a0a" }}>
                     {cat}
                   </option>

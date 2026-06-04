@@ -149,23 +149,37 @@ export default function PostJobPage() {
                 <label style={labelStyle}>Category *</label>
                 <select required name="category" value={formData.category} onChange={handleChange} style={inputStyle}>
                   <option value="" disabled style={{ background: "#0a0a0a" }}>Select Category</option>
-                  <option value="Banking & Finance Jobs" style={{ background: "#0a0a0a" }}>Banking & Finance Jobs</option>
-                  <option value="Caregiver Jobs" style={{ background: "#0a0a0a" }}>Caregiver Jobs</option>
-                  <option value="Construction Jobs" style={{ background: "#0a0a0a" }}>Construction Jobs</option>
-                  <option value="Customer Service" style={{ background: "#0a0a0a" }}>Customer Service</option>
-                  <option value="Driver Jobs" style={{ background: "#0a0a0a" }}>Driver Jobs</option>
-                  <option value="Education & Healthcare" style={{ background: "#0a0a0a" }}>Education & Healthcare</option>
-                  <option value="Engineering & Construction" style={{ background: "#0a0a0a" }}>Engineering & Construction</option>
-                  <option value="Finance & Accountancy" style={{ background: "#0a0a0a" }}>Finance & Accountancy</option>
-                  <option value="Government Jobs" style={{ background: "#0a0a0a" }}>Government Jobs</option>
-                  <option value="Healthcare Jobs" style={{ background: "#0a0a0a" }}>Healthcare Jobs</option>
-                  <option value="Hotel & Restaurant Jobs" style={{ background: "#0a0a0a" }}>Hotel & Restaurant Jobs</option>
-                  <option value="Marketing & Design" style={{ background: "#0a0a0a" }}>Marketing & Design</option>
-                  <option value="Overseas Jobs" style={{ background: "#0a0a0a" }}>Overseas Jobs</option>
-                  <option value="Sales & Business" style={{ background: "#0a0a0a" }}>Sales & Business</option>
-                  <option value="Security Jobs" style={{ background: "#0a0a0a" }}>Security Jobs</option>
-                  <option value="Technology & IT" style={{ background: "#0a0a0a" }}>Technology & IT</option>
-                  <option value="Other" style={{ background: "#0a0a0a" }}>Other</option>
+                  <option value="IT Software / Database / QA / Web / Graphics / GIS" style={{ background: "#0a0a0a" }}>IT Software / Database / QA / Web / Graphics / GIS</option>
+                  <option value="IT Hardware / Networks / Systems" style={{ background: "#0a0a0a" }}>IT Hardware / Networks / Systems</option>
+                  <option value="Accounting / Auditing / Finance" style={{ background: "#0a0a0a" }}>Accounting / Auditing / Finance</option>
+                  <option value="Banking / Finance / Insurance" style={{ background: "#0a0a0a" }}>Banking / Finance / Insurance</option>
+                  <option value="Sales / Marketing / Merchandising" style={{ background: "#0a0a0a" }}>Sales / Marketing / Merchandising</option>
+                  <option value="Human Resources / Training" style={{ background: "#0a0a0a" }}>Human Resources / Training</option>
+                  <option value="Corporate Management / Business Analysis" style={{ background: "#0a0a0a" }}>Corporate Management / Business Analysis</option>
+                  <option value="Office Administration / Secretarial / Reception" style={{ background: "#0a0a0a" }}>Office Administration / Secretarial / Reception</option>
+                  <option value="Civil Engineering / Interior Design / Architecture" style={{ background: "#0a0a0a" }}>Civil Engineering / Interior Design / Architecture</option>
+                  <option value="IT Telecommunications" style={{ background: "#0a0a0a" }}>IT Telecommunications</option>
+                  <option value="Customer Relations / Public Relations" style={{ background: "#0a0a0a" }}>Customer Relations / Public Relations</option>
+                  <option value="Logistics / Warehouse / Transport" style={{ background: "#0a0a0a" }}>Logistics / Warehouse / Transport</option>
+                  <option value="Mechanical / Automotive / Electrical Engineering" style={{ background: "#0a0a0a" }}>Mechanical / Automotive / Electrical Engineering</option>
+                  <option value="Manufacturing / Operations" style={{ background: "#0a0a0a" }}>Manufacturing / Operations</option>
+                  <option value="Media / Advertising / Communication" style={{ background: "#0a0a0a" }}>Media / Advertising / Communication</option>
+                  <option value="Hotel / Restaurant / Hospitality" style={{ background: "#0a0a0a" }}>Hotel / Restaurant / Hospitality</option>
+                  <option value="Travel / Tourism" style={{ background: "#0a0a0a" }}>Travel / Tourism</option>
+                  <option value="Sports / Fitness / Recreation" style={{ background: "#0a0a0a" }}>Sports / Fitness / Recreation</option>
+                  <option value="Medical / Nursing / Healthcare" style={{ background: "#0a0a0a" }}>Medical / Nursing / Healthcare</option>
+                  <option value="Legal / Law" style={{ background: "#0a0a0a" }}>Legal / Law</option>
+                  <option value="Supervision / Quality Control" style={{ background: "#0a0a0a" }}>Supervision / Quality Control</option>
+                  <option value="Apparel / Clothing" style={{ background: "#0a0a0a" }}>Apparel / Clothing</option>
+                  <option value="Ticketing / Airline / Marine" style={{ background: "#0a0a0a" }}>Ticketing / Airline / Marine</option>
+                  <option value="Education / Teaching" style={{ background: "#0a0a0a" }}>Education / Teaching</option>
+                  <option value="Research & Development / Science" style={{ background: "#0a0a0a" }}>Research & Development / Science</option>
+                  <option value="Agriculture / Dairy / Environment" style={{ background: "#0a0a0a" }}>Agriculture / Dairy / Environment</option>
+                  <option value="Security Services" style={{ background: "#0a0a0a" }}>Security Services</option>
+                  <option value="Fashion / Design / Beauty" style={{ background: "#0a0a0a" }}>Fashion / Design / Beauty</option>
+                  <option value="International Development" style={{ background: "#0a0a0a" }}>International Development</option>
+                  <option value="KPO / BPO" style={{ background: "#0a0a0a" }}>KPO / BPO</option>
+                  <option value="Imports / Exports" style={{ background: "#0a0a0a" }}>Imports / Exports</option>
                 </select>
               </div>
 
@@ -178,7 +192,19 @@ export default function PostJobPage() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <label style={labelStyle}>Salary</label>
-                <input type="text" name="salary" value={formData.salary} onChange={handleChange} style={inputStyle} placeholder="e.g. LKR 100,000 / mo or Negotiable" />
+                <select name="salary" value={formData.salary} onChange={handleChange} style={inputStyle}>
+                  <option value="" disabled style={{ background: "#0a0a0a" }}>Select Salary Range</option>
+                  <option value="10,000 - 20,000" style={{ background: "#0a0a0a" }}>10,000 - 20,000</option>
+                  <option value="20,000 - 35,000" style={{ background: "#0a0a0a" }}>20,000 - 35,000</option>
+                  <option value="35,000 - 50,000" style={{ background: "#0a0a0a" }}>35,000 - 50,000</option>
+                  <option value="50,000 - 75,000" style={{ background: "#0a0a0a" }}>50,000 - 75,000</option>
+                  <option value="75,000 - 100,000" style={{ background: "#0a0a0a" }}>75,000 - 100,000</option>
+                  <option value="100,000 - 120,000" style={{ background: "#0a0a0a" }}>100,000 - 120,000</option>
+                  <option value="120,000 - 150,000" style={{ background: "#0a0a0a" }}>120,000 - 150,000</option>
+                  <option value="150,000 - 175,000" style={{ background: "#0a0a0a" }}>150,000 - 175,000</option>
+                  <option value="175,000 - 200,000" style={{ background: "#0a0a0a" }}>175,000 - 200,000</option>
+                  <option value="Negotiable" style={{ background: "#0a0a0a" }}>Negotiable</option>
+                </select>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
