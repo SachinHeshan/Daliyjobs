@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 
-// Format the private key to handle both local (.env.local) and production (Vercel) environments
-const privateKey = process.env.GOOGLE_PRIVATE_KEY
-  ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n").replace(/^"|"$/g, "")
-  : undefined;
+// Extremely robust private key parser for Vercel/Local
+let rawKey = process.env.GOOGLE_PRIVATE_KEY || "";
+// 1. Remove surrounding quotes if they exist
+rawKey = rawKey.replace(/^"|"$/g, "");
+// 2. Unescape literal '\n' and '\r' to real newlines
+rawKey = rawKey.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
+// 3. Normalize all newlines to just '\n' (removes Windows carriage returns that break OpenSSL)
+const privateKey = rawKey ? rawKey.replace(/\r\n/g, "\n").replace(/\r/g, "\n") : undefined;
 
 // Initialize the Google Auth client using environment variables
 const auth = new google.auth.GoogleAuth({
