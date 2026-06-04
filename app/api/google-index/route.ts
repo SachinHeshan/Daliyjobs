@@ -8,21 +8,20 @@ function formatPrivateKey(key: string | undefined): string | undefined {
   let formatted = key.replace(/^"|"$/g, "");
   formatted = formatted.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
   
-  // If key lacks newlines entirely (can happen if copied wrong into env vars)
-  if (!formatted.includes("\n")) {
-    const beginHeader = "-----BEGIN PRIVATE KEY-----";
-    const endHeader = "-----END PRIVATE KEY-----";
+  const beginHeader = "-----BEGIN PRIVATE KEY-----";
+  const endHeader = "-----END PRIVATE KEY-----";
+  
+  if (formatted.includes(beginHeader) && formatted.includes(endHeader)) {
+    // Extract base64 body, remove ALL whitespace, and chunk into 64-character lines
+    const body = formatted
+      .substring(formatted.indexOf(beginHeader) + beginHeader.length, formatted.indexOf(endHeader))
+      .replace(/\s+/g, ""); // Remove all whitespace (spaces, newlines, tabs)
     
-    // Extract base64 body, remove spaces, and chunk into 64-character lines
-    if (formatted.includes(beginHeader) && formatted.includes(endHeader)) {
-      const body = formatted
-        .substring(formatted.indexOf(beginHeader) + beginHeader.length, formatted.indexOf(endHeader))
-        .replace(/\s+/g, ""); // Remove all spaces in the body
-      const bodyLines = body.match(/.{1,64}/g)?.join("\n") || body;
-      formatted = `${beginHeader}\n${bodyLines}\n${endHeader}`;
-    }
+    const bodyLines = body.match(/.{1,64}/g)?.join("\n") || body;
+    return `${beginHeader}\n${bodyLines}\n${endHeader}\n`;
   }
 
+  // Fallback
   return formatted.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim() + "\n";
 }
 
