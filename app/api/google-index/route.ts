@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 
+// Format the private key to handle both local (.env.local) and production (Vercel) environments
+const privateKey = process.env.GOOGLE_PRIVATE_KEY
+  ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n").replace(/^"|"$/g, "")
+  : undefined;
+
 // Initialize the Google Auth client using environment variables
 const auth = new google.auth.GoogleAuth({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    // Replace literal '\n' characters with actual newlines
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+    private_key: privateKey,
   },
   scopes: ["https://www.googleapis.com/auth/indexing"],
 });
