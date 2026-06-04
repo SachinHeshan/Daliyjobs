@@ -1,14 +1,32 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 
-// Extremely robust private key parser for Vercel/Local
-let rawKey = process.env.GOOGLE_PRIVATE_KEY || "";
-// 1. Remove surrounding quotes if they exist
-rawKey = rawKey.replace(/^"|"$/g, "");
-// 2. Unescape literal '\n' and '\r' to real newlines
-rawKey = rawKey.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
-// 3. Normalize all newlines to just '\n' (removes Windows carriage returns that break OpenSSL)
-const privateKey = rawKey ? rawKey.replace(/\r\n/g, "\n").replace(/\r/g, "\n") : undefined;
+// Bulletproof private key formatter
+function formatPrivateKey(key: string | undefined): string | undefined {
+  if (!key) return undefined;
+  
+  let formatted = key.replace(/^"|"$/g, "");
+  formatted = formatted.replace(/\\n/g, "\n").replace(/\\r/g, "\r");
+  
+  // If key lacks newlines entirely (can happen if copied wrong into env vars)
+  if (!formatted.includes("\n")) {
+    const beginHeader = "-----BEGIN PRIVATE KEY-----";
+    const endHeader = "-----END PRIVATE KEY-----";
+    
+    // Extract base64 body, remove spaces, and chunk into 64-character lines
+    if (formatted.includes(beginHeader) && formatted.includes(endHeader)) {
+      const body = formatted
+        .substring(formatted.indexOf(beginHeader) + beginHeader.length, formatted.indexOf(endHeader))
+        .replace(/\s+/g, ""); // Remove all spaces in the body
+      const bodyLines = body.match(/.{1,64}/g)?.join("\n") || body;
+      formatted = `${beginHeader}\n${bodyLines}\n${endHeader}`;
+    }
+  }
+
+  return formatted.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim() + "\n";
+}
+
+const privateKey = formatPrivateKey(process.env.GOOGLE_PRIVATE_KEY);
 
 // Initialize the Google Auth client using environment variables
 const auth = new google.auth.GoogleAuth({
