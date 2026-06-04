@@ -5,6 +5,7 @@ import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
+import { slugify } from "@/lib/slugify";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -150,6 +151,19 @@ export default function ManageJobs() {
       } else {
         await addDoc(collection(db, "job-vacancies"), jobData);
       }
+
+      // Trigger Google Indexing API
+      try {
+        const jobUrl = `https://dailysjobs.com/job/${slugify(jobData.title)}`;
+        await fetch('/api/google-index', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: jobUrl, type: "URL_UPDATED" })
+        });
+      } catch (indexError) {
+        console.error("Failed to trigger google indexing:", indexError);
+      }
+
       setEditingJob(null);
       setTagsInput("");
       await fetchJobs();
@@ -164,7 +178,22 @@ export default function ManageJobs() {
     if (!confirm("Are you sure you want to delete this job?")) return;
     setLoading(true);
     try {
+      const jobToDelete = jobs.find(j => j.id === id);
       await deleteDoc(doc(db, "job-vacancies", id));
+      
+      if (jobToDelete) {
+        try {
+          const jobUrl = `https://dailysjobs.com/job/${slugify(jobToDelete.title)}`;
+          await fetch('/api/google-index', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: jobUrl, type: "URL_DELETED" })
+          });
+        } catch (e) {
+          console.error("Index error:", e);
+        }
+      }
+
       await fetchJobs();
     } catch (err) {
       console.error("Error deleting job:", err);
